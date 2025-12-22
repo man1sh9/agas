@@ -123,6 +123,16 @@
             text-align: center;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         @media (max-width: 768px) {
             .content-section {
                 flex-direction: column !important;
@@ -134,8 +144,29 @@
                 height: 300px;
             }
 
+            .mobile-menu-btn {
+                display: block !important;
+            }
+
             .nav-links {
-                display: none;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+                gap: 2rem;
+                display: flex !important;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
             }
         }
     </style>
@@ -145,7 +176,8 @@
 
     <nav class="navbar">
         <a href="/" class="logo">AGAS ASHRAM</a>
-        <ul class="nav-links">
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/about">About</a></li>
@@ -193,6 +225,14 @@
         <p>&copy; 2025 Agas Ashram. All rights reserved.</p>
     </footer>
 
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            navLinks.classList.toggle('active');
+            menuBtn.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+        }
+    </script>
 </body>
 
 </html>

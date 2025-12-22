@@ -203,17 +203,62 @@
             margin-bottom: 1.5rem;
         }
 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
         @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 5%;
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+
+            .mobile-menu-btn {
+                display: block !important;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+                gap: 2rem;
+                display: flex;
+                /* Override display: none if any */
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
             .hero h1 {
                 font-size: 2.5rem;
             }
 
-            .nav-links {
-                display: none;
-            }
-
             .cta-group {
                 flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-primary,
+            .btn-secondary {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>
@@ -234,7 +279,8 @@
 
     <nav class="navbar">
         <a href="/" class="logo">AGAS ASHRAM</a>
-        <ul class="nav-links">
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/about">About</a></li>
@@ -296,11 +342,14 @@
         </section>
     </main>
 
-    <footer>
-        <h2>AGAS ASHRAM</h2>
-        <p>&copy; 2025 Agas Ashram. All rights reserved.</p>
-    </footer>
-
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            navLinks.classList.toggle('active');
+            menuBtn.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+        }
+    </script>
 </body>
 
 </html>

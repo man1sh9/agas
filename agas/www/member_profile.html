@@ -549,6 +549,43 @@
             border-radius: 20px;
             border: 2px dashed #eee;
         }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block !important;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+                gap: 2rem;
+                display: flex !important;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+        }
     </style>
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#5d4037">
@@ -567,7 +604,8 @@
 
     <nav class="navbar">
         <a href="/" class="logo">AGAS ASHRAM</a>
-        <ul class="nav-links">
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/events">Events</a></li>
             <li><a href="/logout">Logout</a></li>
@@ -1167,22 +1205,29 @@
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
             canvas.toBlob(blob => {
-                const file = new File([blob], `${captureField}_capture.jpg`, { type: 'image/jpeg' });
-                uploadFile(file, captureField, captureForm);
+                // Pass blob directly, uploadFile will handle it
+                uploadFile(blob, captureField, captureForm);
                 stopCamera();
-            }, 'image/jpeg', 0.9);
+            }, 'image/jpeg', 0.8);
         }
 
         async function uploadFile(source, fieldname, customForm = null) {
             let file;
             let form;
+            let filename = fieldname + '_upload.jpg';
 
             if (source instanceof File) {
                 file = source;
                 form = customForm;
+                filename = file.name;
+            } else if (source instanceof Blob) {
+                file = source;
+                form = customForm;
+                filename = fieldname + '_capture.jpg';
             } else {
                 file = source.files[0];
                 form = source.closest('form');
+                if (file) filename = file.name;
             }
 
             if (!file) return;
@@ -1196,7 +1241,7 @@
             if (submitBtn) submitBtn.disabled = true;
 
             const formData = new FormData();
-            formData.append('file', file);
+            formData.append('file', file, filename); // Passing filename explicitly
             formData.append('is_private', 0);
 
             try {
@@ -1210,7 +1255,7 @@
                 if (res.message && res.message.file_url) {
                     const url = res.message.file_url;
                     const hiddenInput = form.querySelector(`input[name="${fieldname}"]`);
-                    hiddenInput.value = url;
+                    if (hiddenInput) hiddenInput.value = url;
 
                     toast.innerText = 'Upload successful!';
                     toast.classList.remove('error');
@@ -1223,12 +1268,23 @@
                         preview.innerHTML = `Current: <a href="${url}" target="_blank">View ${fieldname === 'photo' ? 'Photo' : 'File'}</a>`;
                     }
                 } else {
-                    toast.innerText = 'Upload failed';
+                    let errorMsg = 'Upload failed';
+                    if (res._server_messages) {
+                        try {
+                            const messages = JSON.parse(res._server_messages);
+                            errorMsg = messages.map(m => JSON.parse(m).message).join(', ');
+                        } catch (e) { }
+                    } else if (res.exc) {
+                        errorMsg = 'Server Error: ' + (res.exc_type || 'Unknown');
+                    }
+                    toast.innerText = errorMsg;
                     toast.classList.add('error');
+                    console.error("Upload error response:", res);
                 }
             } catch (err) {
-                toast.innerText = 'Upload error';
+                toast.innerText = 'Network error or timeout';
                 toast.classList.add('error');
+                console.error("Fetch error:", err);
             }
             if (submitBtn) submitBtn.disabled = false;
             setTimeout(() => toast.style.display = 'none', 3000);
@@ -1672,6 +1728,13 @@
 
         function toggleAddressSync(check) {
             toggleOutside(check);
+        }
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            navLinks.classList.toggle('active');
+            menuBtn.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
         }
     </script>
 </body>

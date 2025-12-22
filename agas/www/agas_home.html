@@ -30,7 +30,8 @@
 
     <nav class="navbar" id="navbar">
         <a href="/" class="logo">AGAS ASHRAM</a>
-        <ul class="nav-links">
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/about">About Ashram</a></li>
             <li><a href="/contact">Contact Us</a></li>
@@ -131,6 +132,13 @@
                 nav.classList.remove("scrolled");
             }
         };
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            navLinks.classList.toggle('active');
+            menuBtn.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+        }
     </script>
 </body>
 
