@@ -1,0 +1,105 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "field:title",
+    "creation": "2025-12-21 12:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "title",
+        "subtitle",
+        "event_start_date",
+        "event_end_date",
+        "venue",
+        "published",
+        "image",
+        "section_break_desc",
+        "description",
+        "content"
+    ],
+    "fields": [
+        {
+            "fieldname": "title",
+            "fieldtype": "Data",
+            "label": "Event Title",
+            "reqd": 1,
+            "unique": 1
+        },
+        {
+            "fieldname": "subtitle",
+            "fieldtype": "Data",
+            "label": "Subtitle"
+        },
+        {
+            "fieldname": "event_start_date",
+            "fieldtype": "Date",
+            "label": "Event Start Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "event_end_date",
+            "fieldtype": "Date",
+            "label": "Event End Date",
+            "reqd": 1
+        },
+        {
+            "fieldname": "venue",
+            "fieldtype": "Data",
+            "label": "Venue"
+        },
+        {
+            "default": "0",
+            "fieldname": "published",
+            "fieldtype": "Check",
+            "label": "Published on Website"
+        },
+        {
+            "fieldname": "image",
+            "fieldtype": "Attach Image",
+            "label": "Featured Image"
+        },
+        {
+            "fieldname": "section_break_desc",
+            "fieldtype": "Section Break"
+        },
+        {
+            "fieldname": "description",
+            "fieldtype": "Small Text",
+            "label": "Short Description",
+            "description": "Visible on the cards in listing page"
+        },
+        {
+            "fieldname": "content",
+            "fieldtype": "Text Editor",
+            "label": "Full Event Details"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "modified": "2025-12-22 13:25:00.000000",
+    "modified_by": "Administrator",
+    "module": "Agas",
+    "name": "Agas Event",
+    "naming_rule": "By fieldname",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "read": 1,
+            "role": "Guest"
+        }
+    ],
+    "sort_field": "event_start_date",
+    "sort_order": "DESC",
+    "states": []
+}

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events | Agas Ashram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --accent-color: #d4a373;
+            --text-dark: #2d2424;
+            --text-light: #fefae0;
+            --bg-light: #faf9f6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: white;
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1510672981848-a1c4f1cb5ccf?auto=format&fit=crop&q=80&w=1500');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 5%;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: var(--accent-color);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-img {
+            height: 220px;
+            background-color: var(--gray);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .event-date-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 5px 15px rgba(212, 163, 115, 0.4);
+        }
+
+        .event-content {
+            padding: 2rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .event-content h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .event-subtitle {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .event-desc {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .event-meta {
+            margin-top: auto;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .btn-register {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+            text-align: center;
+            transition: background 0.3s;
+        }
+
+        .btn-register:hover {
+            background: #4a332a;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: #888;
+            font-style: italic;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 4rem 5%;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">AGAS ASHRAM</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            {% if frappe.session.user != "Guest" %}
+            <li><a href="/member_profile">My Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/auth">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Ashram Events</h1>
+        <p>Join us for spiritual discourses, meditation retreats, and community service programs.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- Upcoming Events -->
+        <h2 class="section-title">Upcoming Events</h2>
+        {% if upcoming_events %}
+        <div class="event-grid">
+            {% for event in upcoming_events %}
+            <div class="event-card">
+                <div class="event-img"
+                    style="background-image: url('{{ event.image or 'https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&q=80&w=800' }}')">
+                    <div class="event-date-badge">
+                        {{ frappe.utils.formatdate(event.event_start_date, 'dd/MM/yyyy') }}
+                        {% if event.event_end_date and event.event_end_date != event.event_start_date %}
+                        - {{ frappe.utils.formatdate(event.event_end_date, 'dd/MM/yyyy') }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="event-content">
+                    <div class="event-subtitle">{{ event.subtitle or 'Spiritual Program' }}</div>
+                    <h3>{{ event.title }}</h3>
+                    <p class="event-desc">{{ event.description or 'No description available.' }}</p>
+
+                    <div class="event-meta">
+                        <span>📍 {{ event.venue or 'Ashram' }}</span>
+                    </div>
+
+                    <a href="/event_registration?event={{ event.title }}" class="btn-register">Register Now</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">No upcoming events at the moment. Please check back later.</div>
+        {% endif %}
+
+        <!-- Past Events -->
+        {% if past_events %}
+        <h2 class="section-title">Past Events</h2>
+        <div class="event-grid">
+            {% for event in past_events %}
+            <div class="event-card" style="opacity: 0.8; filter: grayscale(0.5);">
+                <div class="event-img"
+                    style="background-image: url('{{ event.image or 'https://images.unsplash.com/photo-1545235617-9465d2a55698?auto=format&fit=crop&q=80&w=800' }}')">
+                    <div class="event-date-badge" style="background: #999;">
+                        {{ frappe.utils.formatdate(event.event_start_date, 'dd/MM/yyyy') }}
+                    </div>
+                </div>
+                <div class="event-content">
+                    <div class="event-subtitle">Completed</div>
+                    <h3>{{ event.title }}</h3>
+                    <p class="event-desc">{{ event.description or 'No description available.' }}</p>
+                    <div class="event-meta">
+                        <span>📍 {{ event.venue or 'Ashram' }}</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+
+    <footer>
+        <h2>AGAS ASHRAM</h2>
+        <p>&copy; 2025 Agas Ashram. Peace, Spirituality & Growth.</p>
+    </footer>
+
+</body>
+
+</html>

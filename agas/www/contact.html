@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Agas Ashram</title>
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --accent-color: #d4a373;
+            --text-dark: #2d2424;
+            --text-light: #fefae0;
+            --bg-light: #faf9f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-login {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .page-header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 4rem 10%;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact-container {
+            padding: 5rem 10%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            width: 100%;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-submit:hover {
+            background: #c08b5e;
+        }
+
+        .map-section {
+            width: 100%;
+            height: 400px;
+            background-color: #eee;
+            background-image: url('/assets/agas/images/contact_map.png');
+            background-size: cover;
+            background-position: center;
+            margin-top: 3rem;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 10%;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 768px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">AGAS ASHRAM</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            {% if frappe.session.user != "Guest" %}
+            <li><a href="/member_profile">My Profile</a></li>
+            <li><a href="/logout" class="btn-login" style="background: #994d1c;">Logout</a></li>
+            {% else %}
+            <li><a href="/auth" class="btn-login">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Get in Touch</h1>
+        <p>We are here to answer any questions you may have about our retreats and programs.</p>
+    </header>
+
+    <div class="contact-container">
+        <div class="contact-info">
+            <h2>Contact Information</h2>
+            <p>Reach out to us via email, phone, or visit us directly at the Ashram.</p>
+
+            <h3>Address</h3>
+            <p>Agas Ashram, River Road<br>Near Ancient Banyan Tree<br>Pune, Maharashtra - 411001</p>
+
+            <h3>Email</h3>
+            <p>info@agasashram.org<br>bookings@agasashram.org</p>
+
+            <h3>Phone</h3>
+            <p>+91 98765 43210<br>+91 12345 67890</p>
+        </div>
+
+        <div class="contact-form">
+            <form id="contactForm">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="contactName" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="contactEmail" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea id="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Send Message</button>
+                <div id="formResponse" style="margin-top: 1rem; text-align: center; font-weight: 500;"></div>
+            </form>
+        </div>
+    </div>
+
+    <div style="padding: 0 10%;">
+        <div class="map-section">
+            <div class="map-overlay">
+                <strong>Agas Ashram Location</strong><br>
+                Nestled in Nature
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <h2>AGAS ASHRAM</h2>
+        <p>&copy; 2025 Agas Ashram. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerText;
+            btn.innerText = 'Sending...';
+            btn.disabled = true;
+
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            const message = document.getElementById('contactMessage').value;
+            const responseDiv = document.getElementById('formResponse');
+
+            // Using fetch to call the Frappe API
+            fetch('/api/method/agas.api.submit_contact_form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Frappe-CSRF-Token': window.csrf_token || ''
+                },
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    message: message
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+
+                    if (data.message) {
+                        // Success
+                        responseDiv.style.color = 'green';
+                        responseDiv.innerText = data.message.message || "Message sent successfully!";
+                        document.getElementById('contactForm').reset();
+                    } else if (data.exc) {
+                        // Exception/Error
+                        responseDiv.style.color = 'red';
+                        responseDiv.innerText = "Error sending message. Please try again.";
+                        console.error(data.exc);
+                    } else {
+                        // Generic Success fallback if structure varies
+                        responseDiv.style.color = 'green';
+                        responseDiv.innerText = "Message sent!";
+                        document.getElementById('contactForm').reset();
+                    }
+                })
+                .catch(error => {
+                    btn.innerText = originalText;
+                    btn.disabled = false;
+                    responseDiv.style.color = 'red';
+                    responseDiv.innerText = "Network error. Please try again.";
+                    console.error('Error:', error);
+                });
+        });
+
+        // Helper to get CSRF token if not globally available
+        const getCookie = (name) => {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        if (!window.csrf_token) window.csrf_token = getCookie('sid') || 'guest';
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+{
+    "name": "Agas Ashram Portal",
+    "short_name": "Agas",
+    "description": "Premium Portal for Agas Ashram Members",
+    "start_url": "/agas_home",
+    "display": "standalone",
+    "background_color": "#faf9f6",
+    "theme_color": "#5d4037",
+    "icons": [
+        {
+            "src": "/assets/agas/icons/pwa-icon.png",
+            "sizes": "1024x1024",
+            "type": "image/png"
+        }
+    ]
+}

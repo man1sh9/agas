@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agas Ashram | Peace, Spirituality & Growth</title>
+    <meta name="description" content="Welcome to Agas Ashram V2. A place for spiritual retreat, meditation, and community events.">
+    <link rel="stylesheet" href="/assets/agas/css/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar" id="navbar">
+        <a href="/" class="logo">AGAS ASHRAM</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About Ashram</a></li>
+            <li><a href="/contact">Contact Us</a></li>
+            <li><a href="/visitor">Booking</a></li>
+            <li><a href="/login" class="auth-btn">Login/SignUp</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>Find Your Inner Peace</h1>
+        <p>Experience the tranquil beauty and spiritual depth of Agas Ashram. A sanctuary for meditation, reflection, and community growth.</p>
+        <div class="cta-group">
+            <a href="/event-registration" class="btn-primary">Register for Event</a>
+            <a href="/visitor" class="btn-secondary">Visitor Booking</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <div class="section-title">
+                <h2>Our Sanctuary</h2>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="grid">
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/assets/agas/images/meditation.png');"></div>
+                    <div class="card-content">
+                        <h3>Meditation Hall</h3>
+                        <p>A serene space designed for deep reflection and mindfulness. Our hall provides the perfect atmosphere for your spiritual journey.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/assets/agas/images/activity.png');"></div>
+                    <div class="card-content">
+                        <h3>Spiritual Activities</h3>
+                        <p>Participate in group yoga sessions, spiritual discourses, and community services led by experienced practitioners.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-img" style="background-image: url('/assets/agas/images/hero.png');"></div>
+                    <div class="card-content">
+                        <h3>Tranquil Grounds</h3>
+                        <p>Wander through lush gardens and peaceful landscapes that inspire calm and rejuvenation of the soul.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background-color: #f1f0e8;">
+            <div class="section-title">
+                <h2>How It Works</h2>
+                <div class="underline"></div>
+            </div>
+            
+            <div class="grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">1</div>
+                    <h4>Create Profile</h4>
+                    <p>Register with OTP and set up your personal and family profile details.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">2</div>
+                    <h4>Choose Event</h4>
+                    <p>Browse through our spiritual programs and choose your preferred dates.</p>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 3rem; color: var(--accent-color); margin-bottom: 1rem;">3</div>
+                    <h4>Visit Us</h4>
+                    <p>Confirm your booking and experience the tranquility of the Ashram.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="background: var(--primary-color); color: white; padding: 4rem 10%; text-align: center;">
+        <h2 style="margin-bottom: 2rem;">AGAS ASHRAM</h2>
+        <div style="display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem;">
+            <a href="#" style="color: white; text-decoration: none;">Privacy Policy</a>
+            <a href="#" style="color: white; text-decoration: none;">Terms of Service</a>
+            <a href="/contact" style="color: white; text-decoration: none;">Support</a>
+        </div>
+        <p style="opacity: 0.6;">&copy; 2025 Agas Ashram. All rights reserved.</p>
+    </footer>
+
+    <script>
+        window.onscroll = function() {
+            var nav = document.getElementById('navbar');
+            if (window.pageYOffset > 50) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2025-12-21 12:15:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "first_name",
+        "middle_name",
+        "last_name",
+        "relation",
+        "mobile_no",
+        "is_visiting",
+        "visit_date"
+    ],
+    "fields": [
+        {
+            "fieldname": "first_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "First Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "middle_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Middle Name"
+        },
+        {
+            "fieldname": "last_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Last Name"
+        },
+        {
+            "fieldname": "relation",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Relation"
+        },
+        {
+            "fieldname": "mobile_no",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Mobile No"
+        },
+        {
+            "default": "Yes",
+            "fieldname": "is_visiting",
+            "fieldtype": "Check",
+            "in_list_view": 1,
+            "label": "Is Visiting"
+        },
+        {
+            "fieldname": "visit_date",
+            "fieldtype": "Date",
+            "label": "Visit Date",
+            "mandatory_depends_on": "eval:doc.is_visiting==1"
+        }
+    ],
+    "istable": 1,
+    "modified": "2025-12-21 12:15:00.000000",
+    "modified_by": "Administrator",
+    "module": "Agas",
+    "name": "Event Registration Member",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

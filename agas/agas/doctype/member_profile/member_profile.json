@@ -1,0 +1,202 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:{first_name}_{middle_name}_{last_name}",
+    "creation": "2025-12-21 10:00:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "first_name",
+        "middle_name",
+        "last_name",
+        "gender",
+        "date_of_birth",
+        "age",
+        "mobile_no",
+        "email_id",
+        "id_section",
+        "id_proof_type",
+        "id_proof",
+        "photo",
+        "address_section",
+        "outside_india",
+        "address_line_1",
+        "address_line_2",
+        "city",
+        "agas_state",
+        "pincode",
+        "country",
+        "country_text",
+        "system_section",
+        "user",
+        "profile_docname"
+    ],
+    "fields": [
+        {
+            "fieldname": "first_name",
+            "fieldtype": "Data",
+            "label": "First Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "middle_name",
+            "fieldtype": "Data",
+            "label": "Middle Name"
+        },
+        {
+            "fieldname": "last_name",
+            "fieldtype": "Data",
+            "label": "Last Name"
+        },
+        {
+            "fieldname": "gender",
+            "fieldtype": "Select",
+            "label": "Gender",
+            "options": "Male\nFemale\nOther"
+        },
+        {
+            "fieldname": "date_of_birth",
+            "fieldtype": "Date",
+            "label": "Date of Birth"
+        },
+        {
+            "fieldname": "age",
+            "fieldtype": "Int",
+            "label": "Age"
+        },
+        {
+            "fieldname": "mobile_no",
+            "fieldtype": "Data",
+            "label": "Mobile No"
+        },
+        {
+            "fieldname": "email_id",
+            "fieldtype": "Data",
+            "label": "Email ID"
+        },
+        {
+            "fieldname": "id_section",
+            "fieldtype": "Section Break",
+            "label": "Identification"
+        },
+        {
+            "fieldname": "id_proof_type",
+            "fieldtype": "Select",
+            "label": "ID Proof Type",
+            "options": "Aadhar\nPassport\nDriving License\nOther",
+            "reqd": 1
+        },
+        {
+            "fieldname": "id_proof",
+            "fieldtype": "Attach",
+            "label": "ID Proof"
+        },
+        {
+            "fieldname": "photo",
+            "fieldtype": "Attach",
+            "label": "Photo"
+        },
+        {
+            "fieldname": "address_section",
+            "fieldtype": "Section Break",
+            "label": "Address"
+        },
+        {
+            "default": "0",
+            "fieldname": "outside_india",
+            "fieldtype": "Check",
+            "label": "Outside India"
+        },
+        {
+            "fieldname": "address_line_1",
+            "fieldtype": "Data",
+            "label": "Address Line 1"
+        },
+        {
+            "fieldname": "address_line_2",
+            "fieldtype": "Data",
+            "label": "Address Line 2"
+        },
+        {
+            "fieldname": "city",
+            "fieldtype": "Data",
+            "label": "City"
+        },
+        {
+            "fieldname": "agas_state",
+            "fieldtype": "Data",
+            "label": "State"
+        },
+        {
+            "fieldname": "pincode",
+            "fieldtype": "Data",
+            "label": "Pincode"
+        },
+        {
+            "fieldname": "country",
+            "fieldtype": "Data",
+            "label": "Country"
+        },
+        {
+            "fieldname": "country_text",
+            "fieldtype": "Data",
+            "label": "Country (Outside India)",
+            "depends_on": "eval:doc.outside_india"
+        },
+        {
+            "fieldname": "system_section",
+            "fieldtype": "Section Break",
+            "label": "System"
+        },
+        {
+            "fieldname": "user",
+            "fieldtype": "Link",
+            "label": "User",
+            "options": "User",
+            "unique": 1
+        },
+        {
+            "fieldname": "profile_docname",
+            "fieldtype": "Data",
+            "label": "Profile Docname",
+            "read_only": 1
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "modified": "2025-12-21 10:00:00.000000",
+    "modified_by": "Administrator",
+    "module": "Agas",
+    "name": "Member Profile",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Website User",
+            "share": 1,
+            "write": 1,
+            "if_owner": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

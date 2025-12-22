@@ -1,0 +1,160 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:FAM-{primary_member}-{first_name}-{####}",
+    "creation": "2025-12-22 05:50:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "primary_member",
+        "first_name",
+        "middle_name",
+        "last_name",
+        "relation_with_head_member",
+        "gender",
+        "dob",
+        "age",
+        "contact_no",
+        "adultchild",
+        "identification_section",
+        "id_proof_type",
+        "id_proof",
+        "photo",
+        "residency_section",
+        "are_you_a_resident_of_ashram"
+    ],
+    "fields": [
+        {
+            "fieldname": "primary_member",
+            "fieldtype": "Link",
+            "in_list_view": 1,
+            "label": "Primary Member",
+            "options": "Member Profile",
+            "reqd": 1
+        },
+        {
+            "fieldname": "first_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "First Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "middle_name",
+            "fieldtype": "Data",
+            "label": "Middle Name"
+        },
+        {
+            "fieldname": "last_name",
+            "fieldtype": "Data",
+            "in_list_view": 1,
+            "label": "Last Name"
+        },
+        {
+            "fieldname": "relation_with_head_member",
+            "fieldtype": "Select",
+            "in_list_view": 1,
+            "label": "Relation with Head Member",
+            "options": "Father\nMother\nSon\nDaughter\nSpouse\nRelative"
+        },
+        {
+            "fieldname": "gender",
+            "fieldtype": "Select",
+            "label": "Gender",
+            "options": "Male\nFemale\nOther"
+        },
+        {
+            "fieldname": "dob",
+            "fieldtype": "Date",
+            "label": "Date of Birth"
+        },
+        {
+            "fieldname": "age",
+            "fieldtype": "Int",
+            "label": "Age"
+        },
+        {
+            "fieldname": "contact_no",
+            "fieldtype": "Data",
+            "label": "Contact No"
+        },
+        {
+            "fieldname": "adultchild",
+            "fieldtype": "Select",
+            "label": "Adult/Child",
+            "options": "\nAdult\nChild"
+        },
+        {
+            "fieldname": "identification_section",
+            "fieldtype": "Section Break",
+            "label": "Identification"
+        },
+        {
+            "fieldname": "id_proof_type",
+            "fieldtype": "Select",
+            "label": "ID Proof Type",
+            "options": "Aadhar\nPAN\nDriving License\nPassport\nOther",
+            "reqd": 1
+        },
+        {
+            "fieldname": "id_proof",
+            "fieldtype": "Attach",
+            "label": "ID Proof",
+            "reqd": 1
+        },
+        {
+            "fieldname": "photo",
+            "fieldtype": "Attach",
+            "label": "Photo",
+            "reqd": 1
+        },
+        {
+            "fieldname": "residency_section",
+            "fieldtype": "Section Break",
+            "label": "Residency"
+        },
+        {
+            "fieldname": "are_you_a_resident_of_ashram",
+            "fieldtype": "Select",
+            "label": "Are you a resident of Ashram?",
+            "options": "Yes\nNo"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "modified": "2025-12-22 05:50:00.000000",
+    "modified_by": "Administrator",
+    "module": "Agas",
+    "name": "Family Member",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "Website User",
+            "share": 1,
+            "write": 1,
+            "if_owner": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

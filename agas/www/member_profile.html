@@ -1,0 +1,1679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Profile | Agas Ashram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --accent-color: #d4a373;
+            --text-dark: #2d2424;
+            --text-light: #fefae0;
+            --bg-light: #faf9f6;
+            --white: #ffffff;
+            --gray: #f0f0f0;
+            --success: #2e7d32;
+            --sidebar-width: 280px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        /* Main Layout */
+        .main-wrapper {
+            display: flex;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            gap: 2rem;
+            min-height: 80vh;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: var(--sidebar-width);
+            flex-shrink: 0;
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .menu-item:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .menu-item.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 8px 15px rgba(93, 64, 55, 0.2);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex-grow: 1;
+        }
+
+        .section-pane {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .section-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-header h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #666;
+            margin-left: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 1rem 1.2rem;
+            border: 1.5px solid #eee;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fbfbfb;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--accent-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.1);
+            outline: none;
+        }
+
+        .actions {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1.2rem 3rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 10px 20px rgba(93, 64, 55, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(93, 64, 55, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .btn-sm {
+            padding: 0.6rem 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .save-toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            display: none;
+            animation: slideUp 0.3s ease-out;
+            max-width: 400px;
+        }
+
+        .save-toast.error {
+            background: #d32f2f;
+        }
+
+        /* Prevent unwanted Frappe core overlays */
+        #freeze,
+        .freeze-veil,
+        .modal-backdrop {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Re-enable for our own modals */
+        #familyModal,
+        .save-toast {
+            pointer-events: auto !important;
+        }
+
+        #familyModal[style*="display: none"],
+        #familyModal[style*="display:none"] {
+            display: none !important;
+        }
+
+        /* Family Members Table */
+        .family-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 1rem;
+        }
+
+        .family-table th {
+            text-align: left;
+            padding: 1rem;
+            color: #888;
+            font-weight: 600;
+            border-bottom: 1px solid #eee;
+        }
+
+        .family-row {
+            background: #fbfbfb;
+            transition: all 0.3s;
+        }
+
+        .family-row:hover {
+            background: #f0f0f0;
+            transform: scale(1.01);
+        }
+
+        .family-row td {
+            padding: 1.5rem 1rem;
+        }
+
+        .family-row td:first-child {
+            border-radius: 15px 0 0 15px;
+        }
+
+        .family-row td:last-child {
+            border-radius: 0 15px 15px 0;
+            text-align: right;
+        }
+
+        .relation-badge {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .sidebar-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .menu-item {
+                white-space: nowrap;
+            }
+        }
+
+        /* Modal for Family Members */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: modalIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Events Table Styling */
+        .events-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 0.8rem;
+        }
+
+        .events-table th {
+            text-align: left;
+            padding: 1rem;
+            color: #888;
+            font-weight: 600;
+            border-bottom: 2px solid #eee;
+        }
+
+        .event-row {
+            background: #fbfbfb;
+            transition: all 0.3s;
+        }
+
+        .event-row:hover {
+            background: #f4f4f4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+
+        .event-row td {
+            padding: 1.2rem 1rem;
+            border-top: 1px solid transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        .event-row td:first-child {
+            border-radius: 12px 0 0 12px;
+            border-left: 1px solid #eee;
+        }
+
+        .event-row td:last-child {
+            border-radius: 0 12px 12px 0;
+            border-right: 1px solid #eee;
+        }
+
+        .status-badge {
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* Camera Capture Styles */
+        .upload-options {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .upload-options input[type="file"] {
+            flex: 1;
+            min-width: 0;
+            /* Allow input to shrink */
+            overflow: hidden;
+        }
+
+        .capture-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            background: #f8f9fa;
+            border: 1.5px dashed var(--accent-color);
+            border-radius: 12px;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            /* Prevent text wrapping */
+            flex-shrink: 0;
+            /* Don't let the button shrink */
+        }
+
+        .capture-btn:hover {
+            background: #fff;
+            border-style: solid;
+            box-shadow: 0 4px 12px rgba(212, 163, 115, 0.15);
+        }
+
+        .status-registered {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-draft {
+            background: #eeeeee;
+            color: #757575;
+            border: 1px dashed #9e9e9e;
+        }
+
+        .status-confirmed {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-cancelled {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .status-completed {
+            background: #f5f5f5;
+            color: #616161;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.6rem;
+            justify-content: flex-end;
+        }
+
+        .btn-cancel {
+            background: #fff;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+        }
+
+        .btn-cancel:hover {
+            background: #ffebee;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #888;
+            background: #fbfbfb;
+            border-radius: 20px;
+            border: 2px dashed #eee;
+        }
+    </style>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#5d4037">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">AGAS ASHRAM</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div id="saveToast" class="save-toast">Changes saved</div>
+
+    <div class="main-wrapper">
+        {% if not member_data %}
+        {% set member_data = frappe.db.get_value("Member Profile", {"user": frappe.session.user}, "*", as_dict=True) or
+        {} %}
+        {% if not member_data %}
+        {% set user_doc = frappe.get_doc("User", frappe.session.user) %}
+        {% set member_data = {"first_name": user_doc.first_name, "last_name": user_doc.last_name, "email_id":
+        user_doc.email, "mobile_no": user_doc.mobile_no} %}
+        {% endif %}
+        {% endif %}
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="menu-item active" onclick="switchSection('personal')">
+                    <span>👤</span> Personal Details
+                </li>
+                <li class="menu-item" onclick="switchSection('address')">
+                    <span>🏠</span> Address Details
+                </li>
+                <li class="menu-item" onclick="switchSection('id')">
+                    <span>🆔</span> Identification
+                </li>
+                <li class="menu-item" onclick="switchSection('family')">
+                    <span>👨‍👩‍👧‍👦</span> Family Members
+                </li>
+                <li class="menu-item" onclick="switchSection('events')">
+                    <span>📅</span> Events
+                </li>
+                <li class="menu-item" onclick="switchSection('security')">
+                    <span>🔒</span> Login Settings
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+
+            <!-- Section: Personal -->
+            <div id="personal" class="section-pane active">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h1>Personal Details</h1>
+                        <p>Tell us more about yourself.</p>
+                    </div>
+                    <form class="section-form" onsubmit="handleSave(event, 'personal')">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>First Name*</label>
+                                <input type="text" name="first_name" value="{{ member_data.get('first_name', '') }}"
+                                    required oninput="capitalizeInitials(this)">
+                            </div>
+                            <div class="form-group">
+                                <label>Middle Name</label>
+                                <input type="text" name="middle_name" value="{{ member_data.get('middle_name', '') }}"
+                                    oninput="capitalizeInitials(this)">
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" value="{{ member_data.get('last_name', '') }}"
+                                    oninput="capitalizeInitials(this)">
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select name="gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male" {% if member_data.get('gender')=='Male' %}selected{% endif %}>
+                                        Male</option>
+                                    <option value="Female" {% if member_data.get('gender')=='Female' %}selected{% endif
+                                        %}>Female</option>
+                                    <option value="Other" {% if member_data.get('gender')=='Other' %}selected{% endif
+                                        %}>Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Date of Birth</label>
+                                <input type="text" name="date_of_birth" class="datepicker"
+                                    value="{{ member_data.get('date_of_birth', '') }}" placeholder="dd/mm/yyyy">
+                            </div>
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="number" name="age" value="{{ member_data.get('age', '') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile No</label>
+                                <input type="text" name="mobile_no" value="{{ member_data.get('mobile_no', '') }}"
+                                    pattern="\d{10}" maxlength="10" title="Please enter a 10-digit mobile number">
+                            </div>
+                            <div class="form-group">
+                                <label>Email ID</label>
+                                <input type="email" name="email_id" value="{{ member_data.get('email_id', '') }}"
+                                    readonly>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Personal Details</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Section: Address -->
+            <div id="address" class="section-pane">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h1>Address Details</h1>
+                        <p>Where are you from?</p>
+                    </div>
+                    <form class="section-form" id="addressForm" onsubmit="handleSave(event, 'address')">
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label style="display: flex; align-items: center; gap: 0.8rem; cursor: pointer;">
+                                    <input type="checkbox" name="outside_india" {% if member_data.get('outside_india')
+                                        %}checked{% endif %} onchange="toggleOutside(this)"
+                                        style="width: 20px; height: 20px;">
+                                    Lives outside India
+                                </label>
+                            </div>
+                            <div class="form-group full">
+                                <label>Address Line 1</label>
+                                <input type="text" name="address_line_1"
+                                    value="{{ member_data.get('address_line_1', '') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" name="city" value="{{ member_data.get('city', '') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" name="agas_state" value="{{ member_data.get('agas_state', '') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Pincode</label>
+                                <input type="text" name="pincode" value="{{ member_data.get('pincode', '') }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" name="country" value="{{ member_data.get('country', 'India') }}">
+                            </div>
+                            <div class="form-group full" id="outsideDetails" style="display: none;">
+                                <label>International Country Details</label>
+                                <input type="text" name="country_text" value="{{ member_data.get('country_text', '') }}"
+                                    placeholder="Enter Country Name">
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Address</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Section: Identification -->
+            <div id="id" class="section-pane">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h1>Identification</h1>
+                        <p>Provide your identity proof for ashram access.</p>
+                    </div>
+                    <form class="section-form" onsubmit="handleSave(event, 'id')">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>ID Proof Type*</label>
+                                <select name="id_proof_type" required>
+                                    <option value="">Select ID Type</option>
+                                    <option value="Aadhar" {% if member_data.get('id_proof_type')=='Aadhar' %}selected{%
+                                        endif %}>Aadhar</option>
+                                    <option value="Passport" {% if member_data.get('id_proof_type')=='Passport'
+                                        %}selected{% endif %}>Passport</option>
+                                    <option value="Driving License" {% if
+                                        member_data.get('id_proof_type')=='Driving License' %}selected{% endif %}>
+                                        Driving License</option>
+                                    <option value="Other" {% if member_data.get('id_proof_type')=='Other' %}selected{%
+                                        endif %}>
+                                        Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group full">
+                                <label>ID Proof Document</label>
+                                <div class="upload-options">
+                                    <input type="file" accept="image/*" onchange="uploadFile(this, 'id_proof')"
+                                        style="flex: 1;">
+                                    <button type="button" class="capture-btn" onclick="startCamera('id_proof', this)">
+                                        <i>📸</i> Camera
+                                    </button>
+                                </div>
+                                <input type="hidden" name="id_proof" value="{{ member_data.get('id_proof', '') }}">
+                                <div id="primary_id_proof_preview"
+                                    style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--accent-color);">
+                                    {% if member_data.get('id_proof') %}
+                                    Current: <a href="{{ member_data.id_proof }}" target="_blank">View File</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="form-group full">
+                                <label>Member Photo</label>
+                                <div class="upload-options">
+                                    <input type="file" accept="image/*" onchange="uploadFile(this, 'photo')"
+                                        style="flex: 1;">
+                                    <button type="button" class="capture-btn" onclick="startCamera('photo', this)">
+                                        <i>📸</i> Camera
+                                    </button>
+                                </div>
+                                <input type="hidden" name="photo" value="{{ member_data.get('photo', '') }}">
+                                <div id="primary_photo_preview"
+                                    style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--accent-color);">
+                                    {% if member_data.get('photo') %}
+                                    Current: <a href="{{ member_data.photo }}" target="_blank">View Photo</a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Save Identification</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Section: Family Members -->
+            <div id="family" class="section-pane">
+                <div class="section-card">
+                    <div class="section-header">
+                        <div>
+                            <h1>Family Members</h1>
+                            <p>Manage your family members registered with the Ashram.</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm" onclick="openFamilyModal()">+ Add New</button>
+                    </div>
+
+                    <div id="familyList">
+                        <!-- Ajax populated -->
+                        <div style="text-align: center; padding: 3rem; color: #888;">Loading family members...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section: Events -->
+            <div id="events" class="section-pane">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h1>My Events</h1>
+                        <p>Track your upcoming and past event registrations.</p>
+                    </div>
+
+                    <h2 style="margin: 2rem 0 1rem; color: var(--primary-color);">Upcoming Events</h2>
+                    {% if upcoming_events %}
+                    <div class="table-container" style="overflow-x: auto;">
+                        <table class="events-table">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Date</th>
+                                    <th>Visitors</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reg in upcoming_events %}
+                                <tr class="event-row">
+                                    <td><strong>{{ reg.event }}</strong></td>
+                                    <td>{{ frappe.format(reg.event_date, "Date") if reg.event_date else '-' }}</td>
+                                    <td>{{ reg.no_of_visitors }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ reg.status.lower() }}">
+                                            {{ reg.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="event-actions">
+                                            {% if reg.status != 'Cancelled' %}
+                                            {% if reg.status == 'Draft' %}
+                                            <button class="btn btn-primary btn-sm"
+                                                onclick="editRegistration('{{ reg.event }}')"
+                                                style="padding: 0.6rem 1rem;">Complete Registration</button>
+                                            {% else %}
+                                            <button class="btn btn-outline btn-sm"
+                                                onclick="editRegistration('{{ reg.event }}')">Edit</button>
+                                            {% endif %}
+                                            <button class="btn btn-cancel btn-sm"
+                                                onclick="cancelRegistration('{{ reg.name }}')">Cancel</button>
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="empty-state">
+                        <p>No upcoming events registered.</p>
+                        <a href="/events" class="btn btn-primary"
+                            style="margin-top: 1rem; text-decoration: none;">Browse
+                            Events</a>
+                    </div>
+                    {% endif %}
+
+                    <h2 style="margin: 4rem 0 1rem; color: var(--primary-color); opacity: 0.7;">Past Events</h2>
+                    {% if past_events %}
+                    <div class="table-container" style="overflow-x: auto; opacity: 0.8;">
+                        <table class="events-table">
+                            <thead>
+                                <tr>
+                                    <th>Event</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th style="text-align: right;">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reg in past_events %}
+                                <tr class="event-row">
+                                    <td>{{ reg.event }}</td>
+                                    <td>{{ frappe.format(reg.event_date, "Date") if reg.event_date else '-' }}</td>
+                                    <td>
+                                        <span class="status-badge status-{{ reg.status.lower() }}">
+                                            {{ reg.status }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <div class="event-actions">
+                                            <button class="btn btn-outline btn-sm"
+                                                onclick="viewRegistration('{{ reg.event }}')">View</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p style="text-align: center; color: #888; padding: 2rem;">No past registrations found.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Section: Login Settings -->
+            <div id="security" class="section-pane">
+                <div class="section-card">
+                    <div class="section-header">
+                        <h1>Login Settings</h1>
+                        <p>Manage your password and security.</p>
+                    </div>
+                    <form class="section-form" onsubmit="handlePasswordChange(event)">
+                        <div class="form-grid" style="max-width: 400px;">
+                            <div class="form-group full">
+                                <label>New Password</label>
+                                <input type="password" id="new_password" required minlength="6"
+                                    placeholder="At least 6 characters">
+                            </div>
+                            <div class="form-group full">
+                                <label>Confirm Password</label>
+                                <input type="password" id="confirm_password" required minlength="6"
+                                    placeholder="Repeat new password">
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="submit" class="btn btn-primary">Update Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Family Member Modal -->
+    <div id="familyModal" class="modal">
+        <div class="modal-content">
+            <h2 style="color: var(--primary-color); margin-bottom: 2rem;">Family Member Details</h2>
+            <form id="familyForm">
+                <input type="hidden" name="name">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>First Name*</label>
+                        <input type="text" name="first_name" required oninput="capitalizeInitials(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Middle Name</label>
+                        <input type="text" name="middle_name" oninput="capitalizeInitials(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="last_name" oninput="capitalizeInitials(this)">
+                    </div>
+                    <div class="form-group">
+                        <label>Relation*</label>
+                        <select name="relation_with_head_member" required>
+                            <option value="">Select Relation</option>
+                            <option value="Father">Father</option>
+                            <option value="Mother">Mother</option>
+                            <option value="Spouse">Spouse</option>
+                            <option value="Son">Son</option>
+                            <option value="Daughter">Daughter</option>
+                            <option value="Relative">Relative</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select name="gender">
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="text" name="dob" id="family_dob" class="datepicker" placeholder="dd/mm/yyyy"
+                            onchange="recalculateFamilyDetails()">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age" id="family_age" oninput="recalculateFamilyDetails()">
+                    </div>
+                    <div class="form-group">
+                        <label>Adult/Child</label>
+                        <select name="adultchild" id="adultchild_select">
+                            <option value="Adult">Adult</option>
+                            <option value="Child">Child</option>
+                        </select>
+                        <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">Auto-selected based on age
+                            (Child if under 18)</p>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact No</label>
+                        <input type="text" name="contact_no" pattern="\d{10}" maxlength="10"
+                            title="Please enter a 10-digit mobile number">
+                    </div>
+                    <div class="form-group">
+                        <label>ID Proof Type*</label>
+                        <select name="id_proof_type" required>
+                            <option value="">Select ID Type</option>
+                            <option value="Aadhar">Aadhar</option>
+                            <option value="PAN">PAN</option>
+                            <option value="Passport">Passport</option>
+                            <option value="Driving License">Driving License</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Resident of Ashram?</label>
+                        <select name="are_you_a_resident_of_ashram">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                    <div class="form-group full">
+                        <label>ID Proof Document*</label>
+                        <div class="upload-options">
+                            <input type="file" accept="image/*" onchange="uploadFamilyFile(this, 'id_proof')"
+                                id="id_proof_file" style="flex: 1;">
+                            <button type="button" class="capture-btn" onclick="startCamera('id_proof', this)">
+                                <i>📸</i> Camera
+                            </button>
+                        </div>
+                        <input type="hidden" name="id_proof" required>
+                        <div id="family_id_proof_preview" style="font-size: 0.8rem; margin-top: 0.5rem;"></div>
+                    </div>
+                    <div class="form-group full">
+                        <label>Photo*</label>
+                        <div class="upload-options">
+                            <input type="file" accept="image/*" onchange="uploadFamilyFile(this, 'photo')"
+                                id="photo_file" style="flex: 1;">
+                            <button type="button" class="capture-btn" onclick="startCamera('photo', this)">
+                                <i>📸</i> Camera
+                            </button>
+                        </div>
+                        <input type="hidden" name="photo" required>
+                        <div id="family_photo_preview" style="font-size: 0.8rem; margin-top: 0.5rem;"></div>
+                    </div>
+                </div>
+                <div class="actions" style="margin-top: 2rem;">
+                    <button type="button" class="btn btn-outline btn-sm" onclick="closeFamilyModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">Save Family Member</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Camera Capture Modal -->
+    <div id="cameraModal" class="modal">
+        <div class="modal-content" style="max-width: 500px; text-align: center;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h2 style="color: var(--primary-color); margin: 0;">Capture Photo</h2>
+                <button type="button" onclick="stopCamera()"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">&times;</button>
+            </div>
+            <div
+                style="position: relative; width: 100%; aspect-ratio: 4/3; background: #000; border-radius: 20px; overflow: hidden; margin-bottom: 1.5rem; box-shadow: inset 0 0 20px rgba(0,0,0,0.5);">
+                <video id="cameraVideo" autoplay playsinline
+                    style="width: 100%; height: 100%; object-fit: cover;"></video>
+                <canvas id="cameraCanvas" style="display: none;"></canvas>
+            </div>
+            <div class="actions" style="display: flex; justify-content: center; gap: 1rem;">
+                <button type="button" class="btn btn-outline btn-sm" onclick="switchCamera()">Flip</button>
+                <button type="button" class="btn btn-primary btn-sm" onclick="takePhoto()">Capture & Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const csrfToken = "{{ csrf_token }}";
+
+        // Section Switching Logic
+        async function switchSection(id) {
+            // Update Sidebar UI
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+
+            // Handle cross-tab link clicks vs actual button clicks
+            const activeItem = event ? event.currentTarget : document.querySelector(`[onclick="switchSection('${id}')"]`);
+            if (activeItem) activeItem.classList.add('active');
+
+            // Update Content UI
+            document.querySelectorAll('.section-pane').forEach(pane => pane.classList.remove('active'));
+            const targetPane = document.getElementById(id);
+            if (targetPane) {
+                targetPane.classList.add('active');
+            } else {
+                // Fallback if ID is invalid
+                document.getElementById('personal').classList.add('active');
+                id = 'personal';
+            }
+
+            if (id === 'family') await loadFamilyMembers();
+
+            // Save active tab to localStorage
+            localStorage.setItem('active_profile_tab', id);
+        }
+
+        // --- Camera & Upload Logic ---
+        let activeStream = null;
+        let captureField = null;
+        let captureForm = null;
+        let currentFacingMode = 'environment';
+
+        async function startCamera(fieldname, source) {
+            const toast = document.getElementById('saveToast');
+            captureField = fieldname;
+            // Handle both element (btn) and the form itself for re-opening
+            captureForm = source.closest ? source.closest('form') : source;
+            const modal = document.getElementById('cameraModal');
+            const video = document.getElementById('cameraVideo');
+
+            try {
+                if (activeStream) {
+                    activeStream.getTracks().forEach(track => track.stop());
+                }
+
+                activeStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: currentFacingMode,
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    }
+                });
+                video.srcObject = activeStream;
+                modal.style.display = 'flex';
+            } catch (err) {
+                console.error("Camera error:", err);
+                toast.innerText = "Error: Could not access camera. Ensure you have given permission.";
+                toast.classList.add('error');
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 5000);
+            }
+        }
+
+        async function switchCamera() {
+            currentFacingMode = currentFacingMode === 'environment' ? 'user' : 'environment';
+            startCamera(captureField, captureForm);
+        }
+
+        function stopCamera() {
+            if (activeStream) {
+                activeStream.getTracks().forEach(track => track.stop());
+                activeStream = null;
+            }
+            document.getElementById('cameraModal').style.display = 'none';
+        }
+
+        function takePhoto() {
+            const video = document.getElementById('cameraVideo');
+            const canvas = document.getElementById('cameraCanvas');
+            const context = canvas.getContext('2d');
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            canvas.toBlob(blob => {
+                const file = new File([blob], `${captureField}_capture.jpg`, { type: 'image/jpeg' });
+                uploadFile(file, captureField, captureForm);
+                stopCamera();
+            }, 'image/jpeg', 0.9);
+        }
+
+        async function uploadFile(source, fieldname, customForm = null) {
+            let file;
+            let form;
+
+            if (source instanceof File) {
+                file = source;
+                form = customForm;
+            } else {
+                file = source.files[0];
+                form = source.closest('form');
+            }
+
+            if (!file) return;
+
+            const toast = document.getElementById('saveToast');
+            const submitBtn = form.querySelector('button[type="submit"]');
+
+            toast.innerText = 'Uploading ' + fieldname + '...';
+            toast.classList.remove('error');
+            toast.style.display = 'block';
+            if (submitBtn) submitBtn.disabled = true;
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('is_private', 0);
+
+            try {
+                const response = await fetch('/api/method/upload_file', {
+                    method: 'POST',
+                    headers: { 'X-Frappe-CSRF-Token': csrfToken },
+                    body: formData
+                });
+                const res = await response.json();
+
+                if (res.message && res.message.file_url) {
+                    const url = res.message.file_url;
+                    const hiddenInput = form.querySelector(`input[name="${fieldname}"]`);
+                    hiddenInput.value = url;
+
+                    toast.innerText = 'Upload successful!';
+                    toast.classList.remove('error');
+
+                    const isFamily = form.id === 'familyForm';
+                    const previewId = isFamily ? `family_${fieldname}_preview` : `primary_${fieldname}_preview`;
+                    const preview = document.getElementById(previewId);
+
+                    if (preview) {
+                        preview.innerHTML = `Current: <a href="${url}" target="_blank">View ${fieldname === 'photo' ? 'Photo' : 'File'}</a>`;
+                    }
+                } else {
+                    toast.innerText = 'Upload failed';
+                    toast.classList.add('error');
+                }
+            } catch (err) {
+                toast.innerText = 'Upload error';
+                toast.classList.add('error');
+            }
+            if (submitBtn) submitBtn.disabled = false;
+            setTimeout(() => toast.style.display = 'none', 3000);
+        }
+
+        // Wrapper for family files to keep it clean
+        window.uploadFamilyFile = (input, fieldname) => uploadFile(input, fieldname);
+
+        function openFamilyModal(data = null) {
+            const modal = document.getElementById('familyModal');
+            const form = document.getElementById('familyForm');
+            form.reset();
+
+            // Clear previews
+            document.getElementById('family_id_proof_preview').innerHTML = '';
+            document.getElementById('family_photo_preview').innerHTML = '';
+
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    const input = form.querySelector(`[name="${key}"]`);
+                    if (input) {
+                        if (input.classList.contains('datepicker')) {
+                            if (input._flatpickr) input._flatpickr.setDate(data[key]);
+                        } else {
+                            input.value = data[key] || '';
+                        }
+                    }
+
+                    // Specific preview handle
+                    if ((key === 'id_proof' || key === 'photo') && data[key]) {
+                        const previewId = `family_${key}_preview`;
+                        const preview = document.getElementById(previewId);
+                        if (preview) {
+                            preview.innerHTML = `Current: <a href="${data[key]}" target="_blank">View ${key === 'photo' ? 'Photo' : 'File'}</a>`;
+                        }
+                    }
+                });
+                modal.querySelector('h2').innerText = 'Edit Family Member';
+            } else {
+                modal.querySelector('h2').innerText = 'Add Family Member';
+            }
+
+            recalculateFamilyDetails();
+            modal.style.display = 'flex';
+        }
+
+        function closeFamilyModal() {
+            document.getElementById('familyModal').style.display = 'none';
+        }
+
+        async function loadFamilyMembers() {
+            const container = document.getElementById('familyList');
+            try {
+                const res = await fetch('/api/method/agas.api.get_family_members');
+                const data = await res.json();
+                const members = data.message || [];
+
+                if (members.length === 0) {
+                    container.innerHTML = `<div style="text-align: center; padding: 3rem; color: #888;">No family members added yet.</div>`;
+                    return;
+                }
+
+                container.innerHTML = `
+                    <table class="family-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Relation</th>
+                                <th>Age</th>
+                                <th>Contact</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${members.map(m => `
+                                <tr class="family-row">
+                                    <td><strong>${m.first_name} ${m.last_name || ''}</strong></td>
+                                    <td><span class="relation-badge">${m.relation_with_head_member}</span></td>
+                                    <td>${m.age || '-'}</td>
+                                    <td>${m.contact_no || '-'}</td>
+                                    <td>
+                                        <button class="btn btn-outline btn-sm" onclick='handleEditClick(${JSON.stringify(m).replace(/'/g, "&apos;")})' style="padding: 0.4rem 1rem;">Edit</button>
+                                        <button class="btn btn-sm" onclick="deleteFamilyMember('${m.name}')" style="background: #f44336; color: white; padding: 0.4rem 1rem;">Delete</button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                `;
+            } catch (err) {
+                container.innerHTML = `<div style="color: red;">Failed to load family members.</div>`;
+            }
+        }
+
+        window.handleEditClick = (data) => openFamilyModal(data);
+        window.editFamilyMember = (data) => openFamilyModal(data);
+
+        window.deleteFamilyMember = async (name) => {
+            if (!confirm('Are you sure you want to remove this family member?')) return;
+            const toast = document.getElementById('saveToast');
+            toast.innerText = 'Deleting...';
+            toast.style.display = 'block';
+
+            try {
+                await fetch('/api/method/agas.api.delete_family_member', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
+                    body: JSON.stringify({ name })
+                });
+                await loadFamilyMembers();
+                toast.innerText = 'Deleted successfully';
+                setTimeout(() => toast.style.display = 'none', 3000);
+            } catch (err) {
+                alert('Deletion failed');
+            }
+        };
+
+        document.getElementById('familyForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const form = e.currentTarget;
+            const toast = document.getElementById('saveToast');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            const data = {};
+            Array.from(form.elements).forEach(el => {
+                if (el.name) data[el.name] = el.value;
+            });
+
+            toast.innerText = 'Saving...';
+            toast.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/method/agas.api.save_family_member', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
+                    body: JSON.stringify({ data })
+                });
+                const res = await response.json();
+                if (res.message) {
+                    closeFamilyModal();
+                    await loadFamilyMembers();
+                    toast.innerText = 'Saved successfully';
+                    toast.classList.remove('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                } else if (res._server_messages) {
+                    const messages = JSON.parse(res._server_messages);
+                    let errorMsg = JSON.parse(messages[0]).message;
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else if (res.exc) {
+                    const exc = JSON.parse(res.exc);
+                    let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
+                    if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else {
+                    toast.innerText = 'Save failed';
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                }
+            } catch (err) {
+                toast.innerText = 'Connection error';
+                toast.classList.add('error');
+                setTimeout(() => toast.style.display = 'none', 3000);
+            }
+        });
+
+        // --- Standard Profile Logic ---
+        function toggleOutside(checkbox) {
+            document.getElementById('outsideDetails').style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        async function handleSave(event, sectionId) {
+            event.preventDefault();
+            const form = event.currentTarget;
+            const toast = document.getElementById('saveToast');
+
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+
+            toast.innerText = 'Saving ' + sectionId + ' details...';
+            toast.style.display = 'block';
+
+            const data = {};
+            Array.from(form.elements).forEach(el => {
+                if (el.name) {
+                    if (el.type === 'checkbox') data[el.name] = el.checked ? 1 : 0;
+                    else if (el.type !== 'file') data[el.name] = el.value;
+                }
+            });
+
+            try {
+                const response = await fetch('/api/method/agas.api.save_member_profile', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Frappe-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify({ data: data })
+                });
+
+                const res = await response.json();
+                if (res.message) {
+                    toast.innerText = 'Updated successfully!';
+                    toast.classList.remove('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                } else if (res._server_messages) {
+                    const messages = JSON.parse(res._server_messages);
+                    let errorMsg = JSON.parse(messages[0]).message;
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else if (res.exc) {
+                    const exc = JSON.parse(res.exc);
+                    let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
+                    if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else {
+                    toast.innerText = 'Error saving changes.';
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                }
+            } catch (err) {
+                toast.innerText = 'Connection error.';
+                toast.classList.add('error');
+                setTimeout(() => toast.style.display = 'none', 3000);
+            }
+        }
+
+        async function handlePasswordChange(e) {
+            e.preventDefault();
+            const newPwd = document.getElementById('new_password').value;
+            const confirmPwd = document.getElementById('confirm_password').value;
+            const toast = document.getElementById('saveToast');
+
+            if (newPwd !== confirmPwd) {
+                toast.innerText = 'Passwords do not match!';
+                toast.style.display = 'block';
+                setTimeout(() => toast.style.display = 'none', 3000);
+                return;
+            }
+
+            toast.innerText = 'Updating...';
+            toast.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/method/agas.api.change_password', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
+                    body: JSON.stringify({ new_password: newPwd })
+                });
+                const res = await response.json();
+                if (res.message) {
+                    toast.innerText = 'Password updated successfully!';
+                    toast.classList.remove('error');
+                    e.target.reset();
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                } else if (res._server_messages) {
+                    const messages = JSON.parse(res._server_messages);
+                    let errorMsg = JSON.parse(messages[0]).message;
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else if (res.exc) {
+                    const exc = JSON.parse(res.exc);
+                    let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
+                    if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else {
+                    toast.innerText = 'Update failed';
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                }
+            } catch (err) {
+                toast.innerText = 'Update error';
+                toast.classList.add('error');
+                setTimeout(() => toast.style.display = 'none', 3000);
+            }
+        }
+
+        window.capitalizeInitials = (input) => {
+            const val = input.value;
+            if (val) {
+                input.value = val.toLowerCase().split(' ').map(s => s.charAt(0).toUpperCase() + s.substring(1)).join(' ');
+            }
+        };
+
+        window.recalculateFamilyDetails = () => {
+            const dobInput = document.getElementById('family_dob');
+            const ageInput = document.getElementById('family_age');
+            const adultChildSelect = document.getElementById('adultchild_select');
+
+            if (!dobInput || !ageInput || !adultChildSelect) return;
+
+            const dobValue = dobInput.value;
+            const ageValue = ageInput.value;
+
+            if (dobValue) {
+                // DOB Given: Calculate Age
+                const birthDate = new Date(dobValue);
+                if (!isNaN(birthDate)) {
+                    const today = new Date();
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    const m = today.getMonth() - birthDate.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+                    ageInput.value = age;
+                    adultChildSelect.value = age < 18 ? 'Child' : 'Adult';
+
+                    // Disable fields
+                    ageInput.readOnly = true;
+                    ageInput.style.backgroundColor = '#f5f5f5';
+                    adultChildSelect.disabled = true;
+                    adultChildSelect.style.backgroundColor = '#f5f5f5';
+                }
+            } else if (ageValue) {
+                // No DOB, but Age Given
+                const age = parseInt(ageValue);
+                if (!isNaN(age)) {
+                    adultChildSelect.value = age < 18 ? 'Child' : 'Adult';
+                }
+
+                // Disable Adult/Child select
+                adultChildSelect.disabled = true;
+                adultChildSelect.style.backgroundColor = '#f5f5f5';
+
+                // Ensure Age is editable
+                ageInput.readOnly = false;
+                ageInput.style.backgroundColor = '';
+            } else {
+                // Clear state
+                ageInput.value = '';
+                adultChildSelect.value = 'Adult';
+
+                ageInput.readOnly = false;
+                ageInput.style.backgroundColor = '';
+                adultChildSelect.disabled = false;
+                adultChildSelect.style.backgroundColor = '';
+            }
+        };
+
+        // Restore active tab and checkbox state on load
+        async function cancelRegistration(name) {
+            if (!confirm('Are you sure you want to cancel this registration?')) return;
+
+            const toast = document.getElementById('saveToast');
+            toast.innerText = 'Cancelling...';
+            toast.style.display = 'block';
+
+            try {
+                const response = await fetch('/api/method/agas.api.cancel_registration', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
+                    body: JSON.stringify({ registration_name: name })
+                });
+                const res = await response.json();
+                if (res.message) {
+                    toast.innerText = res.message;
+                    setTimeout(() => window.location.reload(), 1500);
+                } else {
+                    toast.innerText = 'Action failed';
+                }
+            } catch (err) {
+                toast.innerText = 'Error occurred';
+            }
+            setTimeout(() => toast.style.display = 'none', 3000);
+        }
+
+        function editRegistration(eventTitle) {
+            window.location.href = `/event_registration?event=${encodeURIComponent(eventTitle)}`;
+        }
+
+        function viewRegistration(eventTitle) {
+            window.location.href = `/event_registration?event=${encodeURIComponent(eventTitle)}&view=1`;
+        }
+
+        window.onload = () => {
+            const activeTab = localStorage.getItem('active_profile_tab') || 'personal';
+            switchSection(activeTab);
+
+            const check = document.querySelector('input[name="outside_india"]');
+            if (check) toggleAddressSync(check);
+
+            // --- Smart Pincode Lookup ---
+            const pincodeInput = document.querySelector('input[name="pincode"]');
+            if (pincodeInput) {
+                pincodeInput.addEventListener('input', async (e) => {
+                    const pin = e.target.value.trim();
+                    if (pin.length === 6 && !isNaN(pin)) {
+                        const toast = document.getElementById('saveToast');
+                        toast.innerText = 'Fetching address details...';
+                        toast.style.display = 'block';
+
+                        try {
+                            const response = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+                            const result = await response.json();
+
+                            if (result[0].Status === "Success") {
+                                const details = result[0].PostOffice[0];
+                                document.querySelector('input[name="city"]').value = details.District;
+                                document.querySelector('input[name="agas_state"]').value = details.State;
+                                document.querySelector('input[name="country"]').value = details.Country;
+                                toast.innerText = 'Address updated from Pincode';
+                            } else {
+                                toast.innerText = 'Invalid Pincode';
+                            }
+                        } catch (err) {
+                            toast.innerText = 'Pincode API Error';
+                        }
+                        setTimeout(() => toast.style.display = 'none', 3000);
+                    }
+                });
+            }
+
+            // Initialize Datepickers
+            flatpickr(".datepicker", {
+                dateFormat: "Y-m-d", // Value saved to DB
+                altInput: true,
+                altFormat: "d/m/Y", // Display format
+                allowInput: true,
+                onChange: function (selectedDates, dateStr, instance) {
+                    if (instance.element.id === 'family_dob') {
+                        recalculateFamilyDetails();
+                    }
+                }
+            });
+        };
+
+        function toggleAddressSync(check) {
+            toggleOutside(check);
+        }
+    </script>
+</body>
+
+</html>

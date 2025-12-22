@@ -1,0 +1,53 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "creation": "2025-12-22 13:30:00.000000",
+    "doctype": "DocType",
+    "editable_grid": 1,
+    "engine": "InnoDB",
+    "field_order": [
+        "date",
+        "breakfast",
+        "lunch",
+        "dinner"
+    ],
+    "fields": [
+        {
+            "fieldname": "date",
+            "fieldtype": "Date",
+            "label": "Date",
+            "in_list_view": 1,
+            "reqd": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "breakfast",
+            "fieldtype": "Check",
+            "label": "Breakfast",
+            "in_list_view": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "lunch",
+            "fieldtype": "Check",
+            "label": "Lunch",
+            "in_list_view": 1
+        },
+        {
+            "default": "0",
+            "fieldname": "dinner",
+            "fieldtype": "Check",
+            "label": "Dinner",
+            "in_list_view": 1
+        }
+    ],
+    "istable": 1,
+    "modified": "2025-12-22 13:30:00.000000",
+    "modified_by": "Administrator",
+    "module": "Agas",
+    "name": "Event Food Day",
+    "owner": "Administrator",
+    "permissions": [],
+    "sort_field": "date",
+    "sort_order": "ASC"
+}

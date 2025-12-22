@@ -1,0 +1,194 @@
+{
+    "actions": [],
+    "allow_rename": 1,
+    "autoname": "format:EV-REG-{event}-{first_name}-{###}",
+    "creation": "2025-12-21 12:15:00.000000",
+    "doctype": "DocType",
+    "engine": "InnoDB",
+    "field_order": [
+        "first_name",
+        "middle_name",
+        "last_name",
+        "email",
+        "mobile_no",
+        "user",
+        "visit_details_section",
+        "event",
+        "date_of_visit",
+        "check_in_date",
+        "check_out_date",
+        "stay_required",
+        "no_of_visitors",
+        "no_of_rooms",
+        "food_section",
+        "food_required",
+        "food_preference",
+        "food_schedule",
+        "status_section",
+        "status",
+        "visitor_members_section",
+        "visitor_members"
+    ],
+    "fields": [
+        {
+            "fieldname": "first_name",
+            "fieldtype": "Data",
+            "label": "First Name",
+            "reqd": 1
+        },
+        {
+            "fieldname": "middle_name",
+            "fieldtype": "Data",
+            "label": "Middle Name"
+        },
+        {
+            "fieldname": "last_name",
+            "fieldtype": "Data",
+            "label": "Last Name"
+        },
+        {
+            "fieldname": "email",
+            "fieldtype": "Data",
+            "label": "Email",
+            "options": "Email"
+        },
+        {
+            "fieldname": "mobile_no",
+            "fieldtype": "Data",
+            "label": "Mobile No"
+        },
+        {
+            "fieldname": "user",
+            "fieldtype": "Link",
+            "label": "User",
+            "options": "User"
+        },
+        {
+            "fieldname": "visit_details_section",
+            "fieldtype": "Section Break",
+            "label": "Visit Details"
+        },
+        {
+            "fieldname": "event",
+            "fieldtype": "Link",
+            "label": "Event",
+            "options": "Agas Event",
+            "reqd": 1
+        },
+        {
+            "fieldname": "date_of_visit",
+            "fieldtype": "Date",
+            "label": "Date of Visit"
+        },
+        {
+            "fieldname": "check_in_date",
+            "fieldtype": "Date",
+            "label": "Check-in Date"
+        },
+        {
+            "fieldname": "check_out_date",
+            "fieldtype": "Date",
+            "label": "Check-out Date"
+        },
+        {
+            "default": "No",
+            "fieldname": "stay_required",
+            "fieldtype": "Select",
+            "label": "Stay Required",
+            "options": "\nYes\nNo",
+            "reqd": 1
+        },
+        {
+            "default": "1",
+            "fieldname": "no_of_visitors",
+            "fieldtype": "Int",
+            "label": "No. of Visitors"
+        },
+        {
+            "fieldname": "no_of_rooms",
+            "fieldtype": "Int",
+            "label": "No. of Rooms Required",
+            "depends_on": "eval:doc.stay_required=='Yes'"
+        },
+        {
+            "fieldname": "food_section",
+            "fieldtype": "Section Break",
+            "label": "Food Requirements"
+        },
+        {
+            "default": "No",
+            "fieldname": "food_required",
+            "fieldtype": "Select",
+            "label": "Food Required",
+            "options": "Yes\nNo",
+            "reqd": 1
+        },
+        {
+            "fieldname": "food_preference",
+            "fieldtype": "Data",
+            "label": "Food Preference",
+            "depends_on": "eval:doc.food_required=='Yes'"
+        },
+        {
+            "fieldname": "food_schedule",
+            "fieldtype": "Table",
+            "label": "Food Schedule",
+            "options": "Event Food Day",
+            "depends_on": "eval:doc.food_required=='Yes'"
+        },
+        {
+            "fieldname": "status_section",
+            "fieldtype": "Section Break",
+            "label": "Status"
+        },
+        {
+            "default": "Draft",
+            "fieldname": "status",
+            "fieldtype": "Select",
+            "label": "Status",
+            "options": "Draft\nRegistered\nConfirmed\nCancelled\nCompleted"
+        },
+        {
+            "fieldname": "visitor_members_section",
+            "fieldtype": "Section Break",
+            "label": "Additional Members"
+        },
+        {
+            "fieldname": "visitor_members",
+            "fieldtype": "Table",
+            "label": "Visitor Member Details",
+            "options": "Event Registration Member"
+        }
+    ],
+    "index_web_pages_for_search": 1,
+    "modified": "2025-12-22 13:35:00.000000",
+    "modified_by": "Administrator",
+    "module": "Agas",
+    "name": "Event Registration",
+    "naming_rule": "Expression",
+    "owner": "Administrator",
+    "permissions": [
+        {
+            "create": 1,
+            "delete": 1,
+            "email": 1,
+            "export": 1,
+            "print": 1,
+            "read": 1,
+            "report": 1,
+            "role": "System Manager",
+            "share": 1,
+            "write": 1
+        },
+        {
+            "create": 1,
+            "read": 1,
+            "role": "Website User",
+            "write": 1,
+            "if_owner": 1
+        }
+    ],
+    "sort_field": "modified",
+    "sort_order": "DESC",
+    "states": []
+}

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Agas Ashram</title>
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --accent-color: #d4a373;
+            --text-dark: #2d2424;
+            --text-light: #fefae0;
+            --bg-light: #faf9f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: white;
+            padding: 1.5rem 5%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-login {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Hero */
+        .page-header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 4rem 10%;
+            text-align: center;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Content */
+        .content-section {
+            padding: 5rem 10%;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .content-section:nth-child(even) {
+            flex-direction: row-reverse;
+            background: white;
+        }
+
+        .content-text {
+            flex: 1;
+        }
+
+        .content-text h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-img {
+            flex: 1;
+            height: 400px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 10%;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .content-section {
+                flex-direction: column !important;
+                gap: 2rem;
+            }
+
+            .content-img {
+                width: 100%;
+                height: 300px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a href="/" class="logo">AGAS ASHRAM</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            {% if frappe.session.user != "Guest" %}
+            <li><a href="/member_profile">My Profile</a></li>
+            <li><a href="/logout" class="btn-login" style="background: #994d1c;">Logout</a></li>
+            {% else %}
+            <li><a href="/auth" class="btn-login">Login</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <header class="page-header">
+        <h1>Our Story & Mission</h1>
+        <p>A legacy of spiritual awakening and community service spanning generations.</p>
+    </header>
+
+    <section class="content-section">
+        <div class="content-text">
+            <h2>Our History</h2>
+            <p>Founded on the principles of ancient wisdom, Agas Ashram has been a beacon of light for spiritual seekers
+                for decades. Our roots go back to the traditional Gurukul system, where knowledge was passed down from
+                Guru to Shishya in the lap of nature.</p>
+            <p><br>Today, we continue that tradition while embracing the modern world, offering a sanctuary where
+                timeless teachings meet contemporary needs.</p>
+        </div>
+        <div class="content-img" style="background-image: url('/assets/agas/images/about_history.png');"></div>
+    </section>
+
+    <section class="content-section">
+        <div class="content-text">
+            <h2>Community Service (Seva)</h2>
+            <p>At the heart of our Ashram is the spirit of Seva (selfless service). We believe that true spiritual
+                growth is incomplete without giving back to the community.</p>
+            <p><br>Our volunteers engage in regular food distribution, educational programs for local children, and
+                health camps. Joining our community means becoming part of a family dedicated to making the world a
+                better place.</p>
+        </div>
+        <div class="content-img" style="background-image: url('/assets/agas/images/community.png');"></div>
+    </section>
+
+    <footer>
+        <h2>AGAS ASHRAM</h2>
+        <p>&copy; 2025 Agas Ashram. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

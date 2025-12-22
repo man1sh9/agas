@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration | Agas Ashram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --accent-color: #d4a373;
+            --text-dark: #2d2424;
+            --bg-light: #faf9f6;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Layout */
+        .main-wrapper {
+            max-width: 1200px;
+            margin: 3rem auto;
+            display: flex;
+            gap: 3rem;
+            padding: 0 2rem;
+        }
+
+        /* Sidebar Styling */
+        .sidebar {
+            width: 300px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .menu-item {
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .menu-item:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .menu-item.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 8px 15px rgba(93, 64, 55, 0.2);
+        }
+
+        /* Content Area */
+        .content-area {
+            flex-grow: 1;
+        }
+
+        .section-pane {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        .section-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .section-header h1 {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #666;
+            margin-left: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 1rem 1.2rem;
+            border: 1.5px solid #eee;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fbfbfb;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-color);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.1);
+            outline: none;
+        }
+
+        .form-group input:read-only {
+            background: #f0f0f0;
+            cursor: not-allowed;
+            color: #888;
+        }
+
+        /* Buttons */
+        .actions {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 1.2rem 3rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 10px 20px rgba(93, 64, 55, 0.2);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(93, 64, 55, 0.3);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .save-toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 10000;
+            display: none;
+            animation: slideUp 0.3s ease-out;
+            max-width: 400px;
+        }
+
+        .save-toast.error {
+            background: #d32f2f;
+        }
+
+        /* Prevent unwanted Frappe core overlays */
+        #freeze,
+        .freeze-veil,
+        .modal-backdrop {
+            display: none !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        /* Family Selection List */
+        .family-card {
+            background: #fbfbfb;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+            border: 1px solid #eee;
+        }
+
+        .family-card:hover {
+            border-color: var(--accent-color);
+            transform: translateX(5px);
+        }
+
+        .family-card input[type="checkbox"] {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .family-info {
+            flex-grow: 1;
+        }
+
+        .family-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.2rem;
+        }
+
+        .family-info p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            background: var(--accent-color);
+            color: white;
+            margin-left: 1rem;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100px);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        #successOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            text-align: center;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        #successOverlay h2 {
+            color: var(--primary-color);
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+            }
+
+            .sidebar-menu {
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 1rem;
+            }
+
+            .menu-item {
+                white-space: nowrap;
+            }
+        }
+    </style>
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#5d4037">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</head>
+
+<body class="{% if is_read_only %}read-only-mode{% endif %}">
+    <style>
+        body.read-only-mode .btn-primary,
+        body.read-only-mode .btn-outline,
+        body.read-only-mode .actions {
+            display: none !important;
+        }
+
+        /* Allow navigation buttons if we add any specific ones for view mode */
+        body.read-only-mode .btn-view-nav {
+            display: inline-flex !important;
+        }
+
+        body.read-only-mode input,
+        body.read-only-mode select,
+        body.read-only-mode textarea {
+            pointer-events: none !important;
+            background-color: #f5f5f5 !important;
+            opacity: 0.8;
+        }
+
+        body.read-only-mode .family-card {
+            pointer-events: none !important;
+            opacity: 0.8;
+        }
+
+        .registration-status-banner {
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.9rem;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .registration-status-banner.editing {
+            background: #fff8e1;
+            border: 1px solid #ffe082;
+            color: #856404;
+        }
+
+        .registration-status-banner.new {
+            background: #e1f5fe;
+            border: 1px solid #b3e5fc;
+            color: #01579b;
+        }
+
+        .registration-status-banner.view-only {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            color: #666;
+        }
+
+        .registration-status-banner .icon {
+            font-size: 1.5rem;
+        }
+
+        .registration-status-banner p {
+            margin: 0;
+            opacity: 0.8;
+            font-size: 0.85rem;
+        }
+    </style>
+
+    <nav class="navbar">
+        <a href="/" class="logo">AGAS ASHRAM</a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/events">Events</a></li>
+            <li><a href="/member_profile">Profile</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div id="saveToast" class="save-toast">Changes saved</div>
+
+    <div id="successOverlay">
+        <h2 style="font-size: 100px;">🕉️</h2>
+        <h2 style="font-size: 3rem; color: var(--primary-color); margin-top: 1rem;">Registration Successful!</h2>
+        <p style="font-size: 1.2rem; margin-top: 1rem; color: #666;">Namaste! We have received your registration
+            details.</p>
+        <p style="margin-top: 2rem; color: #888;">Redirecting to dashboard...</p>
+    </div>
+
+    <div class="main-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">Registration</h2>
+            <ul class="sidebar-menu">
+                <li class="menu-item active" onclick="switchSection('visitor')">
+                    <span>👤</span> Primary Visitor
+                </li>
+                <li class="menu-item" onclick="switchSection('family')">
+                    <span>👨‍👩‍👧‍👦</span> Accompanied By
+                </li>
+                <li class="menu-item" onclick="switchSection('visit')">
+                    <span>📅</span> Visit Details
+                </li>
+                <li class="menu-item" onclick="switchSection('food')">
+                    <span>🍜</span> Food & Stay
+                </li>
+            </ul>
+
+            <div class="view-mode-actions" style="margin-top: 2rem;">
+                <a href="/member_profile#events" class="btn btn-primary btn-view-nav"
+                    style="width: 100%; text-decoration: none;">
+                    ← Back to Profile
+                </a>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <form id="eventRegForm">
+                {% if not member_data %}
+                {% set member_data = frappe.get_all("Member Profile", filters={"user": frappe.session.user},
+                fields=["*"], limit=1) %}
+                {% set member_data = member_data[0] if member_data else {} %}
+                {% endif %}
+
+                {% if is_read_only %}
+                <div class="registration-status-banner view-only">
+                    <span class="icon">👁️</span>
+                    <div>
+                        <strong>View Only Mode</strong>
+                        <p>This event has concluded. You are viewing your historical registration.</p>
+                    </div>
+                </div>
+                {% elif registration_data.get('status') == 'Draft' %}
+                <div class="registration-status-banner editing">
+                    <span class="icon">⏳</span>
+                    <div>
+                        <strong>Draft Registration</strong>
+                        <p>You are completing your registration for: {{ selected_event }}</p>
+                    </div>
+                </div>
+                {% elif registration_data.get('name') %}
+                <div class="registration-status-banner editing">
+                    <span class="icon">📝</span>
+                    <div>
+                        <strong>Modifying Existing Registration</strong>
+                        <p>You are updating your confirmed registration for: {{ selected_event }}</p>
+                    </div>
+                </div>
+                {% elif selected_event %}
+                <div class="registration-status-banner new">
+                    <span class="icon">✨</span>
+                    <div>
+                        <strong>New Registration</strong>
+                        <p>You are starting a new registration for: {{ selected_event }}</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Section: Primary Visitor -->
+                <div id="visitor" class="section-pane active">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h1>Primary Visitor</h1>
+                            <p>Registration as primary contact.</p>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" name="first_name" value="{{ member_data.get('first_name', '') }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Middle Name</label>
+                                <input type="text" name="middle_name" value="{{ member_data.get('middle_name', '') }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" name="last_name" value="{{ member_data.get('last_name', '') }}"
+                                    readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Email ID</label>
+                                <input type="email" name="email"
+                                    value="{{ member_data.get('email_id', frappe.session.user) }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Mobile No</label>
+                                <input type="text" name="mobile_no" value="{{ member_data.get('mobile_no', '') }}"
+                                    readonly pattern="\d{10}" maxlength="10">
+                            </div>
+                        </div>
+                        <p
+                            style="margin-top: 1.5rem; font-size: 0.85rem; color: #888; background: #eee; padding: 0.8rem; border-radius: 8px;">
+                            💡 Primary visitor details are locked to your profile. Update them in <a
+                                href="/member_profile">Profile Settings</a> if needed.
+                        </p>
+                        <div class="actions">
+                            <button type="button" class="btn btn-primary"
+                                onclick="switchSection('family')">Continue</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Family Members -->
+                <div id="family" class="section-pane">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h1>Accompanied By</h1>
+                            <p>Select family members joining you for this event.</p>
+                        </div>
+
+                        <div id="familySelectionList">
+                            {% if family_members %}
+                            {% set registered_fnames = registration_data.get('visitor_members', []) |
+                            map(attribute='first_name') | list %}
+                            {% for m in family_members %}
+                            <div class="family-card">
+                                <input type="checkbox" name="family_member_select" value="{{ m.name }}"
+                                    data-fname="{{ m.first_name }}" data-mname="{{ m.middle_name or '' }}"
+                                    data-lname="{{ m.last_name or '' }}" data-rel="{{ m.relation_with_head_member }}"
+                                    data-mobile="{{ m.contact_no or '' }}" onchange="updateVisitorCount()" {% if
+                                    m.first_name in registered_fnames %}checked{% endif %}>
+                                <div class="family-info">
+                                    <h4>{{ m.first_name }} {{ m.last_name or '' }}</h4>
+                                    <p>{{ m.relation_with_head_member }} | {{ m.gender or '-' }} | Age: {{ m.age or '-'
+                                        }}</p>
+                                </div>
+                                <span class="badge">{{ m.adultchild or 'Member' }}</span>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div
+                                style="text-align: center; padding: 2rem; color: #888; border: 2px dashed #eee; border-radius: 15px;">
+                                No family members found in your profile.<br>
+                                <a href="/member_profile#family" style="color: var(--accent-color); font-weight: 600;">+
+                                    Add Family Members</a>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="actions">
+                            <button type="button" class="btn btn-primary" onclick="switchSection('visit')">Save &
+                                Continue</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Visit Details -->
+                <div id="visit" class="section-pane">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h1>Visit Details</h1>
+                            <p>Specify event and stay timing.</p>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label>Select Event*</label>
+                                <select name="event" required onchange="reloadForEvent(this.value)">
+                                    <option value="">Choose an event</option>
+                                    {% for ev in events %}
+                                    <option value="{{ ev.title }}" {% if selected_event==ev.title %}selected{% endif %}>
+                                        {{ ev.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Stay Required?</label>
+                                <select name="stay_required" id="stayRequired" onchange="toggleStayFields()">
+                                    <option value="No" {% if registration_data.get('stay_required')=='No' %}selected{%
+                                        endif %}>No</option>
+                                    <option value="Yes" {% if registration_data.get('stay_required')=='Yes' %}selected{%
+                                        endif %}>Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="roomsField" style="display: none;">
+                                <label>No. of Rooms Required</label>
+                                <input type="number" name="no_of_rooms"
+                                    value="{{ registration_data.get('no_of_rooms', 1) }}" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label>Total Visitors</label>
+                                <input type="number" name="no_of_visitors"
+                                    value="{{ registration_data.get('no_of_visitors', 1) }}" min="1"
+                                    id="totalVisitorsCount" readonly
+                                    style="background: #fdfdfd; font-weight: 700; color: var(--primary-color);">
+                                <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">(Calculated: Self +
+                                    Selected Family)</p>
+                            </div>
+                            <div class="form-group" id="checkInField">
+                                <label>Check-in Date</label>
+                                <input type="text" name="check_in_date" class="datepicker"
+                                    value="{{ registration_data.get('check_in_date', '') }}" placeholder="dd/mm/yyyy">
+                            </div>
+                            <div class="form-group" id="checkOutField">
+                                <label>Check-out Date</label>
+                                <input type="text" name="check_out_date" class="datepicker"
+                                    value="{{ registration_data.get('check_out_date', '') }}" placeholder="dd/mm/yyyy">
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="button" class="btn btn-primary" onclick="switchSection('food')">Save &
+                                Continue</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section: Food & Stay -->
+                <div id="food" class="section-pane">
+                    <div class="section-card">
+                        <div class="section-header">
+                            <h1>Food Requirements</h1>
+                            <p>Meals and preferences during your visit.</p>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Food Required?</label>
+                                <select name="food_required" id="foodRequired" onchange="toggleFoodFields()">
+                                    <option value="No" {% if registration_data.get('food_required')=='No' %}selected{%
+                                        endif %}>No</option>
+                                    <option value="Yes" {% if registration_data.get('food_required')=='Yes' %}selected{%
+                                        endif %}>Yes</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="foodPrefField" style="display: none;">
+                                <label>Preferences (Optional)</label>
+                                <input type="text" name="food_preference" placeholder="e.g. No Onion/Garlic"
+                                    value="{{ registration_data.get('food_preference', '') }}">
+                            </div>
+                            <div class="form-group full" id="foodScheduleContainer" style="display: none;">
+                                <label>Date-wise Food Selection</label>
+                                <div
+                                    style="background: #fbfbfb; padding: 1.5rem; border-radius: 12px; border: 1.5px solid #eee; overflow-x: auto;">
+                                    <table style="width: 100%; border-collapse: collapse; min-width: 400px;"
+                                        id="foodTable">
+                                        <thead>
+                                            <tr style="text-align: left; border-bottom: 2px solid #eee;">
+                                                <th style="padding: 0.8rem;">Date</th>
+                                                <th style="padding: 0.8rem; text-align: center;">Breakfast</th>
+                                                <th style="padding: 0.8rem; text-align: center;">Lunch</th>
+                                                <th style="padding: 0.8rem; text-align: center;">Dinner</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="foodTableBody">
+                                            <!-- Dynamic rows -->
+                                        </tbody>
+                                    </table>
+                                    <p style="font-size: 0.75rem; color: #888; margin-top: 1rem;">
+                                        Select meals required for each day of your stay.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <button type="button" class="btn btn-primary" onclick="confirmFinal()">Final Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <script>
+        const csrfToken = "{{ csrf_token }}";
+        const isReadOnly = {{ 'true' if is_read_only else 'false' }};
+        const eventsMetadata = {
+            {% for ev in events %}
+        "{{ ev.title }}": {
+            "start": "{{ ev.event_start_date }}",
+                "end": "{{ ev.event_end_date }}"
+        },
+        {% endfor %}
+        };
+
+        let existingFoodSchedule = {{ (registration_data.get('food_schedule', []) | tojson) if registration_data.get('food_schedule') else '[]' }};
+
+        // Section Switching Logic
+        function switchSection(id) {
+            // Save current state if moving away
+            if (id !== localStorage.getItem('active_er_tab')) {
+                saveCurrentSection(false); // Silent save
+            }
+
+            document.querySelectorAll('.menu-item').forEach(item => item.classList.remove('active'));
+            const activeItem = event && event.type === 'click' ? event.currentTarget : document.querySelector(`[onclick="switchSection('${id}')"]`);
+            if (activeItem) activeItem.classList.add('active');
+
+            document.querySelectorAll('.section-pane').forEach(pane => pane.classList.remove('active'));
+            const targetPane = document.getElementById(id);
+            if (targetPane) targetPane.classList.add('active');
+
+            localStorage.setItem('active_er_tab', id);
+
+            if (id === 'food') generateFoodTable();
+        }
+
+        function reloadForEvent(eventTitle) {
+            if (!eventTitle) return;
+            window.location.href = `/event_registration?event=${encodeURIComponent(eventTitle)}`;
+        }
+
+        async function saveCurrentSection(showToast = true) {
+            const form = document.getElementById('eventRegForm');
+            const eventField = form.querySelector('select[name="event"]');
+
+            if (!eventField.value) {
+                if (showToast) {
+                    const toast = document.getElementById('saveToast');
+                    toast.innerText = 'Please select an event first';
+                    toast.style.display = 'block';
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                }
+                return;
+            }
+
+            const toast = document.getElementById('saveToast');
+            if (showToast) {
+                toast.innerText = 'Saving progress...';
+                toast.style.display = 'block';
+            }
+
+            const data = collectFormData();
+
+            try {
+                const response = await fetch('/api/method/agas.api.register_for_event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
+                    body: JSON.stringify({ data: data })
+                });
+                const res = await response.json();
+                if (res.message) {
+                    if (showToast) {
+                        toast.innerText = 'Progress saved';
+                        toast.classList.remove('error');
+                        setTimeout(() => toast.style.display = 'none', 2000);
+                    }
+                } else if (res._server_messages) {
+                    if (showToast) {
+                        const messages = JSON.parse(res._server_messages);
+                        let errorMsg = JSON.parse(messages[0]).message;
+                        toast.innerText = 'Error: ' + errorMsg;
+                        toast.classList.add('error');
+                        setTimeout(() => toast.style.display = 'none', 5000);
+                    }
+                } else if (res.exc) {
+                    if (showToast) {
+                        const exc = JSON.parse(res.exc);
+                        let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
+                        if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
+                        toast.innerText = 'Error: ' + errorMsg;
+                        toast.classList.add('error');
+                        setTimeout(() => toast.style.display = 'none', 5000);
+                    }
+                } else {
+                    if (showToast) {
+                        toast.innerText = 'Save failed';
+                        toast.classList.add('error');
+                        setTimeout(() => toast.style.display = 'none', 3000);
+                    }
+                }
+            } catch (err) {
+                if (showToast) {
+                    toast.innerText = 'Save failed';
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                }
+            }
+        }
+
+        function collectFormData() {
+            const form = document.getElementById('eventRegForm');
+            const data = {};
+            const elements = form.elements;
+            for (let el of elements) {
+                if (el.name && el.name !== 'family_member_select' && !el.name.startsWith('food_row_')) {
+                    if (el.type === 'checkbox') data[el.name] = el.checked ? 1 : 0;
+                    else data[el.name] = el.value;
+                }
+            }
+
+            // Collect Family Selection
+            data.visitor_members = [];
+            document.querySelectorAll('input[name="family_member_select"]:checked').forEach(cb => {
+                data.visitor_members.push({
+                    first_name: cb.dataset.fname,
+                    middle_name: cb.dataset.mname,
+                    last_name: cb.dataset.lname,
+                    relation: cb.dataset.rel,
+                    mobile_no: cb.dataset.mobile,
+                    is_visiting: 1,
+                    visit_date: document.querySelector('input[name="check_in_date"]').value // Default visit date
+                });
+            });
+
+            // Collect Food Schedule
+            data.food_schedule = [];
+            const rows = document.querySelectorAll('#foodTableBody tr');
+            rows.forEach(row => {
+                const date = row.dataset.date;
+                data.food_schedule.push({
+                    date: date,
+                    breakfast: row.querySelector('.food-breakfast').checked ? 1 : 0,
+                    lunch: row.querySelector('.food-lunch').checked ? 1 : 0,
+                    dinner: row.querySelector('.food-dinner').checked ? 1 : 0
+                });
+            });
+
+            return data;
+        }
+
+        // Calculate Visitors
+        function updateVisitorCount() {
+            const selectedFamily = document.querySelectorAll('input[name="family_member_select"]:checked').length;
+            document.getElementById('totalVisitorsCount').value = 1 + selectedFamily;
+        }
+
+        // Final Submission
+        async function confirmFinal() {
+            const form = document.getElementById('eventRegForm');
+            if (!form.checkValidity()) {
+                switchSection('visit');
+                form.reportValidity();
+                return;
+            }
+
+            const toast = document.getElementById('saveToast');
+            toast.innerText = 'Submitting registration...';
+            toast.style.display = 'block';
+
+            const data = collectFormData();
+            data.finalize = true;
+
+            // Client-side food validation
+            if (data.food_required === 'Yes') {
+                const hasMeals = data.food_schedule.some(day => day.breakfast || day.lunch || day.dinner);
+                if (!hasMeals) {
+                    switchSection('food');
+                    const toast = document.getElementById('saveToast');
+                    toast.innerText = 'Please select at least one meal if food is required.';
+                    toast.style.display = 'block';
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                    return;
+                }
+            }
+
+            try {
+                const response = await fetch('/api/method/agas.api.register_for_event', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
+                    body: JSON.stringify({ data: data })
+                });
+
+                const res = await response.json();
+                if (res.message) {
+                    document.getElementById('successOverlay').style.display = 'flex';
+                    toast.classList.remove('error');
+                    setTimeout(() => window.location.href = '/', 4000);
+                } else if (res._server_messages) {
+                    const messages = JSON.parse(res._server_messages);
+                    let errorMsg = JSON.parse(messages[0]).message;
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else if (res.exc) {
+                    const exc = JSON.parse(res.exc);
+                    let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
+                    if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
+                    toast.innerText = 'Error: ' + errorMsg;
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 5000);
+                } else {
+                    toast.innerText = 'Submission failed';
+                    toast.classList.add('error');
+                    setTimeout(() => toast.style.display = 'none', 3000);
+                }
+            } catch (err) {
+                toast.innerText = 'Network error';
+                toast.classList.add('error');
+                setTimeout(() => toast.style.display = 'none', 3000);
+            }
+        }
+
+        function generateFoodTable() {
+            const checkInStr = document.querySelector('input[name="check_in_date"]').value;
+            const checkOutStr = document.querySelector('input[name="check_out_date"]').value;
+            const body = document.getElementById('foodTableBody');
+            const container = document.getElementById('foodScheduleContainer');
+
+            if (!checkInStr || !checkOutStr || document.getElementById('foodRequired').value === 'No') {
+                container.style.display = 'none';
+                return;
+            }
+
+            container.style.display = 'block';
+            body.innerHTML = '';
+
+            const start = new Date(checkInStr);
+            const end = new Date(checkOutStr);
+
+            // Loop through each date
+            let current = new Date(start);
+            while (current <= end) {
+                const dateStr = current.toISOString().split('T')[0];
+                const existing = existingFoodSchedule.find(d => d.date === dateStr) || {};
+
+                const tr = document.createElement('tr');
+                tr.dataset.date = dateStr;
+                tr.style.borderBottom = '1px solid #eee';
+                tr.innerHTML = `
+                    <td style="padding: 0.8rem;">${flatpickr.formatDate(current, "d M, Y")}</td>
+                    <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-breakfast" ${existing.breakfast ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                    <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-lunch" ${existing.lunch ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                    <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-dinner" ${existing.dinner ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                `;
+                body.appendChild(tr);
+                current.setDate(current.getDate() + 1);
+            }
+        }
+
+        window.onload = () => {
+            // Always show visitor info first as per requirements
+            switchSection('visitor');
+            updateVisitorCount();
+
+            const selectedEvent = document.querySelector('select[name="event"]').value;
+            let minDate, maxDate;
+
+            if (selectedEvent && eventsMetadata[selectedEvent]) {
+                const ev = eventsMetadata[selectedEvent];
+                const startDate = new Date(ev.start);
+                const endDate = new Date(ev.end);
+
+                // Allowed Range: Start - 2 days to End + 2 days
+                minDate = new Date(startDate);
+                minDate.setDate(minDate.getDate() - 2);
+
+                maxDate = new Date(endDate);
+                maxDate.setDate(maxDate.getDate() + 2);
+
+                // Auto-fill defaults if empty
+                const checkInEl = document.querySelector('input[name="check_in_date"]');
+                const checkOutEl = document.querySelector('input[name="check_out_date"]');
+                if (!checkInEl.value) checkInEl.value = ev.start;
+                if (!checkOutEl.value) checkOutEl.value = ev.end;
+            }
+
+            flatpickr(".datepicker", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "d/m/Y",
+                allowInput: true,
+                minDate: minDate,
+                maxDate: maxDate,
+                onChange: function () {
+                    if (localStorage.getItem('active_er_tab') === 'food') generateFoodTable();
+                }
+            });
+
+            // Initialize conditional fields
+            toggleStayFields();
+            toggleFoodFields();
+            generateFoodTable();
+        };
+
+        function toggleStayFields() {
+            const stayRequired = document.getElementById('stayRequired').value;
+            const roomsField = document.getElementById('roomsField');
+            const checkInField = document.getElementById('checkInField');
+            const checkOutField = document.getElementById('checkOutField');
+
+            const isVisible = stayRequired === 'Yes';
+
+            if (roomsField) roomsField.style.display = isVisible ? 'block' : 'none';
+            if (checkInField) checkInField.style.display = isVisible ? 'block' : 'none';
+            if (checkOutField) checkOutField.style.display = isVisible ? 'block' : 'none';
+        }
+
+        function toggleFoodFields() {
+            const foodRequired = document.getElementById('foodRequired').value;
+            const foodPrefField = document.getElementById('foodPrefField');
+            if (foodPrefField) {
+                foodPrefField.style.display = foodRequired === 'Yes' ? 'block' : 'none';
+            }
+            generateFoodTable();
+        }
+    </script>
+</body>
+
+</html>
