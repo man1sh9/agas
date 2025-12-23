@@ -349,21 +349,45 @@
         @media (max-width: 992px) {
             .main-wrapper {
                 flex-direction: column;
+                padding: 0 1rem;
+                margin: 1rem auto;
             }
 
             .sidebar {
+                display: none !important;
+                /* Hide sidebar completely on mobile */
+            }
+
+            .section-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .section-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .section-header p {
+                font-size: 0.9rem;
+                opacity: 0.8;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
                 width: 100%;
-                position: static;
+                padding: 1rem 2rem;
             }
 
-            .sidebar-menu {
-                flex-direction: row;
-                overflow-x: auto;
-                padding-bottom: 1rem;
-            }
-
-            .menu-item {
-                white-space: nowrap;
+            .actions {
+                flex-direction: column;
             }
         }
 
@@ -560,6 +584,87 @@
             z-index: 1001;
         }
 
+        /* Nested menu for mobile */
+        .nav-item-with-submenu {
+            position: relative;
+        }
+
+        .submenu-toggle {
+            background: none;
+            border: none;
+            color: var(--text-dark);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Center content */
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: color 0.3s;
+            width: 100%;
+            /* Full width to allow centering */
+        }
+
+        .submenu-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        .submenu-toggle::after {
+            content: '▼';
+            font-size: 0.7rem;
+            transition: transform 0.3s;
+        }
+
+        .submenu-toggle.active::after {
+            transform: rotate(180deg);
+        }
+
+        .profile-submenu {
+            display: none;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+
+        .profile-submenu.active {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-top: 0.8rem;
+            /* Removed left padding to fix alignment */
+            padding-left: 0;
+            align-items: center;
+            /* Center submenu items */
+        }
+
+        .profile-submenu a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            background: rgba(93, 64, 55, 0.05);
+            transition: all 0.3s;
+            width: 100%;
+            /* Full width within container */
+            max-width: 200px;
+            /* Limit width */
+            text-align: center;
+            display: block;
+            /* Ensure it takes width */
+        }
+
+        .profile-submenu a:hover {
+            background: rgba(93, 64, 55, 0.1);
+            transform: translateY(-2px);
+            /* Subtle lift instead of shift */
+        }
+
         @media (max-width: 768px) {
             .mobile-menu-btn {
                 display: block !important;
@@ -580,10 +685,32 @@
                 gap: 2rem;
                 display: flex !important;
                 z-index: 1000;
+                overflow-y: auto;
+                padding: 2rem 0;
             }
 
             .nav-links.active {
                 right: 0;
+            }
+
+            .nav-item-with-submenu {
+                width: 100%;
+                text-align: center;
+            }
+
+            .profile-submenu {
+                width: 100%;
+                padding: 0 2rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .submenu-toggle {
+                display: none;
+            }
+
+            .profile-submenu {
+                display: none !important;
             }
         }
     </style>
@@ -608,6 +735,17 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/events">Events</a></li>
+            <li class="nav-item-with-submenu">
+                <button class="submenu-toggle" onclick="toggleProfileSubmenu(event)">My Profile</button>
+                <ul class="profile-submenu" id="profile-submenu">
+                    <li><a href="#" onclick="navigateToSection(event, 'personal')">👤 Personal Details</a></li>
+                    <li><a href="#" onclick="navigateToSection(event, 'address')">🏠 Address</a></li>
+                    <li><a href="#" onclick="navigateToSection(event, 'id')">🆔 Identification</a></li>
+                    <li><a href="#" onclick="navigateToSection(event, 'family')">👨‍👩‍👧‍👦 Family Members</a></li>
+                    <li><a href="#" onclick="navigateToSection(event, 'events')">📅 My Events</a></li>
+                    <li><a href="#" onclick="navigateToSection(event, 'security')">🔒 Login Settings</a></li>
+                </ul>
+            </li>
             <li><a href="/logout">Logout</a></li>
         </ul>
     </nav>
@@ -720,7 +858,7 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h1>Address Details</h1>
-                        <p>Where are you from?</p>
+                        <p>Where can we reach you?</p>
                     </div>
                     <form class="section-form" id="addressForm" onsubmit="handleSave(event, 'address')">
                         <div class="form-grid">
@@ -771,7 +909,7 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h1>Identification</h1>
-                        <p>Provide your identity proof for ashram access.</p>
+                        <p>Help us verify your identity.</p>
                     </div>
                     <form class="section-form" onsubmit="handleSave(event, 'id')">
                         <div class="form-grid">
@@ -839,7 +977,7 @@
                     <div class="section-header">
                         <div>
                             <h1>Family Members</h1>
-                            <p>Manage your family members registered with the Ashram.</p>
+                            <p>Bring your loved ones along.</p>
                         </div>
                         <button class="btn btn-primary btn-sm" onclick="openFamilyModal()">+ Add New</button>
                     </div>
@@ -856,7 +994,7 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h1>My Events</h1>
-                        <p>Track your upcoming and past event registrations.</p>
+                        <p>Your journey with Agas Ashram.</p>
                     </div>
 
                     <h2 style="margin: 2rem 0 1rem; color: var(--primary-color);">Upcoming Events</h2>
@@ -957,7 +1095,7 @@
                 <div class="section-card">
                     <div class="section-header">
                         <h1>Login Settings</h1>
-                        <p>Manage your password and security.</p>
+                        <p>Keep your account secure.</p>
                     </div>
                     <form class="section-form" onsubmit="handlePasswordChange(event)">
                         <div class="form-grid" style="max-width: 400px;">
@@ -1043,6 +1181,8 @@
                         <label>Contact No</label>
                         <input type="text" name="contact_no" pattern="\d{10}" maxlength="10"
                             title="Please enter a 10-digit mobile number">
+                        <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">Auto-filled from primary member
+                            if age &lt;18 or &gt;60</p>
                     </div>
                     <div class="form-group">
                         <label>ID Proof Type*</label>
@@ -1588,11 +1728,13 @@
             const dobInput = document.getElementById('family_dob');
             const ageInput = document.getElementById('family_age');
             const adultChildSelect = document.getElementById('adultchild_select');
+            const contactInput = document.querySelector('#familyForm input[name="contact_no"]');
 
             if (!dobInput || !ageInput || !adultChildSelect) return;
 
             const dobValue = dobInput.value;
             const ageValue = ageInput.value;
+            let calculatedAge = null;
 
             if (dobValue) {
                 // DOB Given: Calculate Age
@@ -1605,6 +1747,7 @@
                         age--;
                     }
                     ageInput.value = age;
+                    calculatedAge = age;
                     adultChildSelect.value = age < 18 ? 'Child' : 'Adult';
 
                     // Disable fields
@@ -1617,6 +1760,7 @@
                 // No DOB, but Age Given
                 const age = parseInt(ageValue);
                 if (!isNaN(age)) {
+                    calculatedAge = age;
                     adultChildSelect.value = age < 18 ? 'Child' : 'Adult';
                 }
 
@@ -1636,6 +1780,25 @@
                 ageInput.style.backgroundColor = '';
                 adultChildSelect.disabled = false;
                 adultChildSelect.style.backgroundColor = '';
+            }
+
+            // Auto-populate mobile number for age <18 or >60
+            if (contactInput && calculatedAge !== null) {
+                if (calculatedAge < 18 || calculatedAge > 60) {
+                    // Get primary member's mobile number
+                    const primaryMobile = document.querySelector('input[name="mobile_no"]')?.value;
+                    if (primaryMobile && !contactInput.value) {
+                        contactInput.value = primaryMobile;
+                        contactInput.style.backgroundColor = '#fff8e1';
+                        contactInput.title = 'Auto-filled from primary member (age <18 or >60)';
+                    }
+                } else {
+                    // Clear auto-fill styling if age is between 18-60
+                    if (contactInput.style.backgroundColor === 'rgb(255, 248, 225)') {
+                        contactInput.style.backgroundColor = '';
+                        contactInput.title = 'Please enter a 10-digit mobile number';
+                    }
+                }
             }
         };
 
@@ -1735,6 +1898,37 @@
             const menuBtn = document.querySelector('.mobile-menu-btn');
             navLinks.classList.toggle('active');
             menuBtn.innerText = navLinks.classList.contains('active') ? '✕' : '☰';
+        }
+
+        function toggleProfileSubmenu(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const submenu = document.getElementById('profile-submenu');
+            const toggle = event.currentTarget;
+
+            submenu.classList.toggle('active');
+            toggle.classList.toggle('active');
+        }
+
+        function navigateToSection(event, sectionId) {
+            event.preventDefault();
+
+            // Switch to the section
+            switchSection(sectionId);
+
+            // Close mobile menu
+            const navLinks = document.getElementById('nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuBtn.innerText = '☰';
+            }
+
+            // Close submenu
+            const submenu = document.getElementById('profile-submenu');
+            const toggle = document.querySelector('.submenu-toggle');
+            if (submenu) submenu.classList.remove('active');
+            if (toggle) toggle.classList.remove('active');
         }
     </script>
 </body>
