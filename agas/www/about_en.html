@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>અમારા વિશે | અગાસ આશ્રમ</title>
+    <title>About Us | Agas Ashram</title>
     <style>
         :root {
             --primary-color: #5d4037;
@@ -172,57 +172,58 @@
     </style>
 </head>
 
-<body data-lang="gu" data-alt="/about_en">
+<body data-lang="en" data-alt="/about">
 
     <nav class="navbar">
-        <a href="/" class="logo">અગાસ આશ્રમ</a>
+        <a href="/index_en" class="logo">AGAS ASHRAM</a>
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
         <ul class="nav-links" id="nav-links">
-            <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
-            <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
-            <li><a href="/about" data-lang-switch="gu" data-lang-target="/about">વિશે</a></li>
-            <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">સંપર્ક</a></li>
+            <li><a href="/index_en" data-lang-switch="en" data-lang-target="/index_en">Home</a></li>
+            <li><a href="/events_en" data-lang-switch="en" data-lang-target="/events_en">Events</a></li>
+            <li><a href="/about_en" data-lang-switch="en" data-lang-target="/about_en">About</a></li>
+            <li><a href="/contact_en" data-lang-switch="en" data-lang-target="/contact_en">Contact</a></li>
             {% if frappe.session.user != "Guest" %}
-            <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">મારી પ્રોફાઇલ</a></li>
-            <li><a href="/logout" class="btn-login" style="background: #994d1c;">લૉગઆઉટ</a></li>
+            <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">My Profile</a></li>
+            <li><a href="/logout_en" class="btn-login" style="background: #994d1c;">Logout</a></li>
             {% else %}
-            <li><a href="/auth" class="btn-login">લૉગિન</a></li>
+            <li><a href="/auth_en" class="btn-login">Login</a></li>
             {% endif %}
-            <li><a href="/about_en" data-lang-switch="en" data-lang-target="/about_en">English</a></li>
+                    <li><a href="/about" data-lang-switch="gu" data-lang-target="/about">ગુજરાતી</a></li>
         </ul>
     </nav>
 
     <header class="page-header">
-        <h1>અમારી વારસા અને મિશન</h1>
-        <p>પેઢીઓથી ચાલતી આધ્યાત્મિક જાગૃતિ અને સમુદાય સેવાનો વારસો.</p>
+        <h1>Our Story & Mission</h1>
+        <p>A legacy of spiritual awakening and community service spanning generations.</p>
     </header>
 
     <section class="content-section">
         <div class="content-text">
-            <h2>અમારો ઇતિહાસ</h2>
-            <p>પ્રાચીન જ્ઞાનના સિદ્ધાંતો પર સ્થાપિત, અગાસ આશ્રમ દાયકાઓથી આધ્યાત્મિક શોધકરો માટે
-                પ્રકાશનું દીપ છે. અમારી મૂળ પરંપરાગત ગુરુકુળ પ્રણાલીમાં છે, જ્યાં પ્રકૃતિની ગોદમાં ગુરુથી શિષ્ય સુધી
-                જ્ઞાન પહોંચાડવામાં આવતું હતું.</p>
-            <p><br>આજે અમે આધુનિક દુનિયાને સ્વીકારતા હોવા છતાં એ જ પરંપરાને આગળ લઈ જઈએ છીએ, જ્યાં શાશ્વત શિક્ષણો
-                અને આજના જરૂરિયાતોનું સંગમ થાય છે.</p>
+            <h2>Our History</h2>
+            <p>Founded on the principles of ancient wisdom, Agas Ashram has been a beacon of light for spiritual seekers
+                for decades. Our roots go back to the traditional Gurukul system, where knowledge was passed down from
+                Guru to Shishya in the lap of nature.</p>
+            <p><br>Today, we continue that tradition while embracing the modern world, offering a sanctuary where
+                timeless teachings meet contemporary needs.</p>
         </div>
         <div class="content-img" style="background-image: url('/assets/agas/images/about_history.png');"></div>
     </section>
 
     <section class="content-section">
         <div class="content-text">
-            <h2>સમુદાય સેવા (સેવા)</h2>
-            <p>અમારા આશ્રમના હ્રદયમાં સેવાની ભાવના છે. અમે માનીએ છીએ કે સમુદાયને પાછું આપ્યા વિના
-                સાચી આધ્યાત્મિક વૃદ્ધિ અધૂરી છે.</p>
-            <p><br>અમારા સ્વયંસેવકો નિયમિત રીતે અન્ન વિતરણ, સ્થાનિક બાળકો માટે શૈક્ષણિક કાર્યક્રમો અને
-                આરોગ્ય શિબિરોમાં જોડાય છે. અમારી સાથે જોડાવું એટલે વિશ્વને વધુ સારો બનાવવા સમર્પિત એક પરિવારનો ભાગ બનવું.</p>
+            <h2>Community Service (Seva)</h2>
+            <p>At the heart of our Ashram is the spirit of Seva (selfless service). We believe that true spiritual
+                growth is incomplete without giving back to the community.</p>
+            <p><br>Our volunteers engage in regular food distribution, educational programs for local children, and
+                health camps. Joining our community means becoming part of a family dedicated to making the world a
+                better place.</p>
         </div>
         <div class="content-img" style="background-image: url('/assets/agas/images/community.png');"></div>
     </section>
 
     <footer>
-        <h2>અગાસ આશ્રમ</h2>
-        <p>&copy; 2025 અગાસ આશ્રમ. સર્વ અધિકારો સુરક્ષિત.</p>
+        <h2>AGAS ASHRAM</h2>
+        <p>&copy; 2025 Agas Ashram. All rights reserved.</p>
     </footer>
 
     <script>

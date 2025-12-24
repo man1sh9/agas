@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>લૉગિન / સાઇન અપ | અગાસ આશ્રમ</title>
+    <title>Login / Sign Up | Agas Ashram</title>
     <style>
         :root {
             --primary-color: #5d4037;
@@ -234,19 +234,19 @@
     </script>
 </head>
 
-<body data-lang="gu" data-alt="/auth_en">
+<body data-lang="en" data-alt="/auth">
 
     <nav class="navbar">
-        <a href="/" class="logo">અગાસ આશ્રમ</a>
-        <a href="/auth_en" class="lang-switch">English</a>
+        <a href="/index_en" class="logo">AGAS ASHRAM</a>
+        <a href="/auth" class="lang-switch">ગુજરાતી</a>
     </nav>
 
     <div class="auth-container">
         <div class="auth-overlay"></div>
 
         <div class="auth-card">
-            <h1>સ્વાગત છે</h1>
-            <p id="authSubtitle">આગળ વધવા માટે લૉગિન કરો અથવા ખાતું બનાવો</p>
+            <h1>Welcome</h1>
+            <p id="authSubtitle">Login or create an account to continue</p>
 
             <div id="alertError" class="error-message"></div>
             <div id="alertSuccess" class="success-message"></div>
@@ -254,60 +254,60 @@
             <!-- Password Login Form -->
             <form id="passwordLoginForm" style="display: none;">
                 <div class="form-group">
-                    <label for="loginIdentifier">ઇમેલ અથવા મોબાઇલ નંબર</label>
-                    <input type="text" id="loginIdentifier" placeholder="તમારું ઇમેલ અથવા મોબાઇલ દાખલ કરો" required>
+                    <label for="loginIdentifier">Email or Mobile Number</label>
+                    <input type="text" id="loginIdentifier" placeholder="Enter your email or mobile" required>
                 </div>
                 <div class="form-group">
-                    <label for="loginPassword">પાસવર્ડ</label>
-                    <input type="password" id="loginPassword" placeholder="તમારો પાસવર્ડ દાખલ કરો" required>
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password" required>
                 </div>
-                <button type="submit" class="btn-block">લૉગિન</button>
+                <button type="submit" class="btn-block">Login</button>
             </form>
 
             <!-- OTP Login/Signup Form -->
             <form id="otpLoginForm">
                 <div id="identifierGroup">
                     <div class="form-group">
-                        <label for="email">ઇમેલ સરનામું</label>
-                        <input type="email" id="email" placeholder="naam@example.com">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="name@example.com">
                     </div>
-                    <div class="divider"><span>અથવા</span></div>
+                    <div class="divider"><span>OR</span></div>
                     <div class="form-group">
-                        <label for="mobile">મોબાઇલ નંબર</label>
-                        <input type="text" id="mobile" placeholder="10-અંકનો મોબાઇલ નંબર">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="text" id="mobile" placeholder="10-digit mobile number">
                     </div>
                 </div>
 
                 <div class="otp-section" id="otpGroup">
                     <div class="form-group">
-                        <label for="otp">વેરિફિકેશન કોડ દાખલ કરો</label>
+                        <label for="otp">Enter Verification Code</label>
                         <input type="text" id="otp" placeholder="123456" maxlength="6"
                             style="letter-spacing: 5px; text-align: center; font-size: 1.2rem;">
                         <div style="text-align: right; margin-top: 0.5rem;">
-                            <button type="button" class="btn-link" id="resendBtn" style="font-size: 0.85rem;">કોડ ફરી
-                                મોકલો</button>
+                            <button type="button" class="btn-link" id="resendBtn" style="font-size: 0.85rem;">Resend
+                                Code</button>
                         </div>
                     </div>
                     <div class="form-group" id="passwordGroup" style="display: none;">
-                        <label for="newPassword">પાસવર્ડ સેટ કરો (વૈકલ્પિક)</label>
-                        <input type="password" id="newPassword" placeholder="ભવિષ્યના લૉગિન માટે પાસવર્ડ બનાવો">
-                        <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">આગામી વખત ઝડપી લૉગિન માટે
-                            પાસવર્ડ સેટ કરો</p>
+                        <label for="newPassword">Set Password (Optional)</label>
+                        <input type="password" id="newPassword" placeholder="Create a password for future logins">
+                        <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">Set a password to login faster
+                            next time</p>
                     </div>
                 </div>
 
                 <div id="actionButtons">
-                    <button type="button" id="getOtpBtn" class="btn-block">વેરિફિકેશન કોડ મેળવો</button>
-                    <button type="submit" id="verifyBtn" class="btn-block" style="display: none;">ચકાસો અને
-                        લૉગિન કરો</button>
+                    <button type="button" id="getOtpBtn" class="btn-block">Get Verification Code</button>
+                    <button type="submit" id="verifyBtn" class="btn-block" style="display: none;">Verify &
+                        Login</button>
                 </div>
             </form>
 
             <div class="mode-switch">
-                <span id="switchText">ખાતું છે? <a onclick="toggleLoginMode()">પાસવર્ડથી લૉગિન કરો</a></span>
+                <span id="switchText">Have an account? <a onclick="toggleLoginMode()">Login with Password</a></span>
             </div>
 
-            <button class="btn-link" onclick="window.location.href='/'">મુખપૃષ્ઠ પર પાછા જાઓ</button>
+            <button class="btn-link" onclick="window.location.href='/index_en'">Back to Home</button>
         </div>
     </div>
 
@@ -357,13 +357,13 @@
             if (currentMode === 'password') {
                 passwordLoginForm.style.display = 'block';
                 otpLoginForm.style.display = 'none';
-                switchText.innerHTML = 'નવો ઉપયોગકર્તા? <a onclick="toggleLoginMode()">OTPથી સાઇન અપ કરો</a>';
-                authSubtitle.textContent = 'તમારા ખાતામાં લૉગિન કરો';
+                switchText.innerHTML = 'New user? <a onclick="toggleLoginMode()">Sign up with OTP</a>';
+                authSubtitle.textContent = 'Login to your account';
             } else {
                 passwordLoginForm.style.display = 'none';
                 otpLoginForm.style.display = 'block';
-                switchText.innerHTML = 'ખાતું છે? <a onclick="toggleLoginMode()">પાસવર્ડથી લૉગિન કરો</a>';
-                authSubtitle.textContent = 'આગળ વધવા માટે લૉગિન કરો અથવા ખાતું બનાવો';
+                switchText.innerHTML = 'Have an account? <a onclick="toggleLoginMode()">Login with Password</a>';
+                authSubtitle.textContent = 'Login or create an account to continue';
                 // Reset OTP form
                 otpGroup.style.display = 'none';
                 getOtpBtn.style.display = 'block';
@@ -383,13 +383,13 @@
             const password = document.getElementById('loginPassword').value;
 
             if (!identifier || !password) {
-                showError("કૃપા કરી ઇમેલ/મોબાઇલ અને પાસવર્ડ બંને દાખલ કરો");
+                showError("Please enter both identifier (email/mobile) and password");
                 return;
             }
 
             clearMessages();
             const submitBtn = e.target.querySelector('button[type="submit"]');
-            submitBtn.innerText = "લૉગિન થઈ રહ્યું છે...";
+            submitBtn.innerText = "Logging in...";
             submitBtn.disabled = true;
 
             try {
@@ -405,7 +405,7 @@
                 const res = await response.json();
 
                 if (res.message && res.message.message === 'Logged in successfully') {
-                    showSuccess("લૉગિન સફળ! રીડાયરેક્ટ થઈ રહ્યું છે...");
+                    showSuccess("Login Successful! Redirecting...");
                     setTimeout(() => window.location.href = res.message.home_page || '/member_profile', 1000);
                 } else if (res._server_messages) {
                     const messages = JSON.parse(res._server_messages);
@@ -417,12 +417,12 @@
                     if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
                     showError(errorMsg);
                 } else {
-                    showError("અમાન્ય ઇમેલ/મોબાઇલ અથવા પાસવર્ડ");
+                    showError("Invalid email/mobile or password");
                 }
             } catch (err) {
-                showError("કનેક્શન ભૂલ. કૃપા કરી ફરી પ્રયાસ કરો.");
+                showError("Connection error. Please try again.");
             } finally {
-                submitBtn.innerText = "લૉગિન";
+                submitBtn.innerText = "Login";
                 submitBtn.disabled = false;
             }
         });
@@ -438,17 +438,17 @@
             const identifier = getActiveIdentifier();
 
             if (!identifier) {
-                showError("કૃપા કરી ઇમેલ સરનામું અથવા મોબાઇલ નંબર દાખલ કરો");
+                showError("Please enter either an email address or mobile number");
                 return;
             }
 
             if (emailInput.value.trim() && !emailInput.value.includes('@')) {
-                showError("કૃપા કરી માન્ય ઇમેલ સરનામું દાખલ કરો");
+                showError("Please enter a valid email address");
                 return;
             }
 
             clearMessages();
-            getOtpBtn.innerText = "મોકલી રહ્યા છીએ...";
+            getOtpBtn.innerText = "Sending...";
             getOtpBtn.disabled = true;
 
             try {
@@ -464,7 +464,7 @@
                 const res = await response.json();
 
                 if (res.message) {
-                    showSuccess(`વેરિફિકેશન કોડ તમારા ${identifier.includes('@') ? 'ઇમેલ' : 'મોબાઇલ'} પર મોકલાયો!`);
+                    showSuccess(`Verification code sent to your ${identifier.includes('@') ? 'email' : 'mobile'}!`);
                     otpGroup.style.display = 'block';
                     passwordGroup.style.display = 'block';
                     getOtpBtn.style.display = 'none';
@@ -481,12 +481,12 @@
                     if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
                     showError(errorMsg);
                 } else {
-                    showError("વેરિફિકેશન કોડ મોકલવામાં નિષ્ફળ.");
+                    showError("Failed to send verification code.");
                 }
             } catch (err) {
-                showError("કનેક્શન ભૂલ. કૃપા કરી ફરી પ્રયાસ કરો.");
+                showError("Connection error. Please try again.");
             } finally {
-                getOtpBtn.innerText = "વેરિફિકેશન કોડ મેળવો";
+                getOtpBtn.innerText = "Get Verification Code";
                 getOtpBtn.disabled = false;
             }
         });
@@ -500,11 +500,11 @@
             const password = newPasswordInput.value.trim();
 
             if (!otp) {
-                showError("કૃપા કરી વેરિફિકેશન કોડ દાખલ કરો");
+                showError("Please enter the verification code");
                 return;
             }
 
-            verifyBtn.innerText = "ચકાસી રહ્યા છીએ...";
+            verifyBtn.innerText = "Verifying...";
             verifyBtn.disabled = true;
 
             try {
@@ -524,7 +524,7 @@
                 const res = await response.json();
 
                 if (res.message && res.message.message === 'Logged in successfully') {
-                    showSuccess("લૉગિન સફળ! રીડાયરેક્ટ થઈ રહ્યું છે...");
+                    showSuccess("Login Successful! Redirecting...");
                     setTimeout(() => window.location.href = res.message.home_page || '/member_profile', 1000);
                 } else if (res._server_messages) {
                     const messages = JSON.parse(res._server_messages);
@@ -536,12 +536,12 @@
                     if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
                     showError(errorMsg);
                 } else {
-                    showError("અમાન્ય વેરિફિકેશન કોડ.");
+                    showError("Invalid verification code.");
                 }
             } catch (err) {
-                showError("કનેક્શન ભૂલ. કૃપા કરી ફરી પ્રયાસ કરો.");
+                showError("Connection error. Please try again.");
             } finally {
-                verifyBtn.innerText = "ચકાસો અને લૉગિન કરો";
+                verifyBtn.innerText = "Verify & Login";
                 verifyBtn.disabled = false;
             }
         });
@@ -558,7 +558,7 @@
             identifierGroup.style.display = 'block';
             otpInput.value = '';
             newPasswordInput.value = '';
-            showSuccess("કૃપા કરી નવો કોડ માંગો.");
+            showSuccess("Please request a new code.");
         });
     </script>
 

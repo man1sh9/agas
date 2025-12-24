@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>કાર્યક્રમ નોંધણી | અગાસ આશ્રમ</title>
+    <title>Event Registration | Agas Ashram</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -508,50 +508,50 @@
     </style>
 
     <nav class="navbar">
-        <a href="/" class="logo">અગાસ આશ્રમ</a>
+        <a href="/index_en" class="logo">AGAS ASHRAM</a>
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
         <ul class="nav-links" id="nav-links">
-            <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
-            <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
-            <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">પ્રોફાઇલ</a></li>
-            <li><a href="/logout">લૉગઆઉટ</a></li>
-            <li><a href="/event_registration_en" data-lang-switch="en" data-lang-target="/event_registration_en">English</a></li>
+            <li><a href="/index_en" data-lang-switch="en" data-lang-target="/index_en">Home</a></li>
+            <li><a href="/events_en" data-lang-switch="en" data-lang-target="/events_en">Events</a></li>
+            <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">Profile</a></li>
+            <li><a href="/logout_en">Logout</a></li>
+                    <li><a href="/event_registration" data-lang-switch="gu" data-lang-target="/event_registration">ગુજરાતી</a></li>
         </ul>
     </nav>
 
-    <div id="saveToast" class="save-toast">ફેરફારો સાચવાયા</div>
+    <div id="saveToast" class="save-toast">Changes saved</div>
 
     <div id="successOverlay">
         <h2 style="font-size: 100px;">🕉️</h2>
-        <h2 style="font-size: 3rem; color: var(--primary-color); margin-top: 1rem;">નોંધણી સફળ!</h2>
-        <p style="font-size: 1.2rem; margin-top: 1rem; color: #666;">નમસ્તે! તમારી નોંધણી
-            વિગતો મળી ગઈ છે.</p>
-        <p style="margin-top: 2rem; color: #888;">ડેશબોર્ડ તરફ રીડાયરેક્ટ થઈ રહ્યું છે...</p>
+        <h2 style="font-size: 3rem; color: var(--primary-color); margin-top: 1rem;">Registration Successful!</h2>
+        <p style="font-size: 1.2rem; margin-top: 1rem; color: #666;">Namaste! We have received your registration
+            details.</p>
+        <p style="margin-top: 2rem; color: #888;">Redirecting to dashboard...</p>
     </div>
 
     <div class="main-wrapper">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">નોંધણી</h2>
+            <h2 style="margin-bottom: 1.5rem; color: var(--primary-color);">Registration</h2>
             <ul class="sidebar-menu">
                 <li class="menu-item active" onclick="switchSection('visitor')">
-                    <span>👤</span> મુખ્ય મુલાકાતી
+                    <span>👤</span> Primary Visitor
                 </li>
                 <li class="menu-item" onclick="switchSection('family')">
-                    <span>👨‍👩‍👧‍👦</span> સાથે આવનાર
+                    <span>👨‍👩‍👧‍👦</span> Accompanied By
                 </li>
                 <li class="menu-item" onclick="switchSection('visit')">
-                    <span>📅</span> મુલાકાત વિગતો
+                    <span>📅</span> Visit Details
                 </li>
                 <li class="menu-item" onclick="switchSection('food')">
-                    <span>🍜</span> ભોજન અને રોકાણ
+                    <span>🍜</span> Food & Stay
                 </li>
             </ul>
 
             <div class="view-mode-actions" style="margin-top: 2rem;">
                 <a href="/member_profile#events" class="btn btn-primary btn-view-nav"
                     style="width: 100%; text-decoration: none;">
-                    ← પ્રોફાઇલ પર પાછા જાઓ
+                    ← Back to Profile
                 </a>
             </div>
         </aside>
@@ -569,78 +569,78 @@
                 <div class="registration-status-banner view-only">
                     <span class="icon">👁️</span>
                     <div>
-                        <strong>માત્ર દર્શન મોડ</strong>
-                        <p>આ કાર્યક્રમ પૂર્ણ થઈ ગયો છે. તમે તમારી ભૂતકાળની નોંધણી જોઈ રહ્યાં છો.</p>
+                        <strong>View Only Mode</strong>
+                        <p>This event has concluded. You are viewing your historical registration.</p>
                     </div>
                 </div>
                 {% elif registration_data.get('status') == 'Draft' %}
                 <div class="registration-status-banner editing">
                     <span class="icon">⏳</span>
                     <div>
-                        <strong>ડ્રાફ્ટ નોંધણી</strong>
-                        <p>તમારી નોંધણી પૂર્ણ કરી રહ્યા છો: {{ selected_event }}</p>
+                        <strong>Draft Registration</strong>
+                        <p>You are completing your registration for: {{ selected_event }}</p>
                     </div>
                 </div>
                 {% elif registration_data.get('name') %}
                 <div class="registration-status-banner editing">
                     <span class="icon">📝</span>
                     <div>
-                        <strong>હાલની નોંધણીમાં ફેરફાર</strong>
-                        <p>તમે તમારી પુષ્ટિ થયેલી નોંધણી અપડેટ કરી રહ્યા છો: {{ selected_event }}</p>
+                        <strong>Modifying Existing Registration</strong>
+                        <p>You are updating your confirmed registration for: {{ selected_event }}</p>
                     </div>
                 </div>
                 {% elif selected_event %}
                 <div class="registration-status-banner new">
                     <span class="icon">✨</span>
                     <div>
-                        <strong>નવી નોંધણી</strong>
-                        <p>તમે નવી નોંધણી શરૂ કરી રહ્યા છો: {{ selected_event }}</p>
+                        <strong>New Registration</strong>
+                        <p>You are starting a new registration for: {{ selected_event }}</p>
                     </div>
                 </div>
                 {% endif %}
 
-                <!-- Section: મુખ્ય મુલાકાતી -->
+                <!-- Section: Primary Visitor -->
                 <div id="visitor" class="section-pane active">
                     <div class="section-card">
                         <div class="section-header">
-                            <h1>મુખ્ય મુલાકાતી</h1>
-                            <p>મુખ્ય સંપર્ક તરીકે નોંધણી.</p>
+                            <h1>Primary Visitor</h1>
+                            <p>Registration as primary contact.</p>
                         </div>
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>પ્રથમ નામ</label>
+                                <label>First Name</label>
                                 <input type="text" name="first_name" value="{{ member_data.get('first_name', '') }}"
                                     readonly>
                             </div>
                             <div class="form-group">
-                                <label>મધ્ય નામ</label>
+                                <label>Middle Name</label>
                                 <input type="text" name="middle_name" value="{{ member_data.get('middle_name', '') }}"
                                     readonly>
                             </div>
                             <div class="form-group">
-                                <label>છેલ્લું નામ</label>
+                                <label>Last Name</label>
                                 <input type="text" name="last_name" value="{{ member_data.get('last_name', '') }}"
                                     readonly>
                             </div>
                             <div class="form-group">
-                                <label>ઇમેલ ID</label>
+                                <label>Email ID</label>
                                 <input type="email" name="email"
                                     value="{{ member_data.get('email_id', frappe.session.user) }}" readonly>
                             </div>
                             <div class="form-group">
-                                <label>મોબાઇલ નં.</label>
+                                <label>Mobile No</label>
                                 <input type="text" name="mobile_no" value="{{ member_data.get('mobile_no', '') }}"
                                     readonly pattern="\d{10}" maxlength="10">
                             </div>
                         </div>
                         <p
                             style="margin-top: 1.5rem; font-size: 0.85rem; color: #888; background: #eee; padding: 0.8rem; border-radius: 8px;">
-                            💡 મુખ્ય મુલાકાતીની વિગતો તમારી પ્રોફાઇલ સાથે બંધાયેલ છે. તેને અપડેટ કરવા માટે <a
-                                href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">પ્રોફાઇલ સેટિંગ્સ</a> જરૂર હોય તો.
+                            💡 Primary visitor details are locked to your profile. Update them in <a
+                                href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">Profile Settings</a> if needed.
                         </p>
                         <div class="actions">
                             <button type="button" class="btn btn-primary"
-                                onclick="switchSection('family')">આગળ વધો</button>
+                                onclick="switchSection('family')">Continue</button>
                         </div>
                     </div>
                 </div>
@@ -649,8 +649,8 @@
                 <div id="family" class="section-pane">
                     <div class="section-card">
                         <div class="section-header">
-                            <h1>સાથે આવનાર</h1>
-                            <p>આ કાર્યક્રમ માટે તમારી સાથે આવનાર પરિવાર સભ્યો પસંદ કરો.</p>
+                            <h1>Accompanied By</h1>
+                            <p>Select family members joining you for this event.</p>
                         </div>
 
                         <div id="familySelectionList">
@@ -666,40 +666,40 @@
                                     m.first_name in registered_fnames %}checked{% endif %}>
                                 <div class="family-info">
                                     <h4>{{ m.first_name }} {{ m.last_name or '' }}</h4>
-                                    <p>{{ m.relation_with_head_member }} | {{ m.gender or '-' }} | ઉંમર: {{ m.age or '-'
+                                    <p>{{ m.relation_with_head_member }} | {{ m.gender or '-' }} | Age: {{ m.age or '-'
                                         }}</p>
                                 </div>
-                                <span class="badge">{{ m.adultchild or 'સભ્ય' }}</span>
+                                <span class="badge">{{ m.adultchild or 'Member' }}</span>
                             </div>
                             {% endfor %}
                             {% else %}
                             <div
                                 style="text-align: center; padding: 2rem; color: #888; border: 2px dashed #eee; border-radius: 15px;">
-                                તમારી પ્રોફાઇલમાં કોઈ પરિવાર સભ્યો મળ્યા નથી.<br>
+                                No family members found in your profile.<br>
                                 <a href="/member_profile#family" style="color: var(--accent-color); font-weight: 600;">+
-                                    પરિવાર સભ્યો ઉમેરો</a>
+                                    Add Family Members</a>
                             </div>
                             {% endif %}
                         </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-primary" onclick="switchSection('visit')">સાચવો અને
-                                આગળ વધો</button>
+                            <button type="button" class="btn btn-primary" onclick="switchSection('visit')">Save &
+                                Continue</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section: મુલાકાત વિગતો -->
+                <!-- Section: Visit Details -->
                 <div id="visit" class="section-pane">
                     <div class="section-card">
                         <div class="section-header">
-                            <h1>મુલાકાત વિગતો</h1>
-                            <p>કાર્યક્રમ અને રોકાણ સમય નિર્ધારિત કરો.</p>
+                            <h1>Visit Details</h1>
+                            <p>Specify event and stay timing.</p>
                         </div>
                         <div class="form-grid">
                             <div class="form-group full">
-                                <label>કાર્યક્રમ પસંદ કરો*</label>
+                                <label>Select Event*</label>
                                 <select name="event" required onchange="reloadForEvent(this.value)">
-                                    <option value="">કાર્યક્રમ પસંદ કરો</option>
+                                    <option value="">Choose an event</option>
                                     {% for ev in events %}
                                     <option value="{{ ev.title }}" {% if selected_event==ev.title %}selected{% endif %}>
                                         {{ ev.title }}</option>
@@ -707,61 +707,61 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>રોકાણ જરૂરી છે?</label>
+                                <label>Stay Required?</label>
                                 <select name="stay_required" id="stayRequired" onchange="toggleStayFields()">
                                     <option value="No" {% if registration_data.get('stay_required')=='No' %}selected{%
-                                        endif %}>ના</option>
+                                        endif %}>No</option>
                                     <option value="Yes" {% if registration_data.get('stay_required')=='Yes' %}selected{%
-                                        endif %}>હા</option>
+                                        endif %}>Yes</option>
                                 </select>
                             </div>
                             <div class="form-group" id="roomsField" style="display: none;">
-                                <label>કક્ષોની સંખ્યા</label>
+                                <label>No. of Rooms Required</label>
                                 <input type="number" name="no_of_rooms"
                                     value="{{ registration_data.get('no_of_rooms', 1) }}" min="1">
                             </div>
                             <div class="form-group">
-                                <label>કુલ મુલાકાતીઓ</label>
+                                <label>Total Visitors</label>
                                 <input type="number" name="no_of_visitors"
                                     value="{{ registration_data.get('no_of_visitors', 1) }}" min="1"
                                     id="totalVisitorsCount" readonly
                                     style="background: #fdfdfd; font-weight: 700; color: var(--primary-color);">
-                                <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">(ગણતરી: પોતે +
-                                    પસંદ કરેલા પરિવાર)</p>
+                                <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">(Calculated: Self +
+                                    Selected Family)</p>
                             </div>
                             <div class="form-group" id="checkInField">
-                                <label>ચેક-ઇન તારીખ</label>
+                                <label>Check-in Date</label>
                                 <input type="text" name="check_in_date" class="datepicker"
-                                    value="{{ registration_data.get('check_in_date', '') }}" placeholder="દિ/મા/વર્ષ">
+                                    value="{{ registration_data.get('check_in_date', '') }}" placeholder="dd/mm/yyyy">
                             </div>
                             <div class="form-group" id="checkOutField">
-                                <label>ચેક-આઉટ તારીખ</label>
+                                <label>Check-out Date</label>
                                 <input type="text" name="check_out_date" class="datepicker"
-                                    value="{{ registration_data.get('check_out_date', '') }}" placeholder="દિ/મા/વર્ષ">
+                                    value="{{ registration_data.get('check_out_date', '') }}" placeholder="dd/mm/yyyy">
                             </div>
                         </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-primary" onclick="switchSection('food')">સાચવો અને
-                                આગળ વધો</button>
+                            <button type="button" class="btn btn-primary" onclick="switchSection('food')">Save &
+                                Continue</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section: ભોજન અને રોકાણ -->
+                <!-- Section: Food & Stay -->
                 <div id="food" class="section-pane">
                     <div class="section-card">
                         <div class="section-header">
-                            <h1>ભોજન જરૂરીયાતો</h1>
-                            <p>મુલાકાત દરમિયાન ભોજન અને પસંદગીઓ.</p>
+                            <h1>Food Requirements</h1>
+                            <p>Meals and preferences during your visit.</p>
                         </div>
                         <div class="form-grid">
                             <div class="form-group">
-                                <label>ભોજન જોઈએ છે?</label>
+                                <label>Food Required?</label>
                                 <select name="food_required" id="foodRequired" onchange="toggleFoodFields()">
                                     <option value="No" {% if registration_data.get('food_required')=='No' %}selected{%
-                                        endif %}>ના</option>
+                                        endif %}>No</option>
                                     <option value="Yes" {% if registration_data.get('food_required')=='Yes' %}selected{%
-                                        endif %}>હા</option>
+                                        endif %}>Yes</option>
                                 </select>
                             </div>
                             <div class="form-group" id="foodPrefField" style="display: none;">
@@ -770,7 +770,7 @@
                                     value="{{ registration_data.get('food_preference', '') }}">
                             </div>
                             <div class="form-group full" id="foodScheduleContainer" style="display: none;">
-                                <label>તારીખ મુજબ ભોજન પસંદગી</label>
+                                <label>Date-wise Food Selection</label>
                                 <div
                                     style="background: #fbfbfb; padding: 1.5rem; border-radius: 12px; border: 1.5px solid #eee; overflow-x: auto;">
                                     <table style="width: 100%; border-collapse: collapse; min-width: 400px;"
@@ -778,9 +778,9 @@
                                         <thead>
                                             <tr style="text-align: left; border-bottom: 2px solid #eee;">
                                                 <th style="padding: 0.8rem;">Date</th>
-                                                <th style="padding: 0.8rem; text-align: center;">નાસ્તો</th>
-                                                <th style="padding: 0.8rem; text-align: center;">મધ્યાહ્ન ભોજન</th>
-                                                <th style="padding: 0.8rem; text-align: center;">રાત્રિભોજન</th>
+                                                <th style="padding: 0.8rem; text-align: center;">Breakfast</th>
+                                                <th style="padding: 0.8rem; text-align: center;">Lunch</th>
+                                                <th style="padding: 0.8rem; text-align: center;">Dinner</th>
                                             </tr>
                                         </thead>
                                         <tbody id="foodTableBody">
@@ -788,13 +788,13 @@
                                         </tbody>
                                     </table>
                                     <p style="font-size: 0.75rem; color: #888; margin-top: 1rem;">
-                                        તમારા રોકાણના દરેક દિવસે જરૂરી ભોજન પસંદ કરો.
+                                        Select meals required for each day of your stay.
                                     </p>
                                 </div>
                             </div>
                         </div>
                         <div class="actions">
-                            <button type="button" class="btn btn-primary" onclick="confirmFinal()">અંતિમ સબમિટ</button>
+                            <button type="button" class="btn btn-primary" onclick="confirmFinal()">Final Submit</button>
                         </div>
                     </div>
                 </div>
@@ -848,7 +848,7 @@
             if (!eventField.value) {
                 if (showToast) {
                     const toast = document.getElementById('saveToast');
-                    toast.innerText = 'કૃપા કરી પહેલા કાર્યક્રમ પસંદ કરો';
+                    toast.innerText = 'Please select an event first';
                     toast.style.display = 'block';
                     setTimeout(() => toast.style.display = 'none', 3000);
                 }
@@ -857,7 +857,7 @@
 
             const toast = document.getElementById('saveToast');
             if (showToast) {
-                toast.innerText = 'પ્રગતિ સાચવી રહ્યા છીએ...';
+                toast.innerText = 'Saving progress...';
                 toast.style.display = 'block';
             }
 
@@ -880,7 +880,7 @@
                     if (showToast) {
                         const messages = JSON.parse(res._server_messages);
                         let errorMsg = JSON.parse(messages[0]).message;
-                        toast.innerText = 'ભૂલ: ' + errorMsg;
+                        toast.innerText = 'Error: ' + errorMsg;
                         toast.classList.add('error');
                         setTimeout(() => toast.style.display = 'none', 5000);
                     }
@@ -889,20 +889,20 @@
                         const exc = JSON.parse(res.exc);
                         let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
                         if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
-                        toast.innerText = 'ભૂલ: ' + errorMsg;
+                        toast.innerText = 'Error: ' + errorMsg;
                         toast.classList.add('error');
                         setTimeout(() => toast.style.display = 'none', 5000);
                     }
                 } else {
                     if (showToast) {
-                        toast.innerText = 'સાચવવામાં નિષ્ફળ';
+                        toast.innerText = 'Save failed';
                         toast.classList.add('error');
                         setTimeout(() => toast.style.display = 'none', 3000);
                     }
                 }
             } catch (err) {
                 if (showToast) {
-                    toast.innerText = 'સાચવવામાં નિષ્ફળ';
+                    toast.innerText = 'Save failed';
                     toast.classList.add('error');
                     setTimeout(() => toast.style.display = 'none', 3000);
                 }
@@ -934,7 +934,7 @@
                 });
             });
 
-            // Collect ભોજન સમયપત્રક
+            // Collect Food Schedule
             data.food_schedule = [];
             const rows = document.querySelectorAll('#foodTableBody tr');
             rows.forEach(row => {
@@ -966,7 +966,7 @@
             }
 
             const toast = document.getElementById('saveToast');
-            toast.innerText = 'નોંધણી સબમિટ થઈ રહી છે...';
+            toast.innerText = 'Submitting registration...';
             toast.style.display = 'block';
 
             const data = collectFormData();
@@ -978,7 +978,7 @@
                 if (!hasMeals) {
                     switchSection('food');
                     const toast = document.getElementById('saveToast');
-                    toast.innerText = 'જો ભોજન જરૂરી છે, તો ઓછામાં ઓછું એક ભોજન પસંદ કરો.';
+                    toast.innerText = 'Please select at least one meal if food is required.';
                     toast.style.display = 'block';
                     setTimeout(() => toast.style.display = 'none', 3000);
                     return;
@@ -1000,23 +1000,23 @@
                 } else if (res._server_messages) {
                     const messages = JSON.parse(res._server_messages);
                     let errorMsg = JSON.parse(messages[0]).message;
-                    toast.innerText = 'ભૂલ: ' + errorMsg;
+                    toast.innerText = 'Error: ' + errorMsg;
                     toast.classList.add('error');
                     setTimeout(() => toast.style.display = 'none', 5000);
                 } else if (res.exc) {
                     const exc = JSON.parse(res.exc);
                     let errorMsg = Array.isArray(exc) ? exc[0].trim().split('\n').pop() : exc;
                     if (errorMsg.includes(':')) errorMsg = errorMsg.split(':').pop().trim();
-                    toast.innerText = 'ભૂલ: ' + errorMsg;
+                    toast.innerText = 'Error: ' + errorMsg;
                     toast.classList.add('error');
                     setTimeout(() => toast.style.display = 'none', 5000);
                 } else {
-                    toast.innerText = 'સબમિટ નિષ્ફળ';
+                    toast.innerText = 'Submission failed';
                     toast.classList.add('error');
                     setTimeout(() => toast.style.display = 'none', 3000);
                 }
             } catch (err) {
-                toast.innerText = 'નેટવર્ક ભૂલ';
+                toast.innerText = 'Network error';
                 toast.classList.add('error');
                 setTimeout(() => toast.style.display = 'none', 3000);
             }

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>કાર્યક્રમો | અગાસ આશ્રમ</title>
+    <title>Events | Agas Ashram</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -265,35 +265,35 @@
     </style>
 </head>
 
-<body data-lang="gu" data-alt="/events_en">
+<body data-lang="en" data-alt="/events">
 
     <nav class="navbar">
-        <a href="/" class="logo">અગાસ આશ્રમ</a>
+        <a href="/index_en" class="logo">AGAS ASHRAM</a>
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
         <ul class="nav-links" id="nav-links">
-            <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
-            <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
-            <li><a href="/about" data-lang-switch="gu" data-lang-target="/about">વિશે</a></li>
-            <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">સંપર્ક</a></li>
+            <li><a href="/index_en" data-lang-switch="en" data-lang-target="/index_en">Home</a></li>
+            <li><a href="/events_en" data-lang-switch="en" data-lang-target="/events_en">Events</a></li>
+            <li><a href="/about_en" data-lang-switch="en" data-lang-target="/about_en">About</a></li>
+            <li><a href="/contact_en" data-lang-switch="en" data-lang-target="/contact_en">Contact</a></li>
             {% if frappe.session.user != "Guest" %}
-            <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">મારી પ્રોફાઇલ</a></li>
-            <li><a href="/logout">લૉગઆઉટ</a></li>
+            <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">My Profile</a></li>
+            <li><a href="/logout_en">Logout</a></li>
             {% else %}
-            <li><a href="/auth" data-lang-switch="gu" data-lang-target="/auth">લૉગિન</a></li>
+            <li><a href="/auth_en" data-lang-switch="en" data-lang-target="/auth_en">Login</a></li>
             {% endif %}
-            <li><a href="/events_en" data-lang-switch="en" data-lang-target="/events_en">English</a></li>
+                    <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">ગુજરાતી</a></li>
         </ul>
     </nav>
 
     <header class="hero">
-        <h1>આશ્રમ કાર્યક્રમો</h1>
-        <p>આધ્યાત્મિક પ્રવચનો, ધ્યાન રિટ્રીટ્સ અને સમુદાય સેવા કાર્યક્રમોમાં જોડાઓ.</p>
+        <h1>Ashram Events</h1>
+        <p>Join us for spiritual discourses, meditation retreats, and community service programs.</p>
     </header>
 
     <div class="container">
 
         <!-- Upcoming Events -->
-        <h2 class="section-title">આગામી કાર્યક્રમો</h2>
+        <h2 class="section-title">Upcoming Events</h2>
         {% if upcoming_events %}
         <div class="event-grid">
             {% for event in upcoming_events %}
@@ -308,26 +308,26 @@
                     </div>
                 </div>
                 <div class="event-content">
-                    <div class="event-subtitle">{{ event.subtitle or 'આધ્યાત્મિક કાર્યક્રમ' }}</div>
+                    <div class="event-subtitle">{{ event.subtitle or 'Spiritual Program' }}</div>
                     <h3>{{ event.title }}</h3>
-                    <p class="event-desc">{{ event.description or 'વર્ણન ઉપલબ્ધ નથી.' }}</p>
+                    <p class="event-desc">{{ event.description or 'No description available.' }}</p>
 
                     <div class="event-meta">
-                        <span>📍 {{ event.venue or 'આશ્રમ' }}</span>
+                        <span>📍 {{ event.venue or 'Ashram' }}</span>
                     </div>
 
-                    <a href="/event_registration?event={{ event.title }}" class="btn-register">હવે નોંધણી કરો</a>
+                    <a href="/event_registration?event={{ event.title }}" class="btn-register">Register Now</a>
                 </div>
             </div>
             {% endfor %}
         </div>
         {% else %}
-        <div class="empty-state">હાલમાં કોઈ આગામી કાર્યક્રમો નથી. કૃપા કરી પછી ફરી તપાસો.</div>
+        <div class="empty-state">No upcoming events at the moment. Please check back later.</div>
         {% endif %}
 
         <!-- Past Events -->
         {% if past_events %}
-        <h2 class="section-title">ભૂતકાળના કાર્યક્રમો</h2>
+        <h2 class="section-title">Past Events</h2>
         <div class="event-grid">
             {% for event in past_events %}
             <div class="event-card" style="opacity: 0.8; filter: grayscale(0.5);">
@@ -338,11 +338,11 @@
                     </div>
                 </div>
                 <div class="event-content">
-                    <div class="event-subtitle">પૂર્ણ થયો</div>
+                    <div class="event-subtitle">Completed</div>
                     <h3>{{ event.title }}</h3>
-                    <p class="event-desc">{{ event.description or 'વર્ણન ઉપલબ્ધ નથી.' }}</p>
+                    <p class="event-desc">{{ event.description or 'No description available.' }}</p>
                     <div class="event-meta">
-                        <span>📍 {{ event.venue or 'આશ્રમ' }}</span>
+                        <span>📍 {{ event.venue or 'Ashram' }}</span>
                     </div>
                 </div>
             </div>
@@ -353,8 +353,8 @@
     </div>
 
     <footer>
-        <h2>અગાસ આશ્રમ</h2>
-        <p>&copy; 2025 અગાસ આશ્રમ. શાંતિ, આધ્યાત્મિકતા અને વિકાસ.</p>
+        <h2>AGAS ASHRAM</h2>
+        <p>&copy; 2025 Agas Ashram. Peace, Spirituality & Growth.</p>
     </footer>
 
     <script>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="gu">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>સંપર્ક કરો | અગાસ આશ્રમ</title>
+    <title>Contact Us | Agas Ashram</title>
     <style>
         :root {
             --primary-color: #5d4037;
@@ -224,61 +224,61 @@
     </style>
 </head>
 
-<body data-lang="gu" data-alt="/contact_en">
+<body data-lang="en" data-alt="/contact">
 
     <nav class="navbar">
-        <a href="/" class="logo">અગાસ આશ્રમ</a>
+        <a href="/index_en" class="logo">AGAS ASHRAM</a>
         <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
         <ul class="nav-links" id="nav-links">
-            <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
-            <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
-            <li><a href="/about" data-lang-switch="gu" data-lang-target="/about">વિશે</a></li>
-            <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">સંપર્ક</a></li>
+            <li><a href="/index_en" data-lang-switch="en" data-lang-target="/index_en">Home</a></li>
+            <li><a href="/events_en" data-lang-switch="en" data-lang-target="/events_en">Events</a></li>
+            <li><a href="/about_en" data-lang-switch="en" data-lang-target="/about_en">About</a></li>
+            <li><a href="/contact_en" data-lang-switch="en" data-lang-target="/contact_en">Contact</a></li>
             {% if frappe.session.user != "Guest" %}
-            <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">મારી પ્રોફાઇલ</a></li>
-            <li><a href="/logout" class="btn-login" style="background: #994d1c;">લૉગઆઉટ</a></li>
+            <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">My Profile</a></li>
+            <li><a href="/logout_en" class="btn-login" style="background: #994d1c;">Logout</a></li>
             {% else %}
-            <li><a href="/auth" class="btn-login">લૉગિન</a></li>
+            <li><a href="/auth_en" class="btn-login">Login</a></li>
             {% endif %}
-            <li><a href="/contact_en" data-lang-switch="en" data-lang-target="/contact_en">English</a></li>
+                    <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">ગુજરાતી</a></li>
         </ul>
     </nav>
 
     <header class="page-header">
-        <h1>સંપર્કમાં રહો</h1>
-        <p>અમારા રિટ્રીટ્સ અને કાર્યક્રમો વિશેના કોઈપણ પ્રશ્નોના જવાબ માટે અમે અહીં છીએ.</p>
+        <h1>Get in Touch</h1>
+        <p>We are here to answer any questions you may have about our retreats and programs.</p>
     </header>
 
     <div class="contact-container">
         <div class="contact-info">
-            <h2>સંપર્ક માહિતી</h2>
-            <p>ઇમેલ, ફોન દ્વારા અથવા આશ્રમ ખાતે મુલાકાત લઈને અમારો સંપર્ક કરો.</p>
+            <h2>Contact Information</h2>
+            <p>Reach out to us via email, phone, or visit us directly at the Ashram.</p>
 
-            <h3>સરનામું</h3>
+            <h3>Address</h3>
             <p>Agas Ashram, River Road<br>Near Ancient Banyan Tree<br>Pune, Maharashtra - 411001</p>
 
-            <h3>ઇમેલ</h3>
+            <h3>Email</h3>
             <p>info@agasashram.org<br>bookings@agasashram.org</p>
 
-            <h3>ફોન</h3>
+            <h3>Phone</h3>
             <p>+91 98765 43210<br>+91 12345 67890</p>
         </div>
 
         <div class="contact-form">
             <form id="contactForm">
                 <div class="form-group">
-                    <label>તમારું નામ</label>
-                    <input type="text" id="contactName" placeholder="જય પટેલ" required>
+                    <label>Your Name</label>
+                    <input type="text" id="contactName" placeholder="John Doe" required>
                 </div>
                 <div class="form-group">
-                    <label>ઇમેલ સરનામું</label>
-                    <input type="email" id="contactEmail" placeholder="jay@example.com" required>
+                    <label>Email Address</label>
+                    <input type="email" id="contactEmail" placeholder="john@example.com" required>
                 </div>
                 <div class="form-group">
-                    <label>સંદેશ</label>
-                    <textarea id="contactMessage" rows="5" placeholder="અમે તમને કેવી રીતે મદદ કરી શકીએ?" required></textarea>
+                    <label>Message</label>
+                    <textarea id="contactMessage" rows="5" placeholder="How can we help you?" required></textarea>
                 </div>
-                <button type="submit" class="btn-submit">સંદેશ મોકલો</button>
+                <button type="submit" class="btn-submit">Send Message</button>
                 <div id="formResponse" style="margin-top: 1rem; text-align: center; font-weight: 500;"></div>
             </form>
         </div>
@@ -287,15 +287,15 @@
     <div style="padding: 0 10%;">
         <div class="map-section">
             <div class="map-overlay">
-                <strong>અગાસ આશ્રમ સ્થાન</strong><br>
-                પ્રકૃતિની ગોદમાં
+                <strong>Agas Ashram Location</strong><br>
+                Nestled in Nature
             </div>
         </div>
     </div>
 
     <footer>
-        <h2>અગાસ આશ્રમ</h2>
-        <p>&copy; 2025 અગાસ આશ્રમ. સર્વ અધિકારો સુરક્ષિત.</p>
+        <h2>AGAS ASHRAM</h2>
+        <p>&copy; 2025 Agas Ashram. All rights reserved.</p>
     </footer>
 
     <script>
@@ -304,7 +304,7 @@
 
             const btn = this.querySelector('button[type="submit"]');
             const originalText = btn.innerText;
-            btn.innerText = 'મોકલી રહ્યા છીએ...';
+            btn.innerText = 'Sending...';
             btn.disabled = true;
 
             const name = document.getElementById('contactName').value;
@@ -333,17 +333,17 @@
                     if (data.message) {
                         // Success
                         responseDiv.style.color = 'green';
-                        responseDiv.innerText = data.message.message || "સંદેશ સફળતાપૂર્વક મોકલાયો!";
+                        responseDiv.innerText = data.message.message || "Message sent successfully!";
                         document.getElementById('contactForm').reset();
                     } else if (data.exc) {
                         // Exception/Error
                         responseDiv.style.color = 'red';
-                        responseDiv.innerText = "સંદેશ મોકલવામાં ભૂલ. કૃપા કરી ફરી પ્રયાસ કરો.";
+                        responseDiv.innerText = "Error sending message. Please try again.";
                         console.error(data.exc);
                     } else {
                         // Generic Success fallback if structure varies
                         responseDiv.style.color = 'green';
-                        responseDiv.innerText = "સંદેશ મોકલાયો!";
+                        responseDiv.innerText = "Message sent!";
                         document.getElementById('contactForm').reset();
                     }
                 })
@@ -351,7 +351,7 @@
                     btn.innerText = originalText;
                     btn.disabled = false;
                     responseDiv.style.color = 'red';
-                    responseDiv.innerText = "નેટવર્ક ભૂલ. કૃપા કરી ફરી પ્રયાસ કરો.";
+                    responseDiv.innerText = "Network error. Please try again.";
                     console.error('Error:', error);
                 });
         });
