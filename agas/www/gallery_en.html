@@ -129,19 +129,20 @@
         }
 
         .caption-btn {
-            border: 1px solid var(--accent-color);
-            background: #fff;
-            color: var(--accent-color);
+            border: 0;
+            background: var(--accent-color);
+            color: #fff;
             font-weight: 600;
             cursor: pointer;
             font-size: 0.85rem;
             padding: 0.25rem 0.6rem;
             border-radius: 999px;
             transition: background 0.2s ease, color 0.2s ease;
+            display: inline-block;
         }
 
         .caption-btn:hover {
-            background: var(--accent-color);
+            background: #e85f35;
             color: #fff;
         }
 
@@ -155,6 +156,84 @@
             white-space: pre-wrap;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
             display: none;
+        }
+
+        .caption-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            z-index: 999;
+        }
+
+        .caption-modal.active {
+            display: flex;
+        }
+
+        .caption-modal-content {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .caption-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.8rem;
+        }
+
+        .caption-modal-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .caption-modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #999;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .caption-modal-close:hover {
+            color: var(--accent-color);
+        }
+
+        .caption-modal-body {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
 
         .lightbox {
@@ -256,6 +335,16 @@
         {% endfor %}
     </section>
 
+    <div class="caption-modal" id="captionModal">
+        <div class="caption-modal-content">
+            <div class="caption-modal-header">
+                <div class="caption-modal-title" id="captionTitle">Caption</div>
+                <button class="caption-modal-close" onclick="closeCaptionModal()">&times;</button>
+            </div>
+            <div class="caption-modal-body" id="captionBody"></div>
+        </div>
+    </div>
+
     <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
         <button class="close" onclick="closeLightbox(event)">×</button>
         <img src="" alt="Full size" id="lightboxImage">
@@ -264,7 +353,73 @@
     <script type="application/json" id="gallery-texts">
 {"1": {"gu": "૩\nશ્રી સંઘ આમંત્રણ પત્રિકા\nશ્રી સનાતન જેન ધર્મ, શ્રીમદ્ રાજચંદ્ર આશ્રમ, અગાસ\n“શતાબ્દી અષ્ટાહ્વિકા મહોત્સવ”\nવિક્રમ સંવત ૨૦૭૬ ના કાર્તિક સુદ દ્વિતીય ૯ તા. ૬-૧૧-૨૦૧૯ બુધવાર થી કાર્તિક વદ ૧ તા. ૧૩-૧૧-૨૦૧૯ બુધવાર સુધી\n11\nશ્રીમદ્ રાજચંદ્ર આશ્રમ, અગાસનું શ્રી જિન મંદિર અને મૂળ સભામંડપ", "en": "English translation (approximate; may contain errors).\n3\nShri Sangh Invitation Pamphlet\nShri Sanatan Jain Dharma, Shrimad Rajchandra Ashram, Agas\n“Centenary Ashtahnika Mahotsav”\nVikram Samvat 2076, Kartik Sud 2 to Kartik Vad 1, Wed 06-11-2019 to Wed 13-11-2019\n11\nShrimad Rajchandra Ashram, Agas — Shri Jin Mandir and original Sabha Mandap"}, "2": {"gu": "શ્રીમદ્ રાજચંદ્ર આશ્રમ, અગાસના જિનમંદિરના દક્ષિણ દિશાથી થતાં દર્શન\nશ્રીમદ્ રાજચંદ્ર આશ્રમ, અગાસ\nરેલ્વે સ્ટેશન સામે, પોસ્ટ બોરીયા-૩૮૮ ૧૩૦, વાયાઃ આણંદ (ગુજરાત)\nફોનઃ (૦૨૬૯૨) ૨૮૧-૭૭૮/૮૦૦ Email ID: info@agasashram.org / utara@agasashram.org\nમ્યાન દરરોજ બાળકોમાં સત્સંસ્કાર સિંચન અર્થે કાર્યક્રમ યોજવામાં આવેલ છે, જેમાં સહભાગી થવા ઇચ્છનાર\nબાળકનું નામ, ઉંમર, આગમન તથા પ્રસ્થાનની તારીખ અને મોબાઈલ નંબર --૯૧ ૯૩૧૬૩૧૮૮૮૩ પર નોંધાવવા વિનંતી.", "en": "English translation (approximate; may contain errors).\nView of the Jin Mandir of Shrimad Rajchandra Ashram, Agas from the south.\nShrimad Rajchandra Ashram, Agas\nOpposite Railway Station, Post Boriya-388130, via Anand (Gujarat)\nPhone: (02692) 281-778/800 Email ID: info@agasashram.org / utara@agasashram.org\nA daily program is organized to instill good values in children. Those who wish to participate are requested to register the child’s name, age, arrival and departure dates, and mobile number at +91 9316318883."}, "3": {"gu": "ભવ્ય નૂતન સભામંડપ\n“શ્રી તીર્થનાથ હૃદયે ધરીને જીવે જે,\nતેની જ વૃષ્ટિ થકી જે જગને જુએ છે;\nતેની જ વાણી સુણી, જે સમજાવનારા,\nશ્રી રાજચંદ્ર ગુરુ પૂજ્ય સદાય મારા.”\n(પ્રજ્ઞાવબોધ પુષ્પ ૬૩)\nઅનન્ય શરણના આપનાર એવા શ્રી સદ્ગુરુદેવ શ્રીમદ્ રાજચંદ્ર પ્રભુને અત્યંત ભક્તિથી ત્રિકાળ નમસ્કાર હો.\nસદ્ગુણાનુરાગી આત્માર્થી જિજ્ઞાસુ ભાઈઓ તથા બહેનો પ્રત્યે,\nસવિનય જણાવવાનું કે વર્તમાન ચોવીશીના અંતિમ તીર્થકર ભગવાન, શ્રી મહાવીર પ્રભુનું શાસન હાલ પ્રવર્તમાન છે અને તેઓના અંતર આશય અનુસાર\nમૂળ મોક્ષમાર્ગ પ્રગટમાં લાવી શકે તેવા સમર્થ પરમજ્ઞાનાવતાર અને પરમાત્મસ્વરૂપને પામેલા એવા શ્રીમદ્ રાજચંદ્ર પ્રભુનો જન્મ વિક્રમ સંવત ૧૯૨૪ની કાર્તિકી\nપૂર્ણિમાએ, જિજ્ઞાસુ જીવોના અજ્ઞાનરૂપ અંધકારને છેદનાર સૂર્યરૂપે પ્રગટ થયો.\nઈડરના મહારાજા સાથે થયેલ સંવાદમાં શ્રીમદ્જીએ જણાવ્યું હતું કે “.....જિનશાસનને પૂર્ણપણે પ્રકાશ કરનાર આ છેલ્લા તીર્થકર (મહાવીર સ્વામી) અને\nતેઓના શિષ્ય ગૌતમ આદિ ગણધરો (ઈડરના પહાડોમાં) વિચરેલાનો ભાસ થાય છે. તેઓના શિષ્યો નિર્વાણને પામ્યા; તેમાંનો એક પાછળ રહી ગયેલો જેનો જન્મ\nઆ કાળમાં થયેલો છે. તેનાથી ઘણા જીવોનું કલ્યાણ થવાનો સંભવ છે.'' (શ્રીમદ્ રાજચંદ્ર જીવનકળા, પૃષ્ઠ 239)\n“યથા હેતુ જે ચિત્તનો, સત્ય ધર્મનો ઉદ્ધાર રે; ન\nથશે અવશ્ય આ દેહથી, એમ થયો નિરધાર રે. ધન્ય રે દિવસ આ.”\nશ્રીમદ્જીની અવિદ્માનતા છતાં તેમની વીતરાગ મુદ્રાને ચિત્રપટ અથવા પ્રતિમારૂપે સ્થાપિત કરી, પ્રત્યક્ષ તુલ્ય જાણી, તેમના વચનામૃતરૂપી,\nપ્રત્યક્ષ ધારી, તેમની આજ્ઞાનુસાર હજારો જિજ્ઞાસુઓ પોતાના આત્માનું કલ્યાણ સાધી રહ્યા છે, એ પરમકૃપાળુદેવના યોગબળનું જ સામર્થ્ય છે.\n“સત્પુરુષોનું યોગબળ જગતનું કલ્યાણ કરે.”", "en": "English translation (approximate; may contain errors).\nGrand new Sabha Mandap.\n“Whoever lives with the Tirthankar in the heart,\nsees the world only through His grace;\nhears only the words of the one who explains —\nShrimad Rajchandra Guru, always revered by me.”\n(Pragnavbodh Pushp 63)\nWith deep devotion, salutations three times a day to Sadgurudev Shrimad Rajchandra Prabhu, the giver of unique refuge.\nTo virtuous and truth-seeking brothers and sisters, it is respectfully stated that the current era’s last Tirthankar, Lord Mahavir’s shasan is ongoing, and as per his inner intent,\nShrimad Rajchandra Prabhu — a capable parmajnan avatar and realized supreme self who could bring forth the original path of moksha — was born on Kartiki Purnima of Vikram Samvat 1924,\nas a sun to dispel the darkness of ignorance in seekers.\nIn a dialogue with the King of Idar, Shrimadji said: “... It feels that the last Tirthankar (Mahavir Swami) who fully illuminated the Jina shasan and his disciples like Gautam,\nwalked in the hills of Idar. His disciples attained nirvana; one remained behind and was born in this era; through him many beings may find welfare.” (Shrimad Rajchandra Jivankala, p. 239)\n“By true intent, the upliftment of true dharma will arise; it will surely happen through this body.”\nEven in Shrimadji’s physical absence, his vitarag mudra is established as a painting or idol; holding his words as living nectar, thousands of seekers follow his instructions and uplift their souls — this is the power of Param Krupalu Dev’s yogbal.\n“The yogbal of satpurushes brings welfare to the world.”"}, "4": {"gu": "શ્રીજીના અગ્નિસંસ્કાર સ્થાને નિર્મિત સ્મારક અને તેઓશ્રીના ચરણ-પાદુકાજી\n“પ્રભુ બિન, કૌન ઉતારે પાર?\nભવોદપિ અગમ અપાર, પ્રભુ બિન, કૌન ઉતારે પાર?”\n(નિત્યકમ)\nઉપરોક્ત પદ, પ.પૂ. પ્રુશ્રીજીના ચરણકમળના દર્શન કરી પ્રદક્ષિણા લેતા જિજ્ઞાસુઓ નિત્ય સ્મરણ કરે છે.\nપ.પૂ. પ્રભુશ્રીજીની પ્રબળ ઇચ્છા અને તેઓશ્રીની નિશ્રામાં આપણા આશ્રમમાં શ્રી રાજમંદિર, શ્રી શાંતિભુવન, મૂળ સભામંડપ, શ્રી શ્વેતાંબર\nજિનમંદિર, શ્રી દિગંબર જિનમંદિર, શ્રી ગુરુમંદિર તથા ભવ્ય પ્રવેશદ્વાર અને તે ઉપરની દેરીની સ્થાપના પ.પૂ. પ્રભુશ્રીજીની શુભ ઉપસ્થિતિમાં\nથઈ હતી અને તેમની આજ્ઞા અનુસાર ભક્તિનો ક્રમ શરૂઆતથી જ ચાલુ હતો.\nપરમકૃપાળુદેવ બોધિત સનાતન જૈન વીતરાગ માર્ગને અનેક જિજ્ઞાસુ ભવ્યો સુધી પહોંચાડવાનો અથાગ પુરુષાર્થ પ.પૂ. પ્રભુશ્રીજીએ આજીવન\nકર્યો હતો અને તેઓએ પોતાને ગૌણ કરી, એક પરમકૃપાળુદેવને જ ગુરુપદે આરાધવાની સૌને દૃઢપણે ભલામણ કરતા હતા.\n“એક પરમકૃપાળુદેવ અમે જે કર્યો છે તે તમારા ગુરુ છે;\nઅમે પણ તમારા ગુરુ નહીં, પણ અમે જે ગુરુ કર્યા છે તે તમારા ગુરુ છે.” (ઉપદેશામૃત 97)\n“અમે તો ગુરુ થતા નથી. પણ સદ્ગુરુને બતાવી દઈએ છીએ.\nઅમારુ કહ્યું માની તેની કહેલી આજ્ઞા ઉઠાવશે તેનો અવશ્ય મોક્ષ થશે.” (ઉપદેશામૃત પૃષ્ઠ 296)\nઆ આશ્રમની પાવન ભૂમિ પર પ.પૂ. પ્રભુશ્રીજીએ ચૌદ ચોમાસા કર્યાં હતાં. પૂ.શ્રી બ્રહ્મચારીજીને પણ આશ્રમમાં પ.પૂ. પ્રભુશ્રીજીની નિશ્રામાં\nઅગિયાર વર્ષ રહેવાનો શુભ અવસર પ્રાપ્ત થયો હતો. પ.પૂ. પ્રભુશ્રીજીએ તેમના દેહોત્સર્ગ પહેલાં, પૂ.શ્રી બ્રહ્મચારીજીને સંઘની જવાબદારી અને\nવીતરાગ માર્ગની પુષ્ટિ અર્થે ધર્મની સોંપણી કરી હતી, જેથી તેમના દ્વારા વીતરાગ માર્ગ અઢાર વર્ષ સુધી વૃદ્ધિને પામ્યો. પ.પૂ. પ્રભુશ્રીજી તથા\nપૂ.શ્રી બ્રહ્મચારીજીએ આ આશ્રમમાં ઉત્તમ સમાધિમરણ પ્રાપ્તિ કરી હતી.\n“જેણો બ્રહ્મ છૂટશે તેનું સમાધિમરણ થશે” (પત્રાંક 447)\n“પરમ પૂજ્ય પ્રભુશ્રીજીએ જે કાર્યક્રમ આશ્રમ માટે ગોઠવ્યો છે, તે બહુ દીર્ઘદૃષ્ટિ વાપરી ચોક્કસ કર્યો છે.”", "en": "English translation (approximate; may contain errors).\nMemorial built at the site of Shri ji’s cremation and his sacred foot‑padukas.\n“Without the Lord, who can ferry us across?\nThis ocean of worldly existence is vast and unfathomable; without the Lord, who can ferry us across?”\n(Nityakram)\nSeekers who take darshan and circumambulate the lotus feet of Pujya Prabhuji remember this verse daily.\nBy the strong wish of Pujya Prabhuji and under his guidance, in our ashram the Shri Rajmandir, Shri Shantibhavan, the original Sabha Mandap, the Shwetambar\nJin Mandir, Digambar Jin Mandir, Shri Gurumandir, and the grand entrance gate with its shrine were established in his auspicious presence, and the devotional practices have continued since the beginning.\nPujya Prabhuji devoted his life to spread the eternal Jain vitarag path taught by Param Krupalu Dev to countless seekers, and firmly recommended that all worship only Param Krupalu Dev as Guru.\n“The Param Krupalu Dev whom we have revered is your Guru;\nwe are not your Guru; the Guru we have revered is your Guru.” (Updeshamrut 97)\n“We do not become gurus. We only point to the Sadguru.\nWhoever follows what he says will surely attain moksha.” (Updeshamrut p. 296)\nOn this sacred land of the ashram, Pujya Prabhuji spent fourteen monsoons. Pujya Shri Brahmachariji also had the good fortune to stay in Prabhuji’s guidance for eleven years.\nBefore his body’s departure, Prabhuji entrusted Brahmachariji with responsibility of the sangh and the dharma to strengthen the vitarag path, through which the path flourished for eighteen years.\nPujya Prabhuji and Pujya Brahmachariji attained a supreme samadhi death here.\n“One who relinquishes the body in Brahm will attain samadhi‑maran.” (Patrank 447)\n“The program Param Pujya Prabhuji arranged for the ashram was determined with far‑sightedness.”"}}
 </script>
-    <script src="/assets/agas/js/gallery.js" defer></script>
+    <script>
+        let galleryTexts = {};
+
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            if (navLinks) navLinks.classList.toggle('active');
+        }
+
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightboxImage');
+            if (!lightbox || !img) return;
+            img.src = src;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox(event) {
+            const target = event.target;
+            if (target.id === 'lightbox' || (target.classList && target.classList.contains('close'))) {
+                const lightbox = document.getElementById('lightbox');
+                const img = document.getElementById('lightboxImage');
+                if (lightbox) lightbox.style.display = 'none';
+                if (img) img.src = '';
+            }
+        }
+
+        function showCaption(index, lang) {
+            const modal = document.getElementById('captionModal');
+            const titleEl = document.getElementById('captionTitle');
+            const bodyEl = document.getElementById('captionBody');
+            
+            if (!modal || !bodyEl || !titleEl) return;
+            
+            const text = (galleryTexts[index] && galleryTexts[index][lang]) || 'No caption available';
+            const langLabel = lang === 'gu' ? 'Gujarati' : 'English';
+            
+            titleEl.textContent = `Caption (${langLabel})`;
+            bodyEl.textContent = text;
+            modal.classList.add('active');
+        }
+
+        function closeCaptionModal() {
+            const modal = document.getElementById('captionModal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        function loadGalleryTexts() {
+            const dataNode = document.getElementById('gallery-texts');
+            if (!dataNode) return;
+            try {
+                galleryTexts = JSON.parse(dataNode.textContent);
+            } catch (err) {
+                console.error('Failed to parse gallery texts', err);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGalleryTexts();
+            document.querySelectorAll('.caption-btn').forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.getAttribute('data-caption-index'), 10);
+                    const lang = btn.getAttribute('data-caption-lang');
+                    showCaption(index, lang);
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
