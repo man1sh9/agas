@@ -735,6 +735,7 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
             <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
+            <li><a href="/gallery" data-lang-switch="gu" data-lang-target="/gallery">ગેલેરી</a></li>
             <li class="nav-item-with-submenu">
                 <button class="submenu-toggle" onclick="toggleProfileSubmenu(event)">મારી પ્રોફાઇલ</button>
                 <ul class="profile-submenu" id="profile-submenu">
@@ -829,17 +830,18 @@
                             </div>
                             <div class="form-group">
                                 <label>જન્મ તારીખ</label>
-                                <input type="text" name="date_of_birth" class="datepicker"
+                                <input type="text" name="date_of_birth" id="personal_dob" class="datepicker"
                                     value="{{ member_data.get('date_of_birth', '') }}" placeholder="dd/mm/yyyy">
                             </div>
                             <div class="form-group">
                                 <label>ઉંમર</label>
-                                <input type="number" name="age" value="{{ member_data.get('age', '') }}">
+                                <input type="number" name="age" id="personal_age" value="{{ member_data.get('age', '') }}">
                             </div>
                             <div class="form-group">
                                 <label>મોબાઇલ નં.</label>
                                 <input type="text" name="mobile_no" value="{{ member_data.get('mobile_no', '') }}"
-                                    pattern="\d{10}" maxlength="10" title="કૃપા કરી 10 અંકનો મોબાઇલ નંબર દાખલ કરો">
+                                    pattern="\d{10}" maxlength="10" required
+                                    title="કૃપા કરી 10 અંકનો મોબાઇલ નંબર દાખલ કરો">
                             </div>
                             <div class="form-group">
                                 <label>ઇમેલ ID</label>
@@ -877,16 +879,16 @@
                                     value="{{ member_data.get('address_line_1', '') }}">
                             </div>
                             <div class="form-group">
+                                <label>પિનકોડ</label>
+                                <input type="text" name="pincode" value="{{ member_data.get('pincode', '') }}">
+                            </div>
+                            <div class="form-group">
                                 <label>શહેર</label>
                                 <input type="text" name="city" value="{{ member_data.get('city', '') }}">
                             </div>
                             <div class="form-group">
                                 <label>રાજ્ય</label>
                                 <input type="text" name="agas_state" value="{{ member_data.get('agas_state', '') }}">
-                            </div>
-                            <div class="form-group">
-                                <label>પિનકોડ</label>
-                                <input type="text" name="pincode" value="{{ member_data.get('pincode', '') }}">
                             </div>
                             <div class="form-group">
                                 <label>દેશ</label>
@@ -1021,6 +1023,11 @@
                                         <span class="status-badge status-{{ reg.status.lower() }}">
                                             {{ reg.status }}
                                         </span>
+                                        {% if reg.status == 'Cancelled' and reg.cancellation_reason %}
+                                        <div style="font-size: 0.75rem; color: #888; margin-top: 0.35rem;">
+                                            કારણ: {{ reg.cancellation_reason }}
+                                        </div>
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <div class="event-actions">
@@ -1072,6 +1079,11 @@
                                         <span class="status-badge status-{{ reg.status.lower() }}">
                                             {{ reg.status }}
                                         </span>
+                                        {% if reg.status == 'Cancelled' and reg.cancellation_reason %}
+                                        <div style="font-size: 0.75rem; color: #888; margin-top: 0.35rem;">
+                                            કારણ: {{ reg.cancellation_reason }}
+                                        </div>
+                                        {% endif %}
                                     </td>
                                     <td>
                                         <div class="event-actions">
@@ -1173,9 +1185,10 @@
                         <select name="adultchild" id="adultchild_select">
                             <option value="Adult">વયસ્ક</option>
                             <option value="Child">બાળક</option>
+                            <option value="Senior Citizen">વરિષ્ઠ નાગરિક</option>
                         </select>
                         <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">ઉંમર આધારે આપમેળે પસંદ થાય છે
-                            (18 વર્ષથી ઓછા હોય તો બાળક)</p>
+                            (18 વર્ષથી ઓછા હોય તો બાળક, 60થી વધુ હોય તો વરિષ્ઠ નાગરિક)</p>
                     </div>
                     <div class="form-group">
                         <label>સંપર્ક નં.</label>
@@ -1464,6 +1477,23 @@
                 });
                 modal.querySelector('h2').innerText = 'પરિવાર સભ્ય સંપાદિત કરો';
             } else {
+                const dobInput = form.querySelector('#family_dob');
+                if (dobInput && dobInput._flatpickr) dobInput._flatpickr.setDate('', false);
+                const ageInput = form.querySelector('#family_age');
+                if (ageInput) ageInput.value = '';
+                const adultChildSelect = form.querySelector('#adultchild_select');
+                if (adultChildSelect) {
+                    adultChildSelect.value = 'Adult';
+                    adultChildSelect.disabled = false;
+                    adultChildSelect.style.backgroundColor = '';
+                }
+                const contactInput = form.querySelector('input[name="contact_no"]');
+                if (contactInput) {
+                    contactInput.value = '';
+                    contactInput.required = true;
+                    contactInput.style.backgroundColor = '';
+                    contactInput.title = 'કૃપા કરી 10 અંકનો મોબાઇલ નંબર દાખલ કરો';
+                }
                 modal.querySelector('h2').innerText = 'પરિવાર સભ્ય ઉમેરો';
             }
 
@@ -1756,7 +1786,13 @@
                     }
                     ageInput.value = age;
                     calculatedAge = age;
-                    adultChildSelect.value = age < 18 ? 'Child' : 'Adult';
+                    if (age < 18) {
+                        adultChildSelect.value = 'Child';
+                    } else if (age > 60) {
+                        adultChildSelect.value = 'Senior Citizen';
+                    } else {
+                        adultChildSelect.value = 'Adult';
+                    }
 
                     // Disable fields
                     ageInput.readOnly = true;
@@ -1769,7 +1805,13 @@
                 const age = parseInt(ageValue);
                 if (!isNaN(age)) {
                     calculatedAge = age;
-                    adultChildSelect.value = age < 18 ? 'Child' : 'Adult';
+                    if (age < 18) {
+                        adultChildSelect.value = 'Child';
+                    } else if (age > 60) {
+                        adultChildSelect.value = 'Senior Citizen';
+                    } else {
+                        adultChildSelect.value = 'Adult';
+                    }
                 }
 
                 // Disable Adult/Child select
@@ -1790,29 +1832,59 @@
                 adultChildSelect.style.backgroundColor = '';
             }
 
-            // Auto-populate mobile number for age <18 or >60
-            if (contactInput && calculatedAge !== null) {
-                if (calculatedAge < 18 || calculatedAge > 60) {
-                    // Get primary member's mobile number
+            // Contact rules by age group
+            if (contactInput) {
+                const selectedGroup = adultChildSelect.value;
+                const isAdult = selectedGroup === 'Adult';
+                const needsPrimary = selectedGroup === 'Child' || selectedGroup === 'Senior Citizen';
+
+                contactInput.required = isAdult;
+
+                if (needsPrimary) {
                     const primaryMobile = document.querySelector('input[name=\"mobile_no\"]')?.value;
                     if (primaryMobile && !contactInput.value) {
                         contactInput.value = primaryMobile;
                         contactInput.style.backgroundColor = '#fff8e1';
                         contactInput.title = 'મુખ્ય સભ્યથી આપમેળે ભરાયેલ (ઉંમર <18 અથવા >60)';
                     }
-                } else {
-                    // Clear auto-fill styling if age is between 18-60
-                    if (contactInput.style.backgroundColor === 'rgb(255, 248, 225)') {
-                        contactInput.style.backgroundColor = '';
-                        contactInput.title = 'કૃપા કરી 10 અંકનો મોબાઇલ નંબર દાખલ કરો';
-                    }
+                } else if (contactInput.style.backgroundColor === 'rgb(255, 248, 225)') {
+                    contactInput.style.backgroundColor = '';
+                    contactInput.title = 'કૃપા કરી 10 અંકનો મોબાઇલ નંબર દાખલ કરો';
                 }
             }
+        };
+
+        window.recalculatePersonalAge = () => {
+            const dobInput = document.getElementById('personal_dob');
+            const ageInput = document.getElementById('personal_age');
+            if (!dobInput || !ageInput) return;
+
+            const dobValue = dobInput.value;
+            if (dobValue) {
+                const birthDate = new Date(dobValue);
+                if (!isNaN(birthDate)) {
+                    const today = new Date();
+                    let age = today.getFullYear() - birthDate.getFullYear();
+                    const m = today.getMonth() - birthDate.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                        age--;
+                    }
+                    ageInput.value = age;
+                    ageInput.readOnly = true;
+                    ageInput.style.backgroundColor = '#f5f5f5';
+                    return;
+                }
+            }
+
+            ageInput.readOnly = false;
+            ageInput.style.backgroundColor = '';
         };
 
         // Restore active tab and checkbox state on load
         async function cancelRegistration(name) {
             if (!confirm('શું તમે આ નોંધણી રદ કરવા માંગો છો?')) return;
+            const reason = prompt('રદ કરવાની કારણ લખો (આવશ્યક):');
+            if (!reason || !reason.trim()) return;
 
             const toast = document.getElementById('saveToast');
             toast.innerText = 'રદ કરી રહ્યા છીએ...';
@@ -1822,7 +1894,7 @@
                 const response = await fetch('/api/method/agas.api.cancel_registration', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'X-Frappe-CSRF-Token': csrfToken },
-                    body: JSON.stringify({ registration_name: name })
+                    body: JSON.stringify({ registration_name: name, reason: reason.trim() })
                 });
                 const res = await response.json();
                 if (res.message) {
@@ -1851,6 +1923,13 @@
 
             const check = document.querySelector('input[name="outside_india"]');
             if (check) toggleAddressSync(check);
+
+            const dobInput = document.getElementById('personal_dob');
+            if (dobInput) {
+                dobInput.addEventListener('change', window.recalculatePersonalAge);
+                dobInput.addEventListener('input', window.recalculatePersonalAge);
+            }
+            window.recalculatePersonalAge();
 
             // --- Smart પિનકોડ Lookup ---
             const pincodeInput = document.querySelector('input[name="pincode"]');

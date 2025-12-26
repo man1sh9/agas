@@ -513,6 +513,7 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
             <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
+            <li><a href="/gallery" data-lang-switch="gu" data-lang-target="/gallery">ગેલેરી</a></li>
             <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">પ્રોફાઇલ</a></li>
             <li><a href="/logout">લૉગઆઉટ</a></li>
             <li><a href="/event_registration_en" data-lang-switch="en" data-lang-target="/event_registration_en">English</a></li>
@@ -549,8 +550,8 @@
             </ul>
 
             <div class="view-mode-actions" style="margin-top: 2rem;">
-                <a href="/member_profile#events" class="btn btn-primary btn-view-nav"
-                    style="width: 100%; text-decoration: none;">
+                <a href="/member_profile#events" id="backToProfileLink" class="back-to-profile-link"
+                    style="display: none; text-decoration: none;">
                     ← પ્રોફાઇલ પર પાછા જાઓ
                 </a>
             </div>
@@ -702,7 +703,9 @@
                                     <option value="">કાર્યક્રમ પસંદ કરો</option>
                                     {% for ev in events %}
                                     <option value="{{ ev.title }}" {% if selected_event==ev.title %}selected{% endif %}>
-                                        {{ ev.title }}</option>
+                                        {{ ev.title }}
+                                        ({{ frappe.utils.formatdate(ev.event_start_date, 'dd/MM/yyyy') }}{% if ev.event_end_date and ev.event_end_date != ev.event_start_date %} - {{ frappe.utils.formatdate(ev.event_end_date, 'dd/MM/yyyy') }}{% endif %})
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -833,6 +836,7 @@
 
             localStorage.setItem('active_er_tab', id);
 
+            if (id === 'visit') toggleStayFields();
             if (id === 'food') generateFoodTable();
         }
 
@@ -1102,6 +1106,13 @@
             toggleStayFields();
             toggleFoodFields();
             generateFoodTable();
+
+            const backLink = document.getElementById('backToProfileLink');
+            if (backLink) {
+                const ref = document.referrer || '';
+                const fromProfile = ref.includes('/member_profile');
+                if (fromProfile) backLink.style.display = 'inline';
+            }
         };
 
         function toggleStayFields() {
@@ -1110,11 +1121,12 @@
             const checkInField = document.getElementById('checkInField');
             const checkOutField = document.getElementById('checkOutField');
 
-            const isVisible = stayRequired === 'Yes';
+            const isVisible = (stayRequired || '').trim().toLowerCase() === 'yes';
 
             if (roomsField) roomsField.style.display = isVisible ? 'block' : 'none';
             if (checkInField) checkInField.style.display = isVisible ? 'block' : 'none';
             if (checkOutField) checkOutField.style.display = isVisible ? 'block' : 'none';
+
         }
 
         function toggleFoodFields() {

@@ -26,6 +26,7 @@
         "food_schedule",
         "status_section",
         "status",
+        "cancellation_reason",
         "visitor_members_section",
         "visitor_members"
     ],
@@ -147,6 +148,12 @@
             "fieldtype": "Select",
             "label": "Status",
             "options": "Draft\nRegistered\nConfirmed\nCancelled\nCompleted"
+        },
+        {
+            "fieldname": "cancellation_reason",
+            "fieldtype": "Small Text",
+            "label": "Cancellation Reason",
+            "depends_on": "eval:doc.status=='Cancelled'"
         },
         {
             "fieldname": "visitor_members_section",

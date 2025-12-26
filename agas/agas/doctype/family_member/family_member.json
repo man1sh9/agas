@@ -82,7 +82,7 @@
             "fieldname": "adultchild",
             "fieldtype": "Select",
             "label": "Adult/Child",
-            "options": "\nAdult\nChild"
+            "options": "\nAdult\nChild\nSenior Citizen"
         },
         {
             "fieldname": "identification_section",

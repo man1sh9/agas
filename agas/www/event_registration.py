@@ -10,9 +10,13 @@ def get_context(context):
 	profile = frappe.db.get_value("Member Profile", {"user": frappe.session.user}, "*", as_dict=True) or {}
 	context.member_data = profile
 	
-	# Fetch all published events for the dropdown
+	# Fetch upcoming published events for the dropdown
+	today = frappe.utils.getdate()
 	context.events = frappe.get_all("Agas Event", 
-		filters={"published": 1}, 
+		filters={
+			"published": 1,
+			"event_start_date": [">=", today],
+		},
 		fields=["title", "event_start_date", "event_end_date"], 
 		order_by="event_start_date asc"
 	)

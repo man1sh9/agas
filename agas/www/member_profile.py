@@ -42,7 +42,7 @@ def get_context(context):
 	# Fetch event registrations
 	registrations = frappe.get_all("Event Registration",
 		filters={"user": frappe.session.user},
-		fields=["name", "event", "status", "no_of_visitors", "check_in_date", "creation"]
+		fields=["name", "event", "status", "no_of_visitors", "check_in_date", "creation", "cancellation_reason"]
 	)
 
 	upcoming_events = []

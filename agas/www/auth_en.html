@@ -406,7 +406,7 @@
 
                 if (res.message && res.message.message === 'Logged in successfully') {
                     showSuccess("Login Successful! Redirecting...");
-                    setTimeout(() => window.location.href = res.message.home_page || '/member_profile', 1000);
+                    setTimeout(() => window.location.href = res.message.home_page || '/member_profile_en', 1000);
                 } else if (res._server_messages) {
                     const messages = JSON.parse(res._server_messages);
                     let errorMsg = JSON.parse(messages[0]).message;
@@ -525,7 +525,7 @@
 
                 if (res.message && res.message.message === 'Logged in successfully') {
                     showSuccess("Login Successful! Redirecting...");
-                    setTimeout(() => window.location.href = res.message.home_page || '/member_profile', 1000);
+                    setTimeout(() => window.location.href = res.message.home_page || '/member_profile_en', 1000);
                 } else if (res._server_messages) {
                     const messages = JSON.parse(res._server_messages);
                     let errorMsg = JSON.parse(messages[0]).message;

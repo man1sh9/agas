@@ -153,13 +153,16 @@
             width: 100%;
             height: 400px;
             background-color: #eee;
-            background-image: url('/assets/agas/images/contact_map.png');
-            background-size: cover;
-            background-position: center;
             margin-top: 3rem;
             border-radius: 15px;
             overflow: hidden;
             position: relative;
+        }
+
+        .map-section iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         .map-overlay {
@@ -232,6 +235,7 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
             <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
+            <li><a href="/gallery" data-lang-switch="gu" data-lang-target="/gallery">ગેલેરી</a></li>
             <li><a href="/about" data-lang-switch="gu" data-lang-target="/about">વિશે</a></li>
             <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">સંપર્ક</a></li>
             {% if frappe.session.user != "Guest" %}
@@ -255,13 +259,13 @@
             <p>ઇમેલ, ફોન દ્વારા અથવા આશ્રમ ખાતે મુલાકાત લઈને અમારો સંપર્ક કરો.</p>
 
             <h3>સરનામું</h3>
-            <p>Agas Ashram, River Road<br>Near Ancient Banyan Tree<br>Pune, Maharashtra - 411001</p>
+            <p>શ્રીમદ્ રાજચંદ્ર આશ્રમ, અગાસ<br>રેલ્વે સ્ટેશન સામે, પોસ્ટ બોરીયા - ૩૮૮ ૧૩૦<br>વાયાઃ આણંદ (ગુજરાત)</p>
 
             <h3>ઇમેલ</h3>
-            <p>info@agasashram.org<br>bookings@agasashram.org</p>
+            <p>info@agasashram.org<br>utara@agasashram.org</p>
 
             <h3>ફોન</h3>
-            <p>+91 98765 43210<br>+91 12345 67890</p>
+            <p>(૦૨૬૯૨) ૨૮૧-૭૭૮ / ૨૮૧-૮૦૦<br>બાળકોના કાર્યક્રમ માટે: +91 9316318883</p>
         </div>
 
         <div class="contact-form">
@@ -286,9 +290,14 @@
 
     <div style="padding: 0 10%;">
         <div class="map-section">
+            <iframe
+                title="Shrimad Rajchandra Ashram, Agas"
+                src="https://www.openstreetmap.org/export/embed.html?marker=22.5041408,72.8584696&zoom=11">
+            </iframe>
             <div class="map-overlay">
-                <strong>અગાસ આશ્રમ સ્થાન</strong><br>
-                પ્રકૃતિની ગોદમાં
+                <strong>શ્રીમદ્ રાજચંદ્ર આશ્રમ, અગાસ</strong><br>
+                રેલ્વે સ્ટેશન સામે, પોસ્ટ બોરીયા - ૩૮૮ ૧૩૦<br>
+                વાયાઃ આણંદ (ગુજરાત)
             </div>
         </div>
     </div>

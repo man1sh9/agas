@@ -471,19 +471,27 @@ def save_family_member(data):
 	if not profile_name:
 		frappe.throw("Please create your member profile first")
 
-	# Validate unique mobile number for family members
+	adultchild = data.get("adultchild")
 	contact_no = data.get("contact_no")
+	primary_mobile = frappe.db.get_value("Member Profile", profile_name, "mobile_no")
+
+	if adultchild == "Adult" and not contact_no:
+		frappe.throw("Contact number is required for adult family members", frappe.ValidationError)
+
+	# Validate unique mobile number for family members
 	if contact_no:
-		existing_family = frappe.db.get_value("Family Member", 
-			{"contact_no": contact_no, "name": ["!=", data.get("name") or ""]}, "name")
-		if existing_family:
-			frappe.throw("This mobile number is already registered with another family member", frappe.ValidationError)
-		
-		# Also check against primary member profiles (excluding self)
-		existing_profile = frappe.db.get_value("Member Profile", 
-			{"mobile_no": contact_no, "name": ["!=", profile_name]}, "name")
-		if existing_profile:
-			frappe.throw("This mobile number is already registered with another user", frappe.ValidationError)
+		allow_primary = adultchild in ["Child", "Senior Citizen"] and contact_no == primary_mobile
+		if not allow_primary:
+			existing_family = frappe.db.get_value("Family Member", 
+				{"contact_no": contact_no, "name": ["!=", data.get("name") or ""]}, "name")
+			if existing_family:
+				frappe.throw("This mobile number is already registered with another family member", frappe.ValidationError)
+			
+			# Also check against primary member profiles (excluding self)
+			existing_profile = frappe.db.get_value("Member Profile", 
+				{"mobile_no": contact_no, "name": ["!=", profile_name]}, "name")
+			if existing_profile:
+				frappe.throw("This mobile number is already registered with another user", frappe.ValidationError)
 
 	data["doctype"] = "Family Member"
 	data["primary_member"] = profile_name
@@ -532,19 +540,23 @@ def delete_family_member(name):
 	return {"message": "Deleted successfully"}
 
 @frappe.whitelist()
-def cancel_registration(registration_name):
+def cancel_registration(registration_name, reason=None):
 	"""
 	Cancels an Event Registration.
 	"""
 	user = frappe.session.user
 	if user == "Guest":
 		frappe.throw("Please login", frappe.PermissionError)
+
+	if not reason:
+		frappe.throw("Cancellation reason is required", frappe.ValidationError)
 	
 	doc = frappe.get_doc("Event Registration", registration_name)
 	if doc.user != user:
 		frappe.throw("Not authorized", frappe.PermissionError)
 	
 	doc.status = "Cancelled"
+	doc.cancellation_reason = reason
 	doc.save(ignore_permissions=True)
 	frappe.db.commit()
 	return "Registration cancelled successfully"

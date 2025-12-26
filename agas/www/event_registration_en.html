@@ -513,6 +513,7 @@
         <ul class="nav-links" id="nav-links">
             <li><a href="/index_en" data-lang-switch="en" data-lang-target="/index_en">Home</a></li>
             <li><a href="/events_en" data-lang-switch="en" data-lang-target="/events_en">Events</a></li>
+            <li><a href="/gallery_en" data-lang-switch="en" data-lang-target="/gallery_en">Gallery</a></li>
             <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">Profile</a></li>
             <li><a href="/logout_en">Logout</a></li>
                     <li><a href="/event_registration" data-lang-switch="gu" data-lang-target="/event_registration">ગુજરાતી</a></li>
@@ -549,8 +550,8 @@
             </ul>
 
             <div class="view-mode-actions" style="margin-top: 2rem;">
-                <a href="/member_profile#events" class="btn btn-primary btn-view-nav"
-                    style="width: 100%; text-decoration: none;">
+                <a href="/member_profile_en#events" id="backToProfileLink" class="back-to-profile-link"
+                    style="display: none; text-decoration: none;">
                     ← Back to Profile
                 </a>
             </div>
@@ -676,7 +677,7 @@
                             <div
                                 style="text-align: center; padding: 2rem; color: #888; border: 2px dashed #eee; border-radius: 15px;">
                                 No family members found in your profile.<br>
-                                <a href="/member_profile#family" style="color: var(--accent-color); font-weight: 600;">+
+                                <a href="/member_profile_en#family" style="color: var(--accent-color); font-weight: 600;">+
                                     Add Family Members</a>
                             </div>
                             {% endif %}
@@ -702,7 +703,9 @@
                                     <option value="">Choose an event</option>
                                     {% for ev in events %}
                                     <option value="{{ ev.title }}" {% if selected_event==ev.title %}selected{% endif %}>
-                                        {{ ev.title }}</option>
+                                        {{ ev.title }}
+                                        ({{ frappe.utils.formatdate(ev.event_start_date, 'dd/MM/yyyy') }}{% if ev.event_end_date and ev.event_end_date != ev.event_start_date %} - {{ frappe.utils.formatdate(ev.event_end_date, 'dd/MM/yyyy') }}{% endif %})
+                                    </option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -833,12 +836,13 @@
 
             localStorage.setItem('active_er_tab', id);
 
+            if (id === 'visit') toggleStayFields();
             if (id === 'food') generateFoodTable();
         }
 
         function reloadForEvent(eventTitle) {
             if (!eventTitle) return;
-            window.location.href = `/event_registration?event=${encodeURIComponent(eventTitle)}`;
+            window.location.href = `/event_registration_en?event=${encodeURIComponent(eventTitle)}`;
         }
 
         async function saveCurrentSection(showToast = true) {
@@ -996,7 +1000,7 @@
                 if (res.message) {
                     document.getElementById('successOverlay').style.display = 'flex';
                     toast.classList.remove('error');
-                    setTimeout(() => window.location.href = '/', 4000);
+                    setTimeout(() => window.location.href = '/index_en', 4000);
                 } else if (res._server_messages) {
                     const messages = JSON.parse(res._server_messages);
                     let errorMsg = JSON.parse(messages[0]).message;
@@ -1102,6 +1106,13 @@
             toggleStayFields();
             toggleFoodFields();
             generateFoodTable();
+
+            const backLink = document.getElementById('backToProfileLink');
+            if (backLink) {
+                const ref = document.referrer || '';
+                const fromProfile = ref.includes('/member_profile') || ref.includes('/member_profile_en');
+                if (fromProfile) backLink.style.display = 'inline';
+            }
         };
 
         function toggleStayFields() {
@@ -1110,11 +1121,12 @@
             const checkInField = document.getElementById('checkInField');
             const checkOutField = document.getElementById('checkOutField');
 
-            const isVisible = stayRequired === 'Yes';
+            const isVisible = (stayRequired || '').trim().toLowerCase() === 'yes';
 
             if (roomsField) roomsField.style.display = isVisible ? 'block' : 'none';
             if (checkInField) checkInField.style.display = isVisible ? 'block' : 'none';
             if (checkOutField) checkOutField.style.display = isVisible ? 'block' : 'none';
+
         }
 
         function toggleFoodFields() {

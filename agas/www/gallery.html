@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="gu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ગેલેરી | અગાસ આશ્રમ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #5d4037;
+            --accent-color: #ff7043;
+            --bg-color: #fdf7f2;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-color);
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            padding: 3rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            margin-top: 0.8rem;
+            color: #666;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .thumb {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            background: #fff;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+            aspect-ratio: 4 / 3;
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .thumb:hover img {
+            transform: scale(1.05);
+        }
+
+        .caption-controls {
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .caption-controls a {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 0.3rem;
+        }
+
+        .caption-btn {
+            border: 1px solid var(--accent-color);
+            background: #fff;
+            color: var(--accent-color);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 999px;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .caption-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        .caption-text {
+            background: #fff;
+            border-radius: 10px;
+            padding: 0.8rem;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            color: #444;
+            white-space: pre-wrap;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            display: none;
+        }
+
+        .lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            z-index: 1000;
+        }
+
+        .lightbox img {
+            max-width: 95vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .lightbox .close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        @media (max-width: 900px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                height: 100vh;
+                width: 70vw;
+                background: #fff;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: right 0.3s ease;
+                gap: 2rem;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+
+<body data-lang="gu" data-alt="/gallery_en">
+    <nav class="navbar">
+        <a href="/" class="logo">અગાસ આશ્રમ</a>
+        <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/" data-lang-switch="gu" data-lang-target="/">મુખપૃષ્ઠ</a></li>
+            <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
+            <li><a href="/gallery" data-lang-switch="gu" data-lang-target="/gallery">ગેલેરી</a></li>
+            <li><a href="/about" data-lang-switch="gu" data-lang-target="/about">વિશે</a></li>
+            <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">સંપર્ક</a></li>
+            {% if frappe.session.user != "Guest" %}
+            <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">મારી પ્રોફાઇલ</a></li>
+            <li><a href="/logout">લૉગઆઉટ</a></li>
+            {% else %}
+            <li><a href="/auth" data-lang-switch="gu" data-lang-target="/auth">લૉગિન</a></li>
+            {% endif %}
+            <li><a href="/gallery_en" data-lang-switch="en" data-lang-target="/gallery_en">English</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <h1>અમારી ગેલેરી</h1>
+        <p>આશ્રમના યાદગાર ક્ષણો</p>
+    </header>
+
+    <section class="gallery" id="gallery">
+        {% for i in range(1, 9) %}
+        <div class="gallery-item">
+            <div class="thumb" onclick="openLightbox('/assets/agas/images/new{{ i }}.jpeg')">
+                <img src="/assets/agas/images/new{{ i }}.jpeg" alt="Gallery image {{ i }}" loading="lazy">
+            </div>
+            {% if i <= 4 %}
+            <div class="caption-controls">
+                <button class="caption-btn" type="button" data-caption-index="{{ i }}" data-caption-lang="gu">ગુજરાતી</button>
+                <span>|</span>
+                <button class="caption-btn" type="button" data-caption-index="{{ i }}" data-caption-lang="en">English</button>
+            </div>
+            <div class="caption-text" id="caption-{{ i }}"></div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </section>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+        <button class="close" onclick="closeLightbox(event)">×</button>
+        <img src="" alt="Full size" id="lightboxImage">
+    </div>
+
+</script>
+    <script src="/assets/agas/js/gallery.js" defer></script>
+</body>
+
+</html>
