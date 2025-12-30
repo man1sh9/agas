@@ -30,6 +30,7 @@
         }
 
         .navbar {
+            font-family: 'Outfit', sans-serif;
             background: white;
             padding: 1.5rem 5%;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -52,12 +53,46 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-login {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.3s;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-login:hover {
+            background: #994d1c;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            cursor: pointer;
         }
 
         .hero {
@@ -278,9 +313,9 @@
             <li><a href="/contact_en" data-lang-switch="en" data-lang-target="/contact_en">Contact</a></li>
             {% if frappe.session.user != "Guest" %}
             <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">My Profile</a></li>
-            <li><a href="/logout_en">Logout</a></li>
+            <li><a href="/logout_en" class="btn-login" style="background: #994d1c;">Logout</a></li>
             {% else %}
-            <li><a href="/auth_en" data-lang-switch="en" data-lang-target="/auth_en">Login</a></li>
+            <li><a href="/auth_en" class="btn-login" data-lang-switch="en" data-lang-target="/auth_en">Login</a></li>
             {% endif %}
                     <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">ગુજરાતી</a></li>
         </ul>

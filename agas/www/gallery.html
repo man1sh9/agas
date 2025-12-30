@@ -9,8 +9,10 @@
     <style>
         :root {
             --primary-color: #5d4037;
-            --accent-color: #ff7043;
-            --bg-color: #fdf7f2;
+            --accent-color: #d4a373;
+            --text-dark: #2d2424;
+            --text-light: #fefae0;
+            --bg-light: #faf9f6;
         }
 
         * {
@@ -21,25 +23,27 @@
 
         body {
             font-family: 'Outfit', sans-serif;
-            background: var(--bg-color);
-            color: #2d2d2d;
+            background: var(--bg-light);
+            color: var(--text-dark);
         }
 
+        /* Navbar */
         .navbar {
+            font-family: 'Outfit', sans-serif;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 2rem;
+            padding: 1.5rem 5%;
             background: #fff;
-            border-bottom: 1px solid #eee;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
-            z-index: 10;
+            z-index: 1000;
         }
 
         .logo {
             font-weight: 700;
-            font-size: 1.2rem;
+            font-size: 1.8rem;
             text-decoration: none;
             color: var(--primary-color);
         }
@@ -47,13 +51,39 @@
         .nav-links {
             list-style: none;
             display: flex;
-            gap: 1.5rem;
+            gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
+            color: var(--text-dark);
             font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .btn-login {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.3s;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-login:hover {
+            background: #994d1c;
         }
 
         .mobile-menu-btn {
@@ -77,6 +107,20 @@
         .hero p {
             margin-top: 0.8rem;
             color: #666;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: var(--primary-color);
+            color: var(--text-light);
+            padding: 4rem 10%;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
         .gallery {
@@ -304,15 +348,15 @@
             <li><a href="/contact" data-lang-switch="gu" data-lang-target="/contact">સંપર્ક</a></li>
             {% if frappe.session.user != "Guest" %}
             <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">મારી પ્રોફાઇલ</a></li>
-            <li><a href="/logout">લૉગઆઉટ</a></li>
+            <li><a href="/logout" class="btn-login" style="background: #994d1c;">લૉગઆઉટ</a></li>
             {% else %}
-            <li><a href="/auth" data-lang-switch="gu" data-lang-target="/auth">લૉગિન</a></li>
+            <li><a href="/auth" class="btn-login" data-lang-switch="gu" data-lang-target="/auth">લૉગિન</a></li>
             {% endif %}
             <li><a href="/gallery_en" data-lang-switch="en" data-lang-target="/gallery_en">English</a></li>
         </ul>
     </nav>
 
-    <header class="hero">
+    <header class="page-header">
         <h1>અમારી ગેલેરી</h1>
         <p>આશ્રમના યાદગાર ક્ષણો</p>
     </header>
@@ -419,6 +463,65 @@
                 });
             });
         });
+    </script>
+    <script>
+        (function () {
+            const body = document.body;
+            const currentLang = body.getAttribute('data-lang');
+            const altUrl = body.getAttribute('data-alt');
+            const saved = localStorage.getItem('agas_lang');
+
+            if (saved && currentLang && saved !== currentLang && altUrl) {
+                const nextUrl = altUrl + window.location.search + window.location.hash;
+                window.location.replace(nextUrl);
+                return;
+            }
+
+            if (!document.getElementById('langIndicatorStyle')) {
+                const style = document.createElement('style');
+                style.id = 'langIndicatorStyle';
+                style.textContent = `
+                    .lang-indicator { font-weight: 600; color: var(--primary-color, #5d4037); }
+                    .lang-indicator .lang-current { color: var(--primary-color, #5d4037); }
+                    .lang-indicator .lang-sep { margin: 0 0.4rem; opacity: 0.6; }
+                    .lang-indicator .lang-link { color: var(--primary-color, #5d4037); text-decoration: none; }
+                    .lang-indicator .lang-link:hover { text-decoration: underline; }
+                `;
+                document.head.appendChild(style);
+            }
+
+            const langLinks = Array.from(
+                document.querySelectorAll('[data-lang-switch], .lang-switch, .lang-link')
+            ).filter(link => {
+                const text = (link.textContent || '').trim();
+                return text === 'English' || text === 'ગુજરાતી';
+            });
+
+            const langLink = langLinks[0];
+            if (langLink && altUrl) {
+                const currentLabel = currentLang === 'en' ? 'English' : 'ગુજરાતી';
+                const altLabel = currentLang === 'en' ? 'ગુજરાતી' : 'English';
+                const altLang = currentLang === 'en' ? 'gu' : 'en';
+                const targetHref = altUrl + window.location.search + window.location.hash;
+                const indicatorHtml = `<span class="lang-indicator"><span class="lang-current">${currentLabel}</span><span class="lang-sep">|</span><a class="lang-link" href="${targetHref}" data-lang-switch="${altLang}">${altLabel}</a></span>`;
+
+                const li = langLink.closest('li');
+                if (li) {
+                    li.innerHTML = indicatorHtml;
+                } else {
+                    langLink.outerHTML = indicatorHtml;
+                }
+            }
+
+            langLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const explicitLang = link.getAttribute('data-lang-switch');
+                    const href = link.getAttribute('href') || '';
+                    const targetLang = explicitLang || (href.includes('_en') ? 'en' : 'gu');
+                    if (targetLang) localStorage.setItem('agas_lang', targetLang);
+                });
+            });
+        })();
     </script>
 </body>
 

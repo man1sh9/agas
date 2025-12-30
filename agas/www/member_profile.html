@@ -37,6 +37,7 @@
 
         /* Navbar */
         .navbar {
+            font-family: 'Outfit', sans-serif;
             background: var(--white);
             padding: 1rem 5%;
             display: flex;
@@ -59,12 +60,33 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
             text-decoration: none;
             color: var(--text-dark);
             font-weight: 500;
+        }
+
+        .btn-login {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.3s;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-login:hover {
+            background: #994d1c;
         }
 
         /* Main Layout */
@@ -747,7 +769,7 @@
                     <li><a href="#" onclick="navigateToSection(event, 'security')">🔒 લૉગિન સેટિંગ્સ</a></li>
                 </ul>
             </li>
-            <li><a href="/logout">લૉગઆઉટ</a></li>
+            <li><a href="/logout" class="btn-login" style="background: #994d1c;">લૉગઆઉટ</a></li>
             <li><a href="/member_profile_en" data-lang-switch="en" data-lang-target="/member_profile_en">English</a></li>
         </ul>
     </nav>

@@ -32,6 +32,7 @@
         }
 
         .navbar {
+            font-family: 'Outfit', sans-serif;
             background: var(--white);
             padding: 1rem 5%;
             display: flex;
@@ -54,6 +55,7 @@
             list-style: none;
             display: flex;
             gap: 2rem;
+            align-items: center;
         }
 
         .nav-links a {
@@ -65,6 +67,26 @@
 
         .nav-links a:hover {
             color: var(--accent-color);
+        }
+
+        .btn-login {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.7rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.3s;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-login:hover {
+            background: #994d1c;
         }
 
         /* Main Layout */
@@ -515,7 +537,7 @@
             <li><a href="/events" data-lang-switch="gu" data-lang-target="/events">કાર્યક્રમો</a></li>
             <li><a href="/gallery" data-lang-switch="gu" data-lang-target="/gallery">ગેલેરી</a></li>
             <li><a href="/member_profile" data-lang-switch="gu" data-lang-target="/member_profile">પ્રોફાઇલ</a></li>
-            <li><a href="/logout">લૉગઆઉટ</a></li>
+            <li><a href="/logout" class="btn-login" style="background: #994d1c;">લૉગઆઉટ</a></li>
             <li><a href="/event_registration_en" data-lang-switch="en" data-lang-target="/event_registration_en">English</a></li>
         </ul>
     </nav>

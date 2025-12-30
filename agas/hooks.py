@@ -57,7 +57,7 @@ app_license = "mit"
 # ----------
 
 # application home page (will override Website Settings)
-home_page = "index"
+home_page = "agas"
 
 # website user home page (by Role)
 # role_home_page = {
@@ -246,4 +246,3 @@ home_page = "index"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
-

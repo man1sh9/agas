@@ -29,12 +29,16 @@
 
         /* Navbar */
         .navbar {
+            font-family: 'Outfit', sans-serif;
             background: white;
             padding: 1.5rem 5%;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
@@ -48,6 +52,7 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
 
         .nav-links a {
@@ -68,6 +73,17 @@
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: background 0.3s;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .btn-login:hover {
+            background: #994d1c;
         }
 
         /* Hero */
@@ -170,6 +186,7 @@
             }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body data-lang="en" data-alt="/about">
