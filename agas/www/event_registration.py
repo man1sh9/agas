@@ -34,6 +34,7 @@ def get_context(context):
 
 	# Fetch existing registration if exists
 	context.registration_data = {}
+	context.family_visit_dates = {}
 	if selected_event and profile.get("name"):
 		reg = frappe.get_all("Event Registration",
 			filters={"user": frappe.session.user, "event": selected_event},
@@ -51,7 +52,7 @@ def get_context(context):
 			# Fetch food schedule
 			food_schedule = frappe.get_all("Event Food Day",
 				filters={"parent": reg.name},
-				fields=["date", "breakfast", "lunch", "dinner"],
+				fields=["date", "member_ref", "member_name", "breakfast", "lunch", "dinner"],
 				order_by="date asc"
 			)
 			# Convert dates to strings for JSON serialization in template
@@ -59,6 +60,17 @@ def get_context(context):
 				if day.get("date"):
 					day["date"] = str(day["date"])
 			reg["food_schedule"] = food_schedule
+
+			# Build family visit date mapping
+			family_visit_dates = {}
+			for member in reg.get("visitor_members", []):
+				family_member = member.get("family_member")
+				if family_member:
+					family_visit_dates[family_member] = {
+						"visit_from_date": str(member.get("visit_from_date") or ""),
+						"visit_to_date": str(member.get("visit_to_date") or "")
+					}
+			context.family_visit_dates = family_visit_dates
 			context.registration_data = reg
 
 	# Fetch Family Members

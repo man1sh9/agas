@@ -1,7 +1,7 @@
 import frappe
 import secrets
 import string
-from frappe.utils import validate_email_address, now_datetime
+from frappe.utils import validate_email_address, now_datetime, getdate
 from datetime import timedelta
 
 # Rate limiting settings
@@ -301,8 +301,18 @@ def save_member_profile(data):
 
 	profile_name = frappe.db.get_value("Member Profile", {"user": user}, "name")
 	
+	existing_doc = frappe.get_doc("Member Profile", profile_name) if profile_name else None
+	id_proof_type = data.get("id_proof_type") or (existing_doc.id_proof_type if existing_doc else None)
+	id_proof = data.get("id_proof") or (existing_doc.id_proof if existing_doc else None)
+	photo = data.get("photo") or (existing_doc.photo if existing_doc else None)
+
+	if not id_proof_type:
+		frappe.throw("ID Proof Type is required", frappe.ValidationError)
+	if not id_proof or not photo:
+		frappe.throw("ID Proof and Photo are required", frappe.ValidationError)
+
 	if profile_name:
-		doc = frappe.get_doc("Member Profile", profile_name)
+		doc = existing_doc
 		frappe.logger().info(f"Updating Member Profile {profile_name} with keys: {list(data.keys())}")
 		for key, value in data.items():
 			if key not in ["name", "doctype", "user"]:
@@ -369,9 +379,26 @@ def register_for_event(data):
 	# Validate visitor members - check if visiting members have visit dates
 	if "visitor_members" in data and isinstance(data["visitor_members"], list):
 		for member in data["visitor_members"]:
-			if member.get("is_visiting") == 1 and not member.get("visit_date"):
-				member_name = f"{member.get('first_name', '')} {member.get('last_name', '')}".strip()
-				frappe.throw(f"Visit date is required for {member_name or 'visiting member'}", frappe.ValidationError)
+			if member.get("is_visiting") == 1:
+				visit_from = member.get("visit_from_date")
+				visit_to = member.get("visit_to_date")
+				if not visit_from or not visit_to:
+					member_name = f"{member.get('first_name', '')} {member.get('last_name', '')}".strip()
+					frappe.throw(
+						f"Visit from/to dates are required for {member_name or 'visiting member'}",
+						frappe.ValidationError,
+					)
+				if getdate(visit_from) > getdate(visit_to):
+					member_name = f"{member.get('first_name', '')} {member.get('last_name', '')}".strip()
+					frappe.throw(
+						f"Visit from date must be before visit to date for {member_name or 'visiting member'}",
+						frappe.ValidationError,
+					)
+
+	# Validate primary visit dates if provided
+	if data.get("check_in_date") and data.get("check_out_date"):
+		if getdate(data["check_in_date"]) > getdate(data["check_out_date"]):
+			frappe.throw("Check-in date must be before check-out date", frappe.ValidationError)
 
 	# Validate food requirements
 	if data.get("food_required") == "Yes":

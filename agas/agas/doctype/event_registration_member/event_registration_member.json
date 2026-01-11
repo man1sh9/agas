@@ -6,15 +6,24 @@
     "editable_grid": 1,
     "engine": "InnoDB",
     "field_order": [
+        "family_member",
         "first_name",
         "middle_name",
         "last_name",
         "relation",
         "mobile_no",
         "is_visiting",
+        "visit_from_date",
+        "visit_to_date",
         "visit_date"
     ],
     "fields": [
+        {
+            "fieldname": "family_member",
+            "fieldtype": "Link",
+            "label": "Family Member",
+            "options": "Family Member"
+        },
         {
             "fieldname": "first_name",
             "fieldtype": "Data",
@@ -54,10 +63,21 @@
             "label": "Is Visiting"
         },
         {
+            "fieldname": "visit_from_date",
+            "fieldtype": "Date",
+            "label": "Visit From Date",
+            "mandatory_depends_on": "eval:doc.is_visiting==1"
+        },
+        {
+            "fieldname": "visit_to_date",
+            "fieldtype": "Date",
+            "label": "Visit To Date",
+            "mandatory_depends_on": "eval:doc.is_visiting==1"
+        },
+        {
             "fieldname": "visit_date",
             "fieldtype": "Date",
-            "label": "Visit Date",
-            "mandatory_depends_on": "eval:doc.is_visiting==1"
+            "label": "Visit Date"
         }
     ],
     "istable": 1,

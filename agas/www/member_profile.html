@@ -963,7 +963,8 @@
                                         <i>📸</i> કેમેરા
                                     </button>
                                 </div>
-                                <input type="hidden" name="id_proof" value="{{ member_data.get('id_proof', '') }}">
+                                <input type="hidden" name="id_proof" value="{{ member_data.get('id_proof', '') }}"
+                                    required>
                                 <div id="primary_id_proof_preview"
                                     style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--accent-color);">
                                     {% if member_data.get('id_proof') %}
@@ -980,7 +981,7 @@
                                         <i>📸</i> કેમેરા
                                     </button>
                                 </div>
-                                <input type="hidden" name="photo" value="{{ member_data.get('photo', '') }}">
+                                <input type="hidden" name="photo" value="{{ member_data.get('photo', '') }}" required>
                                 <div id="primary_photo_preview"
                                     style="font-size: 0.8rem; margin-top: 0.5rem; color: var(--accent-color);">
                                     {% if member_data.get('photo') %}

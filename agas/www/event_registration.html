@@ -322,6 +322,7 @@
             margin-bottom: 1rem;
             transition: all 0.3s;
             border: 1px solid #eee;
+            flex-wrap: wrap;
         }
 
         .family-card:hover {
@@ -358,6 +359,64 @@
             background: var(--accent-color);
             color: white;
             margin-left: 1rem;
+        }
+
+        .family-card.active {
+            border-color: var(--accent-color);
+            background: #fffaf6;
+        }
+
+        .family-visit-dates {
+            display: none;
+            width: 100%;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
+        .family-card.active .family-visit-dates {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        }
+
+        .family-visit-dates label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+
+        .family-visit-dates input {
+            padding: 0.7rem 0.9rem;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: #fff;
+        }
+
+        .member-food-block {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .member-food-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .member-food-header h4 {
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .member-food-meta {
+            font-size: 0.85rem;
+            color: #666;
         }
 
         @keyframes slideUp {
@@ -693,6 +752,23 @@
                                         }}</p>
                                 </div>
                                 <span class="badge">{{ m.adultchild or 'સભ્ય' }}</span>
+                                {% set visit_dates = family_visit_dates.get(m.name, {}) %}
+                                <div class="family-visit-dates">
+                                    <div>
+                                        <label>મુલાકાત થી</label>
+                                        <input type="text" class="datepicker member-visit-from"
+                                            data-member-id="{{ m.name }}"
+                                            value="{{ visit_dates.get('visit_from_date', '') }}"
+                                            placeholder="દિ/મા/વર્ષ">
+                                    </div>
+                                    <div>
+                                        <label>મુલાકાત સુધી</label>
+                                        <input type="text" class="datepicker member-visit-to"
+                                            data-member-id="{{ m.name }}"
+                                            value="{{ visit_dates.get('visit_to_date', '') }}"
+                                            placeholder="દિ/મા/વર્ષ">
+                                    </div>
+                                </div>
                             </div>
                             {% endfor %}
                             {% else %}
@@ -755,12 +831,12 @@
                                     પસંદ કરેલા પરિવાર)</p>
                             </div>
                             <div class="form-group" id="checkInField">
-                                <label>ચેક-ઇન તારીખ</label>
+                                <label>મુલાકાત થી</label>
                                 <input type="text" name="check_in_date" class="datepicker"
                                     value="{{ registration_data.get('check_in_date', '') }}" placeholder="દિ/મા/વર્ષ">
                             </div>
                             <div class="form-group" id="checkOutField">
-                                <label>ચેક-આઉટ તારીખ</label>
+                                <label>મુલાકાત સુધી</label>
                                 <input type="text" name="check_out_date" class="datepicker"
                                     value="{{ registration_data.get('check_out_date', '') }}" placeholder="દિ/મા/વર્ષ">
                             </div>
@@ -777,7 +853,7 @@
                     <div class="section-card">
                         <div class="section-header">
                             <h1>ભોજન જરૂરીયાતો</h1>
-                            <p>મુલાકાત દરમિયાન ભોજન અને પસંદગીઓ.</p>
+                            <p>મુલાકાત દરમિયાન ભોજન.</p>
                         </div>
                         <div class="form-grid">
                             <div class="form-group">
@@ -789,31 +865,15 @@
                                         endif %}>હા</option>
                                 </select>
                             </div>
-                            <div class="form-group" id="foodPrefField" style="display: none;">
-                                <label>Preferences (Optional)</label>
-                                <input type="text" name="food_preference" placeholder="e.g. No Onion/Garlic"
-                                    value="{{ registration_data.get('food_preference', '') }}">
-                            </div>
                             <div class="form-group full" id="foodScheduleContainer" style="display: none;">
-                                <label>તારીખ મુજબ ભોજન પસંદગી</label>
+                                <label>સભ્ય મુજબ ભોજન પસંદગી</label>
                                 <div
                                     style="background: #fbfbfb; padding: 1.5rem; border-radius: 12px; border: 1.5px solid #eee; overflow-x: auto;">
-                                    <table style="width: 100%; border-collapse: collapse; min-width: 400px;"
-                                        id="foodTable">
-                                        <thead>
-                                            <tr style="text-align: left; border-bottom: 2px solid #eee;">
-                                                <th style="padding: 0.8rem;">Date</th>
-                                                <th style="padding: 0.8rem; text-align: center;">નાસ્તો</th>
-                                                <th style="padding: 0.8rem; text-align: center;">મધ્યાહ્ન ભોજન</th>
-                                                <th style="padding: 0.8rem; text-align: center;">રાત્રિભોજન</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="foodTableBody">
-                                            <!-- Dynamic rows -->
-                                        </tbody>
-                                    </table>
+                                    <div id="foodSchedules">
+                                        <!-- Member-wise schedules -->
+                                    </div>
                                     <p style="font-size: 0.75rem; color: #888; margin-top: 1rem;">
-                                        તમારા રોકાણના દરેક દિવસે જરૂરી ભોજન પસંદ કરો.
+                                        દરેક સભ્ય માટે મુલાકાતની તારીખ મુજબ ભોજન પસંદ કરો.
                                     </p>
                                 </div>
                             </div>
@@ -859,7 +919,7 @@
             localStorage.setItem('active_er_tab', id);
 
             if (id === 'visit') toggleStayFields();
-            if (id === 'food') generateFoodTable();
+            if (id === 'food') generateFoodTables();
         }
 
         function reloadForEvent(eventTitle) {
@@ -898,7 +958,7 @@
                 const res = await response.json();
                 if (res.message) {
                     if (showToast) {
-                        toast.innerText = 'Progress saved';
+                        toast.innerText = 'પ્રગતિ સાચવાઈ';
                         toast.classList.remove('error');
                         setTimeout(() => toast.style.display = 'none', 2000);
                     }
@@ -949,24 +1009,28 @@
             // Collect Family Selection
             data.visitor_members = [];
             document.querySelectorAll('input[name="family_member_select"]:checked').forEach(cb => {
+                const fromInput = document.querySelector(`.member-visit-from[data-member-id="${cb.value}"]`);
+                const toInput = document.querySelector(`.member-visit-to[data-member-id="${cb.value}"]`);
                 data.visitor_members.push({
+                    family_member: cb.value,
                     first_name: cb.dataset.fname,
                     middle_name: cb.dataset.mname,
                     last_name: cb.dataset.lname,
                     relation: cb.dataset.rel,
                     mobile_no: cb.dataset.mobile,
                     is_visiting: 1,
-                    visit_date: document.querySelector('input[name="check_in_date"]').value // Default visit date
+                    visit_from_date: fromInput ? fromInput.value : '',
+                    visit_to_date: toInput ? toInput.value : ''
                 });
             });
 
             // Collect ભોજન સમયપત્રક
             data.food_schedule = [];
-            const rows = document.querySelectorAll('#foodTableBody tr');
-            rows.forEach(row => {
-                const date = row.dataset.date;
+            document.querySelectorAll('.member-food-block tbody tr').forEach(row => {
                 data.food_schedule.push({
-                    date: date,
+                    member_ref: row.dataset.memberRef,
+                    member_name: row.dataset.memberName,
+                    date: row.dataset.date,
                     breakfast: row.querySelector('.food-breakfast').checked ? 1 : 0,
                     lunch: row.querySelector('.food-lunch').checked ? 1 : 0,
                     dinner: row.querySelector('.food-dinner').checked ? 1 : 0
@@ -980,6 +1044,21 @@
         function updateVisitorCount() {
             const selectedFamily = document.querySelectorAll('input[name="family_member_select"]:checked').length;
             document.getElementById('totalVisitorsCount').value = 1 + selectedFamily;
+
+            document.querySelectorAll('input[name="family_member_select"]').forEach(cb => {
+                const card = cb.closest('.family-card');
+                if (card) {
+                    card.classList.toggle('active', cb.checked);
+                    const fromInput = card.querySelector('.member-visit-from');
+                    const toInput = card.querySelector('.member-visit-to');
+                    if (fromInput) fromInput.required = cb.checked;
+                    if (toInput) toInput.required = cb.checked;
+                }
+            });
+
+            if (localStorage.getItem('active_er_tab') === 'food') {
+                generateFoodTables();
+            }
         }
 
         // Final Submission
@@ -1048,41 +1127,119 @@
             }
         }
 
-        function generateFoodTable() {
-            const checkInStr = document.querySelector('input[name="check_in_date"]').value;
-            const checkOutStr = document.querySelector('input[name="check_out_date"]').value;
-            const body = document.getElementById('foodTableBody');
-            const container = document.getElementById('foodScheduleContainer');
+        function getSelectedMembers() {
+            const members = [];
+            const firstName = document.querySelector('input[name="first_name"]')?.value || '';
+            const lastName = document.querySelector('input[name="last_name"]')?.value || '';
+            const primaryName = `${firstName} ${lastName}`.trim() || 'મુખ્ય મુલાકાતી';
+            const primaryFrom = document.querySelector('input[name="check_in_date"]').value;
+            const primaryTo = document.querySelector('input[name="check_out_date"]').value;
 
-            if (!checkInStr || !checkOutStr || document.getElementById('foodRequired').value === 'No') {
+            members.push({
+                ref: 'PRIMARY',
+                name: primaryName,
+                from: primaryFrom,
+                to: primaryTo
+            });
+
+            document.querySelectorAll('input[name="family_member_select"]:checked').forEach(cb => {
+                const fromInput = document.querySelector(`.member-visit-from[data-member-id="${cb.value}"]`);
+                const toInput = document.querySelector(`.member-visit-to[data-member-id="${cb.value}"]`);
+                const fullName = `${cb.dataset.fname || ''} ${cb.dataset.lname || ''}`.trim();
+                members.push({
+                    ref: cb.value,
+                    name: fullName || 'પરિવાર સભ્ય',
+                    from: fromInput ? fromInput.value : '',
+                    to: toInput ? toInput.value : ''
+                });
+            });
+
+            return members;
+        }
+
+        function generateFoodTables() {
+            const container = document.getElementById('foodScheduleContainer');
+            const schedules = document.getElementById('foodSchedules');
+            const foodRequired = document.getElementById('foodRequired').value;
+
+            if (foodRequired === 'No') {
                 container.style.display = 'none';
                 return;
             }
 
+            const members = getSelectedMembers();
+            schedules.innerHTML = '';
             container.style.display = 'block';
-            body.innerHTML = '';
 
-            const start = new Date(checkInStr);
-            const end = new Date(checkOutStr);
+            members.forEach(member => {
+                const block = document.createElement('div');
+                block.className = 'member-food-block';
 
-            // Loop through each date
-            let current = new Date(start);
-            while (current <= end) {
-                const dateStr = current.toISOString().split('T')[0];
-                const existing = existingFoodSchedule.find(d => d.date === dateStr) || {};
+                if (!member.from || !member.to) {
+                    block.innerHTML = `
+                        <div class="member-food-header">
+                            <h4>${member.name}</h4>
+                            <span class="member-food-meta">તારીખ ઉપલબ્ધ નથી</span>
+                        </div>
+                        <div class="member-food-meta">ભોજન પસંદ કરવા માટે મુલાકાત તારીખો ભરો.</div>
+                    `;
+                    schedules.appendChild(block);
+                    return;
+                }
 
-                const tr = document.createElement('tr');
-                tr.dataset.date = dateStr;
-                tr.style.borderBottom = '1px solid #eee';
-                tr.innerHTML = `
-                    <td style="padding: 0.8rem;">${flatpickr.formatDate(current, "d M, Y")}</td>
-                    <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-breakfast" ${existing.breakfast ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
-                    <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-lunch" ${existing.lunch ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
-                    <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-dinner" ${existing.dinner ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                const start = new Date(member.from);
+                const end = new Date(member.to);
+                const defaultChecked = foodRequired === 'Yes';
+
+                const header = document.createElement('div');
+                header.className = 'member-food-header';
+                header.innerHTML = `
+                    <h4>${member.name}</h4>
+                    <span class="member-food-meta">${flatpickr.formatDate(start, "d M, Y")} - ${flatpickr.formatDate(end, "d M, Y")}</span>
                 `;
-                body.appendChild(tr);
-                current.setDate(current.getDate() + 1);
-            }
+                block.appendChild(header);
+
+                const table = document.createElement('table');
+                table.style.width = '100%';
+                table.style.borderCollapse = 'collapse';
+                table.style.minWidth = '400px';
+                table.innerHTML = `
+                    <thead>
+                        <tr style="text-align: left; border-bottom: 2px solid #eee;">
+                            <th style="padding: 0.8rem;">તારીખ</th>
+                            <th style="padding: 0.8rem; text-align: center;">નાસ્તો</th>
+                            <th style="padding: 0.8rem; text-align: center;">મધ્યાહ્ન ભોજન</th>
+                            <th style="padding: 0.8rem; text-align: center;">રાત્રિભોજન</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+
+                const body = table.querySelector('tbody');
+                let current = new Date(start);
+                while (current <= end) {
+                    const dateStr = current.toISOString().split('T')[0];
+                    const existing = existingFoodSchedule.find(d => d.date === dateStr && ((d.member_ref || 'PRIMARY') === member.ref)) || null;
+                    const hasExisting = existing && Object.prototype.hasOwnProperty.call(existing, 'date');
+
+                    const tr = document.createElement('tr');
+                    tr.dataset.date = dateStr;
+                    tr.dataset.memberRef = member.ref;
+                    tr.dataset.memberName = member.name;
+                    tr.style.borderBottom = '1px solid #eee';
+                    tr.innerHTML = `
+                        <td style="padding: 0.8rem;">${flatpickr.formatDate(current, "d M, Y")}</td>
+                        <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-breakfast" ${(hasExisting ? existing.breakfast : defaultChecked) ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                        <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-lunch" ${(hasExisting ? existing.lunch : defaultChecked) ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                        <td style="padding: 0.8rem; text-align: center;"><input type="checkbox" class="food-dinner" ${(hasExisting ? existing.dinner : defaultChecked) ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} style="width:18px;height:18px;"></td>
+                    `;
+                    body.appendChild(tr);
+                    current.setDate(current.getDate() + 1);
+                }
+
+                block.appendChild(table);
+                schedules.appendChild(block);
+            });
         }
 
         window.onload = () => {
@@ -1120,14 +1277,14 @@
                 minDate: minDate,
                 maxDate: maxDate,
                 onChange: function () {
-                    if (localStorage.getItem('active_er_tab') === 'food') generateFoodTable();
+                    if (localStorage.getItem('active_er_tab') === 'food') generateFoodTables();
                 }
             });
 
             // Initialize conditional fields
             toggleStayFields();
             toggleFoodFields();
-            generateFoodTable();
+            generateFoodTables();
 
             const backLink = document.getElementById('backToProfileLink');
             if (backLink) {
@@ -1146,18 +1303,13 @@
             const isVisible = (stayRequired || '').trim().toLowerCase() === 'yes';
 
             if (roomsField) roomsField.style.display = isVisible ? 'block' : 'none';
-            if (checkInField) checkInField.style.display = isVisible ? 'block' : 'none';
-            if (checkOutField) checkOutField.style.display = isVisible ? 'block' : 'none';
+            if (checkInField) checkInField.style.display = 'block';
+            if (checkOutField) checkOutField.style.display = 'block';
 
         }
 
         function toggleFoodFields() {
-            const foodRequired = document.getElementById('foodRequired').value;
-            const foodPrefField = document.getElementById('foodPrefField');
-            if (foodPrefField) {
-                foodPrefField.style.display = foodRequired === 'Yes' ? 'block' : 'none';
-            }
-            generateFoodTable();
+            generateFoodTables();
         }
 
         function toggleMenu() {
