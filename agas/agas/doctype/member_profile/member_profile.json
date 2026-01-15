@@ -10,6 +10,7 @@
         "middle_name",
         "last_name",
         "gender",
+        "are_you_a_resident_of_ashram",
         "date_of_birth",
         "age",
         "mobile_no",
@@ -53,6 +54,12 @@
             "fieldtype": "Select",
             "label": "Gender",
             "options": "Male\nFemale\nOther"
+        },
+        {
+            "default": "0",
+            "fieldname": "are_you_a_resident_of_ashram",
+            "fieldtype": "Check",
+            "label": "Ashram Resident?"
         },
         {
             "fieldname": "date_of_birth",

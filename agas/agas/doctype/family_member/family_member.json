@@ -115,9 +115,8 @@
         },
         {
             "fieldname": "are_you_a_resident_of_ashram",
-            "fieldtype": "Select",
-            "label": "Are you a resident of Ashram?",
-            "options": "Yes\nNo"
+            "fieldtype": "Check",
+            "label": "Ashram Resident?"
         }
     ],
     "index_web_pages_for_search": 1,

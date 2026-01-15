@@ -507,7 +507,8 @@
         .upload-options {
             display: flex;
             gap: 0.8rem;
-            align-items: center;
+            align-items: flex-start;
+            flex-direction: column;
             width: 100%;
         }
 
@@ -849,6 +850,14 @@
                                     <option value="Other" {% if member_data.get('gender')=='Other' %}selected{% endif
                                         %}>Other</option>
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer;">
+                                    <input type="checkbox" name="are_you_a_resident_of_ashram" {% if
+                                        member_data.get('are_you_a_resident_of_ashram') %}checked{% endif %}
+                                        style="width: 18px; height: 18px;">
+                                    Ashram Resident?
+                                </label>
                             </div>
                             <div class="form-group">
                                 <label>Date of Birth</label>
@@ -1233,11 +1242,11 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Resident of Ashram?</label>
-                        <select name="are_you_a_resident_of_ashram">
-                            <option value="No">No</option>
-                            <option value="Yes">Yes</option>
-                        </select>
+                        <label style="display: flex; align-items: center; gap: 0.6rem; cursor: pointer;">
+                            <input type="checkbox" name="are_you_a_resident_of_ashram"
+                                style="width: 18px; height: 18px;">
+                            Ashram Resident?
+                        </label>
                     </div>
                     <div class="form-group full">
                         <label>ID Proof Document*</label>
@@ -1483,6 +1492,11 @@
                 Object.keys(data).forEach(key => {
                     const input = form.querySelector(`[name="${key}"]`);
                     if (input) {
+                        if (input.type === 'checkbox') {
+                            const val = data[key];
+                            input.checked = val === 1 || val === '1' || val === true || val === 'Yes';
+                            return;
+                        }
                         if (input.classList.contains('datepicker')) {
                             if (input._flatpickr) input._flatpickr.setDate(data[key]);
                         } else {
@@ -1608,7 +1622,9 @@
 
             const data = {};
             Array.from(form.elements).forEach(el => {
-                if (el.name) data[el.name] = el.value;
+                if (!el.name) return;
+                if (el.type === 'checkbox') data[el.name] = el.checked ? 1 : 0;
+                else data[el.name] = el.value;
             });
 
             toast.innerText = 'Saving...';

@@ -714,6 +714,22 @@
                                 <input type="text" name="mobile_no" value="{{ member_data.get('mobile_no', '') }}"
                                     readonly pattern="\d{10}" maxlength="10">
                             </div>
+                            <div class="form-group full">
+                                <div class="family-visit-dates" style="margin-top: 0;">
+                                    <div>
+                                        <label>Visit From</label>
+                                        <input type="text" name="check_in_date" class="datepicker" required
+                                            value="{{ registration_data.get('check_in_date', '') }}"
+                                            placeholder="dd/mm/yyyy">
+                                    </div>
+                                    <div>
+                                        <label>Visit To</label>
+                                        <input type="text" name="check_out_date" class="datepicker" required
+                                            value="{{ registration_data.get('check_out_date', '') }}"
+                                            placeholder="dd/mm/yyyy">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <p
                             style="margin-top: 1.5rem; font-size: 0.85rem; color: #888; background: #eee; padding: 0.8rem; border-radius: 8px;">
@@ -807,6 +823,11 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="form-group full">
+                                <p style="margin: 0; font-size: 0.85rem; color: #777;">
+                                    Primary visitor visit dates are captured in the Primary Visitor section.
+                                </p>
+                            </div>
                             <div class="form-group">
                                 <label>Stay Required?</label>
                                 <select name="stay_required" id="stayRequired" onchange="toggleStayFields()">
@@ -829,16 +850,6 @@
                                     style="background: #fdfdfd; font-weight: 700; color: var(--primary-color);">
                                 <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">(Calculated: Self +
                                     Selected Family)</p>
-                            </div>
-                            <div class="form-group" id="checkInField">
-                                <label>Visit From</label>
-                                <input type="text" name="check_in_date" class="datepicker"
-                                    value="{{ registration_data.get('check_in_date', '') }}" placeholder="dd/mm/yyyy">
-                            </div>
-                            <div class="form-group" id="checkOutField">
-                                <label>Visit To</label>
-                                <input type="text" name="check_out_date" class="datepicker"
-                                    value="{{ registration_data.get('check_out_date', '') }}" placeholder="dd/mm/yyyy">
                             </div>
                         </div>
                         <div class="actions">

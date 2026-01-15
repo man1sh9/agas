@@ -714,6 +714,22 @@
                                 <input type="text" name="mobile_no" value="{{ member_data.get('mobile_no', '') }}"
                                     readonly pattern="\d{10}" maxlength="10">
                             </div>
+                            <div class="form-group full">
+                                <div class="family-visit-dates" style="margin-top: 0;">
+                                    <div>
+                                        <label>મુલાકાત થી</label>
+                                        <input type="text" name="check_in_date" class="datepicker" required
+                                            value="{{ registration_data.get('check_in_date', '') }}"
+                                            placeholder="દિ/મા/વર્ષ">
+                                    </div>
+                                    <div>
+                                        <label>મુલાકાત સુધી</label>
+                                        <input type="text" name="check_out_date" class="datepicker" required
+                                            value="{{ registration_data.get('check_out_date', '') }}"
+                                            placeholder="દિ/મા/વર્ષ">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <p
                             style="margin-top: 1.5rem; font-size: 0.85rem; color: #888; background: #eee; padding: 0.8rem; border-radius: 8px;">
@@ -807,6 +823,11 @@
                                     {% endfor %}
                                 </select>
                             </div>
+                            <div class="form-group full">
+                                <p style="margin: 0; font-size: 0.85rem; color: #777;">
+                                    મુખ્ય મુલાકાતીની મુલાકાત તારીખો મુખ્ય મુલાકાતી વિભાગમાં લેવાય છે.
+                                </p>
+                            </div>
                             <div class="form-group">
                                 <label>રોકાણ જરૂરી છે?</label>
                                 <select name="stay_required" id="stayRequired" onchange="toggleStayFields()">
@@ -829,16 +850,6 @@
                                     style="background: #fdfdfd; font-weight: 700; color: var(--primary-color);">
                                 <p style="font-size: 0.75rem; color: #888; margin-top: 0.3rem;">(ગણતરી: પોતે +
                                     પસંદ કરેલા પરિવાર)</p>
-                            </div>
-                            <div class="form-group" id="checkInField">
-                                <label>મુલાકાત થી</label>
-                                <input type="text" name="check_in_date" class="datepicker"
-                                    value="{{ registration_data.get('check_in_date', '') }}" placeholder="દિ/મા/વર્ષ">
-                            </div>
-                            <div class="form-group" id="checkOutField">
-                                <label>મુલાકાત સુધી</label>
-                                <input type="text" name="check_out_date" class="datepicker"
-                                    value="{{ registration_data.get('check_out_date', '') }}" placeholder="દિ/મા/વર્ષ">
                             </div>
                         </div>
                         <div class="actions">
